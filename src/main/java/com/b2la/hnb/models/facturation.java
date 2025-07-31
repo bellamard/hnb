@@ -31,10 +31,15 @@ public class facturation {
     utilisateurs utilisateur;
 
     @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "idBilan", referencedColumnName = "id")
+    bilan bilan;
+
+    @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<produits> produit= new ArrayList<>();
 
-    @Column(nullable = false)
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     Date dateFacturation;
@@ -42,12 +47,13 @@ public class facturation {
     public facturation() {
     }
 
-    public facturation(Long id, Long code_reference, double ttc, etat etat, utilisateurs utilisateur, List<produits> produit, Date dateFacturation) {
+    public facturation(Long id, Long code_reference, double ttc, etat etat, utilisateurs utilisateur, bilan bilan, List<produits> produit, Date dateFacturation) {
         this.id = id;
         this.code_reference = code_reference;
         this.ttc = ttc;
         this.etat = etat;
         this.utilisateur = utilisateur;
+        this.bilan = bilan;
         this.produit = produit;
         this.dateFacturation = dateFacturation;
     }
@@ -90,6 +96,14 @@ public class facturation {
 
     public void setUtilisateur(utilisateurs utilisateur) {
         this.utilisateur = utilisateur;
+    }
+
+    public bilan getBilan() {
+        return bilan;
+    }
+
+    public void setBilan(bilan bilan) {
+        this.bilan = bilan;
     }
 
     public List<produits> getProduit() {
