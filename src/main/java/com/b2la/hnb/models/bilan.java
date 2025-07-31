@@ -23,4 +23,56 @@ public class bilan {
     Date debutBilan;
     @Temporal(TemporalType.TIMESTAMP)
     Date finBilan;
+
+    public bilan() {
+    }
+
+    public bilan(Long id, List<facturation> factures, List<depense> depenses, Date debutBilan, Date finBilan) {
+        this.id = id;
+        this.factures = factures;
+        this.depenses = depenses;
+        this.debutBilan = debutBilan;
+        this.finBilan = finBilan;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<facturation> getFactures() {
+        return factures;
+    }
+
+    public void setFactures(List<facturation> factures) {
+        this.factures = factures;
+    }
+
+    public List<depense> getDepenses() {
+        return depenses;
+    }
+
+    public void setDepenses(List<depense> depenses) {
+        this.depenses = depenses;
+    }
+
+    public Date getDebutBilan() {
+        return debutBilan;
+    }
+
+    public void setDebutBilan(Date debutBilan) {
+        this.debutBilan = debutBilan;
+    }
+
+    public Date getFinBilan() {
+        return finBilan;
+    }
+
+    public void setFinBilan(Date finBilan) {
+        this.finBilan = finBilan;
+    }
+
 }
