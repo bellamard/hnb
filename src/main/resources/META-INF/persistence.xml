@@ -7,7 +7,13 @@
 
     <persistence-unit name="HNB" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-
+        <class>com.b2la.hnb.models.bilan</class>
+        <class>com.b2la.hnb.models.facturation</class>
+        <class>com.b2la.hnb.models.utilisateurs</class>
+        <class>com.b2la.hnb.models.produits</class>
+        <class>com.b2la.hnb.models.commande</class>
+        <class>com.b2la.hnb.models.depense</class>
+        <class>com.b2la.hnb.models.promotion</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="${mysql.datasource.url}"/>
             <property name="jakarta.persistence.jdbc.user" value="${mysql.datasource.username}"/>
