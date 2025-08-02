@@ -36,8 +36,18 @@ public class produitService {
             em.close();
         }
     }
-    public produits produit(Long id){
+    public produits findById(Long id){
+        EntityManager em= JPAUtil.getEntityManager();
+        produits produit=null;
+        try {
+            produit=em.find(produits.class, id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
 
+        return produit;
     }
     public void delete(Long id){
 
