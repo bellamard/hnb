@@ -70,6 +70,19 @@ public class depenseService {
     }
 
     public void delete(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try {
+            transaction= em.getTransaction();
+            transaction.begin();
+            depense depense= em.find(depense.class, id);
+            if(depense!=null)em.remove(depense);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
     }
 }
