@@ -72,6 +72,11 @@ public class produitService {
             produits produit= em.find(produits.class, id);
             if(produit!=null)em.remove(produit);
             transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
         }
     }
 }
