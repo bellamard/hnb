@@ -1,9 +1,11 @@
 package com.b2la.hnb.services;
 
+import com.b2la.hnb.models.bilan;
 import com.b2la.hnb.models.utilisateurs;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -85,5 +87,20 @@ public class utilisateurService {
         }finally {
             em.close();
         }
+    }
+
+    public utilisateurs findByName(String name){
+        EntityManager em= JPAUtil.getEntityManager();
+        bilan bil= null;
+        try {
+            TypedQuery<utilisateurs> query=em.createQuery("SELECT u FROM Utilisateurs U WHERE u.name=:name",utilisateurs.class);
+            query.setParameter("name", name);
+            return query.getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }finally {
+            em.close();
+        }
+
     }
 }

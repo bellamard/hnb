@@ -14,11 +14,11 @@ public class utilisateurs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String name;
     @Column(nullable = false)
     fonction fonction;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String phone;
     @Column(nullable = false)
     @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
