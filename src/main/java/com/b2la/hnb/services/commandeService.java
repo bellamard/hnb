@@ -68,6 +68,19 @@ public class commandeService {
     }
 
     public void delete(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try {
+            transaction= em.getTransaction();
+            transaction.begin();
+            commande article= em.find(commande.class, id);
+            if(article!=null)em.remove(article);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if (transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
     }
 }
