@@ -26,7 +26,17 @@ public class depenseService {
     }
 
     public void update(depense depense){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try {
+            transaction= em.getTransaction();
+            transaction.begin();
+            em.merge(depense);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        }
     }
 
     public depense findById(Long id){
