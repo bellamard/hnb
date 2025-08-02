@@ -9,13 +9,13 @@ import java.util.List;
 
 public class bilanService {
 
-    public void save(bilan bilan){
+    public void save(bilan bil){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try {
             transaction= em.getTransaction();
             transaction.begin();
-            em.persist(bilan);
+            em.persist(bil);
             transaction.commit();
         } catch (RuntimeException e) {
             if(transaction!= null)transaction.rollback();
@@ -25,8 +25,20 @@ public class bilanService {
         }
     }
 
-    public void update(){
-
+    public void update(bilan bil){
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try {
+            transaction=em.getTransaction();
+            transaction.begin();
+            em.merge(bil);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
     }
     public bilan findById(Long id){
 
