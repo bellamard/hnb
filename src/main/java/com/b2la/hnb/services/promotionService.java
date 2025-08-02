@@ -72,6 +72,19 @@ public class promotionService {
     }
 
     public void delete(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try{
+            transaction= em.getTransaction();
+            transaction.begin();
+            promotion promo= em.find(promotion.class, id);
+            if(promo!=null)em.remove(promo);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            em.close();
+        }
     }
 }
