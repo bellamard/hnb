@@ -4,6 +4,7 @@ import com.b2la.hnb.models.promotion;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -56,6 +57,17 @@ public class promotionService {
     }
 
     public List<promotion> findAll(){
+        EntityManager em= JPAUtil.getEntityManager();
+        List<promotion> promotionsList= null;
+        try {
+            TypedQuery<promotion> query=em.createQuery("SELECT p FROM Promotions p", promotion.class);
+            promotionsList= query.getResultList();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
+        return promotionsList;
 
     }
 
