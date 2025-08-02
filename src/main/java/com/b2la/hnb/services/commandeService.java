@@ -26,10 +26,22 @@ public class commandeService {
     }
 
     public void update(commande article){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try {
+            transaction= em.getTransaction();
+            transaction.begin();
+            em.merge(article);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
     }
 
-    public commande findById(Long ){
+    public commande findById(Long id){
 
     }
 
