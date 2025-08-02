@@ -4,6 +4,9 @@ import com.b2la.hnb.models.produits;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 public class produitService {
 
@@ -48,6 +51,17 @@ public class produitService {
         }
 
         return produit;
+    }
+
+    public List<produits> findAll(){
+        EntityManager em= JPAUtil.getEntityManager();
+        List<produits> produitsList= null;
+        try {
+            TypedQuery<produits> query= em.createQuery("SELECT p FROM Produits p", produits.class);
+        } finally {
+            em.close();
+        }
+        return produitsList;
     }
     public void delete(Long id){
 
