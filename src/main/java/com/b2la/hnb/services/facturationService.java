@@ -69,7 +69,20 @@ public class facturationService {
     }
 
     public void delete (Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try{
+            transaction=em.getTransaction();
+            transaction.begin();
+            facturation facture= em.find(facturation.class, id);
+            if(facture!=null)em.remove(facture);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
     }
 
 }
