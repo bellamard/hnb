@@ -43,7 +43,16 @@ public class promotionService {
     }
 
     public promotion findById(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        promotion promo= null;
+        try{
+            promo= em.find(promotion.class, id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
+        return promo;
     }
 
     public List<promotion> findAll(){
