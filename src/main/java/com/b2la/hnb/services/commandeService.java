@@ -4,6 +4,7 @@ import com.b2la.hnb.models.commande;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -46,7 +47,15 @@ public class commandeService {
     }
 
     public List<commande> findAll(){
-
+        EntityManager em = JPAUtil.getEntityManager();
+        List<commande> articlesList= null;
+        try {
+            TypedQuery<commande> query= em.createQuery("SELECT c FROM Commandes c", commande.class);
+            articlesList= query.getResultList();
+        }finally {
+            em.close();
+        }
+        return articlesList;
     }
 
     public void delete(Long id){
