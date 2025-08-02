@@ -13,11 +13,13 @@ public class bilan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false)
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<facturation> factures= new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<depense> depenses= new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<produits> produits= new ArrayList<>();
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     Date debutBilan;
@@ -27,10 +29,11 @@ public class bilan {
     public bilan() {
     }
 
-    public bilan(Long id, List<facturation> factures, List<depense> depenses, Date debutBilan, Date finBilan) {
+    public bilan(Long id, List<facturation> factures, List<depense> depenses, List<produits> produits, Date debutBilan, Date finBilan) {
         this.id = id;
         this.factures = factures;
         this.depenses = depenses;
+        this.produits = produits;
         this.debutBilan = debutBilan;
         this.finBilan = finBilan;
     }
@@ -57,6 +60,14 @@ public class bilan {
 
     public void setDepenses(List<depense> depenses) {
         this.depenses = depenses;
+    }
+
+    public List<produits> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<produits> produits) {
+        this.produits = produits;
     }
 
     public Date getDebutBilan() {
