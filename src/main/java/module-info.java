@@ -9,6 +9,7 @@ module com.b2la.hnb {
     requires jakarta.persistence;
     requires com.fasterxml.jackson.annotation;
     requires org.hibernate.orm.core;
+    requires jbcrypt;
 
     opens com.b2la.hnb to javafx.fxml;
     exports com.b2la.hnb;
