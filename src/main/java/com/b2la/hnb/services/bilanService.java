@@ -68,6 +68,19 @@ public class bilanService {
     }
 
     public void delete(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try{
+            transaction= em.getTransaction();
+            transaction.begin();
+            bilan bil=em.find(bilan.class, id);
+            if(bil!=null)em.remove(bil);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
     }
 }
