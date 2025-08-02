@@ -36,6 +36,8 @@ public class depenseService {
         } catch (RuntimeException e) {
             if(transaction!=null)transaction.rollback();
             throw new RuntimeException(e);
+        }finally {
+            em.close();
         }
     }
 
