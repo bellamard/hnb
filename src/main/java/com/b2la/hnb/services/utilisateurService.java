@@ -2,6 +2,7 @@ package com.b2la.hnb.services;
 
 import com.b2la.hnb.models.bilan;
 import com.b2la.hnb.models.utilisateurs;
+import com.b2la.hnb.util.BcryptUtil;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -100,6 +101,18 @@ public class utilisateurService {
             return null;
         }finally {
             em.close();
+        }
+
+    }
+
+    public utilisateurs login(String name, String password){
+        try {
+            utilisateurs user= findByName(name);
+            if(user==null)throw new RuntimeException("Utilisateurs n'eexiste pas");
+            if(!BcryptUtil.checkPassword(password, user.getMots_de_passe()))throw new RuntimeException("mot de passe incorrecte");;
+            return user;
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
         }
 
     }
