@@ -4,6 +4,7 @@ import com.b2la.hnb.models.depense;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -42,10 +43,29 @@ public class depenseService {
     }
 
     public depense findById(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        depense depense= null;
+        try {
+            depense= em.find(depense.class, id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
+        return depense;
     }
 
     public List<depense> findAll(){
+        EntityManager em= JPAUtil.getEntityManager();
+        List<depense> depenseList= null;
+
+        try{
+            TypedQuery<depense> query= em.createQuery("SELECT d FROM Depenses d", depense.class);
+            depenseList= query.getResultList();
+        } finally {
+            em.close();
+        }
+        return  depenseList;
 
     }
 
