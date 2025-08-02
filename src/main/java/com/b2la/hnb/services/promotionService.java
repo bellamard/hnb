@@ -25,7 +25,20 @@ public class promotionService {
         }
     }
 
-    public void update (promotion promotion){
+    public void update (promotion promo){
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction= null;
+        try{
+            transaction= em.getTransaction();
+            transaction.begin();
+            em.merge(promo);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            if(transaction!=null)transaction.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            em.close();
+        }
 
     }
 
