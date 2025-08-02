@@ -43,7 +43,16 @@ public class facturationService {
     }
 
     public facturation findById(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        facturation facture= null;
+        try{
+            facture= em.find(facturation.class, id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
+        return facture;
     }
 
     public List<facturation> findAll(){
