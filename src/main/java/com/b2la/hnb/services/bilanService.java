@@ -4,6 +4,7 @@ import com.b2la.hnb.models.bilan;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -55,7 +56,15 @@ public class bilanService {
     }
 
     public List<bilan> findAll(){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        List<bilan> bilanList= null;
+        try {
+            TypedQuery<bilan> query= em.createQuery("SELECT b FROM Bilans b", bilan.class);
+            bilanList=query.getResultList();
+        }finally {
+            em.close();
+        }
+        return bilanList;
     }
 
     public void delete(Long id){
