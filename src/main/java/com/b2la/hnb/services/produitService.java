@@ -58,6 +58,7 @@ public class produitService {
         List<produits> produitsList= null;
         try {
             TypedQuery<produits> query= em.createQuery("SELECT p FROM Produits p", produits.class);
+            produitsList=query.getResultList();
         } finally {
             em.close();
         }
