@@ -4,6 +4,7 @@ import com.b2la.hnb.models.facturation;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -56,7 +57,15 @@ public class facturationService {
     }
 
     public List<facturation> findAll(){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        List<facturation> facturesList= null;
+        try{
+            TypedQuery<facturation> query= em.createQuery("SELECT f FROM Facturations f", facturation.class);
+            facturesList= query.getResultList();
+        }finally {
+            em.close();
+        }
+        return facturesList;
     }
 
     public void delete (Long id){
