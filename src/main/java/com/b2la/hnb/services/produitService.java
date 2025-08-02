@@ -64,6 +64,14 @@ public class produitService {
         return produitsList;
     }
     public void delete(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        EntityTransaction transaction=null;
+        try {
+            transaction=em.getTransaction();
+            transaction.begin();
+            produits produit= em.find(produits.class, id);
+            if(produit!=null)em.remove(produit);
+            transaction.commit();
+        }
     }
 }
