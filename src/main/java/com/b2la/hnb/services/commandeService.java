@@ -43,7 +43,16 @@ public class commandeService {
     }
 
     public commande findById(Long id){
-
+        EntityManager em= JPAUtil.getEntityManager();
+        commande article= null;
+        try {
+            article= em.find(commande.class, id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
+        return article;
     }
 
     public List<commande> findAll(){
