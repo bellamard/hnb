@@ -10,6 +10,8 @@ module com.b2la.hnb {
     requires com.fasterxml.jackson.annotation;
     requires org.hibernate.orm.core;
     requires jbcrypt;
+    requires java.prefs;
+    requires com.google.gson;
 
     opens com.b2la.hnb to javafx.fxml;
     exports com.b2la.hnb;

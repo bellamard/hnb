@@ -6,7 +6,7 @@
 }
 
 .bgPanelPrincipal {
-  -fx-background-color: linear-gradient(to top left, #02033a, #1f1f70);
+  -fx-background-color: linear-gradient(to top left, #e70e07, #3c0602);
   -fx-background-radius: 0 20 20 0;
   -fx-border-radius: 0 20 20 0;
 }

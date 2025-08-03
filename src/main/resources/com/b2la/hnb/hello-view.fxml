@@ -11,7 +11,7 @@
 <left>
     <Pane prefHeight="400.0" prefWidth="325.0" styleClass="bgPanelSecond" BorderPane.alignment="CENTER">
         <children>
-            <Button id="btnClose" fx:id="btnClose" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClose" styleClass="btnClose" text="x" textAlignment="CENTER" textFill="WHITE">
+            <Button id="btnClose" fx:id="btnClose" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" styleClass="btnClose" text="x" textAlignment="CENTER" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font>
@@ -35,22 +35,22 @@
             <TextField id="fieldUsername" fx:id="fieldUsername" layoutX="10.0" layoutY="158.0" prefHeight="25.0" prefWidth="227.0" promptText="USERNAME" text="+243" />
             <ImageView fitHeight="50.0" fitWidth="60.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/picture.png" />
+                    <Image url="@images/logo.png" />
                 </image>
             </ImageView>
-            <Label layoutX="40.0" layoutY="130.0" prefHeight="17.0" prefWidth="182.0" text="UTILISATEUR" textFill="#00bbff" />
-            <FontIcon iconColor="#00bbff" iconLiteral="fa-user" iconSize="24" layoutX="13.0" layoutY="144.0" />
-            <Label layoutX="40.0" layoutY="200.0" prefHeight="17.0" prefWidth="182.0" text="MOT DE PASSE" textFill="#00bbff" />
-            <FontIcon iconColor="#00bbff" iconLiteral="fa-lock" iconSize="24" layoutX="13.0" layoutY="214.0" />
-            <PasswordField id="fieldPassword" fx:id="fieldPassword" layoutX="10.0" layoutY="229.0" onKeyPressed="#handleKeyPressed" prefHeight="25.0" prefWidth="227.0" promptText="*********" />
+            <Label layoutX="40.0" layoutY="130.0" prefHeight="17.0" prefWidth="182.0" text="UTILISATEUR" textFill="WHITE" />
+            <FontIcon iconColor="WHITE" iconLiteral="fa-user" iconSize="24" layoutX="13.0" layoutY="144.0" />
+            <Label layoutX="40.0" layoutY="200.0" prefHeight="17.0" prefWidth="182.0" text="MOT DE PASSE" textFill="WHITE" />
+            <FontIcon iconColor="WHITE" iconLiteral="fa-lock" iconSize="24" layoutX="13.0" layoutY="214.0" />
+            <PasswordField id="fieldPassword" fx:id="fieldPassword" layoutX="10.0" layoutY="229.0" prefHeight="25.0" prefWidth="227.0" promptText="*********" />
             <Pane id="pannelLoading" fx:id="paneLoading" layoutX="10.0" layoutY="264.0" prefHeight="20.0" prefWidth="200.0" visible="false">
                 <children>
                     <Label layoutX="30.0" prefHeight="17.0" prefWidth="168.0" text="LOADING" textFill="#00bbff" />
                     <ProgressIndicator prefHeight="20.0" prefWidth="20.0" />
                 </children>
             </Pane>
-            <Button id="btnConnexion" fx:id="btnConnexion" layoutX="10.0" layoutY="298.0" mnemonicParsing="false" onAction="#onConnexion" prefHeight="25.0" prefWidth="227.0" styleClass="btnLogin" text="CONNEXION" textFill="WHITE" />
-            <Label layoutX="67.0" layoutY="49.0" text="LOGIN" textFill="#00b2ff">
+            <Button id="btnConnexion" fx:id="btnConnexion" layoutX="10.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="227.0" styleClass="btnLogin" text="CONNEXION" textFill="WHITE" />
+            <Label layoutX="112.0" layoutY="39.0" text="LOGIN" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font>
