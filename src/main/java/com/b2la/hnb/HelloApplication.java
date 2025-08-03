@@ -1,5 +1,6 @@
 package com.b2la.hnb;
 
+import com.b2la.hnb.util.JPAUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,6 +17,13 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        JPAUtil.shutdown();
+        System.out.println("Application stopped and JPA resources released.");
+    }
+
 
     public static void main(String[] args) {
         launch();
