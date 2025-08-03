@@ -35,7 +35,7 @@ public class Stockage {
         prefs.put(KEY_ROLE, fonction);
     }
 
-    public void reset() {
+    public static void reset() {
         prefs.remove(KEY_USERNAME);
         prefs.remove(KEY_ROLE);
     }
