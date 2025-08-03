@@ -9,9 +9,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.awt.*;
+
 public class HelloController {
     @FXML
-    private Label welcomeText;
+    private Label errorTitle;
+
+    @FXML
+    private Panel panelLoading;
 
     @FXML
     private Button connexion, fermer;
@@ -29,6 +34,9 @@ public class HelloController {
     }
     @FXML
     private void onConnexion() {
+        if(phoneField.getText().length()<4){
+
+        }
     }
 
 
@@ -37,6 +45,14 @@ public class HelloController {
         Stockage.reset();
         System.exit(0);
     }
+
+    private void viewError(String messageError){
+        errorTitle.setText(messageError);
+        errorTitle.setVisible(true);
+        panelLoading.setVisible(false);
+        throw new RuntimeException(messageError);
+    }
+
 
 
 }

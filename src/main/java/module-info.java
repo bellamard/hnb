@@ -12,6 +12,7 @@ module com.b2la.hnb {
     requires jbcrypt;
     requires java.prefs;
     requires com.google.gson;
+    requires java.desktop;
 
     opens com.b2la.hnb to javafx.fxml;
     exports com.b2la.hnb;

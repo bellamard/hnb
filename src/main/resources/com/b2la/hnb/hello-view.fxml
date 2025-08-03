@@ -11,7 +11,7 @@
 <left>
     <Pane prefHeight="400.0" prefWidth="325.0" styleClass="bgPanelSecond" BorderPane.alignment="CENTER">
         <children>
-            <Button id="btnClose" fx:id="btnClose" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClose" styleClass="btnClose" text="x" textAlignment="CENTER" textFill="WHITE">
+            <Button id="btnClose" fx:id="fermer" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClose" styleClass="btnClose" text="x" textAlignment="CENTER" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font>
@@ -29,7 +29,7 @@
 
             <Label id="errorTitle" fx:id="errorTitle" layoutX="10.0" layoutY="335.0" lineSpacing="1.0" prefHeight="54.0" prefWidth="223.0" text="There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc." textAlignment="CENTER" textFill="RED" visible="false" wrapText="true">
                 <font>
-                    <Font name="Roboto Light" size="12.0" />
+                    <Font name="Roboto Light" size="9.0" />
                 </font>
             </Label>
             <TextField id="fieldUsername" fx:id="phoneField" layoutX="10.0" layoutY="158.0" prefHeight="25.0" prefWidth="227.0" promptText="USERNAME" text="+243" />
@@ -42,17 +42,17 @@
             <FontIcon iconColor="WHITE" iconLiteral="fa-user" iconSize="24" layoutX="13.0" layoutY="144.0" />
             <Label layoutX="40.0" layoutY="200.0" prefHeight="17.0" prefWidth="182.0" text="MOT DE PASSE" textFill="WHITE" />
             <FontIcon iconColor="WHITE" iconLiteral="fa-lock" iconSize="24" layoutX="13.0" layoutY="214.0" />
-            <PasswordField id="passwordField" fx:id="fieldPassword" layoutX="10.0" layoutY="229.0" prefHeight="25.0" prefWidth="227.0" promptText="*********" onKeyPressed="#handleKeyPressed"/>
+            <PasswordField id="passwordField" fx:id="fieldPassword" layoutX="10.0" layoutY="229.0" onKeyPressed="#handleKeyPressed" prefHeight="25.0" prefWidth="227.0" promptText="*********" />
             <Pane id="pannelLoading" fx:id="paneLoading" layoutX="10.0" layoutY="264.0" prefHeight="20.0" prefWidth="200.0" visible="false">
                 <children>
                     <Label layoutX="30.0" prefHeight="17.0" prefWidth="168.0" text="LOADING" textFill="#00bbff" />
                     <ProgressIndicator prefHeight="20.0" prefWidth="20.0" />
                 </children>
             </Pane>
-            <Button id="btnConnexion" fx:id="btnConnexion" layoutX="10.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="227.0" styleClass="btnLogin" text="CONNEXION" textFill="WHITE" />
-            <Label layoutX="112.0" layoutY="39.0" text="LOGIN" textFill="WHITE">
+            <Button id="btnConnexion" fx:id="connexion" layoutX="10.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="227.0" styleClass="btnLogin" text="CONNEXION" textFill="WHITE" />
+            <Label layoutX="106.0" layoutY="27.0" text="LOGIN" textFill="WHITE">
                 <font>
-                    <Font name="System Bold" size="12.0" />
+                    <Font name="System Bold" size="16.0" />
                 </font>
             </Label>
         </children>

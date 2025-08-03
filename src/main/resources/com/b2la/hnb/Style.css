@@ -101,9 +101,9 @@
 .btnLogin {
   -fx-background-color: linear-gradient(
     from 0% 0% to 100% 100%,
-    #3baded,
-    #576fe6,
-    #9844b7,
+    #ffffff,
+    #beb4b4,
+    #efc5c2,
     #ff357f
   );
 }
