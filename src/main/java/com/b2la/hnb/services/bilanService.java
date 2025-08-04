@@ -1,6 +1,6 @@
 package com.b2la.hnb.services;
 
-import com.b2la.hnb.models.bilan;
+import com.b2la.hnb.models.Bilan;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class bilanService {
 
-    public void save(bilan bil){
+    public void save(Bilan bil){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try {
@@ -26,7 +26,7 @@ public class bilanService {
         }
     }
 
-    public void update(bilan bil){
+    public void update(Bilan bil){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try {
@@ -42,11 +42,11 @@ public class bilanService {
         }
     }
 
-    public bilan findById(Long id){
+    public Bilan findById(Long id){
         EntityManager em= JPAUtil.getEntityManager();
-        bilan bil= null;
+        Bilan bil= null;
         try{
-            bil=em.find(bilan.class, id);
+            bil=em.find(Bilan.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }finally {
@@ -55,11 +55,11 @@ public class bilanService {
         return bil;
     }
 
-    public List<bilan> findAll(){
+    public List<Bilan> findAll(){
         EntityManager em= JPAUtil.getEntityManager();
-        List<bilan> bilanList= null;
+        List<Bilan> bilanList= null;
         try {
-            TypedQuery<bilan> query= em.createQuery("SELECT b FROM Bilans b", bilan.class);
+            TypedQuery<Bilan> query= em.createQuery("SELECT b FROM Bilans b", Bilan.class);
             bilanList=query.getResultList();
         }finally {
             em.close();
@@ -73,7 +73,7 @@ public class bilanService {
         try{
             transaction= em.getTransaction();
             transaction.begin();
-            bilan bil=em.find(bilan.class, id);
+            Bilan bil=em.find(Bilan.class, id);
             if(bil!=null)em.remove(bil);
             transaction.commit();
         } catch (RuntimeException e) {

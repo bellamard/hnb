@@ -1,6 +1,6 @@
 package com.b2la.hnb.services;
 
-import com.b2la.hnb.models.facturation;
+import com.b2la.hnb.models.Facturation;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -9,7 +9,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class facturationService {
-    public void save(facturation facture){
+    public void save(Facturation facture){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try{
@@ -26,7 +26,7 @@ public class facturationService {
 
     }
 
-    public void update(facturation facture){
+    public void update(Facturation facture){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try {
@@ -43,11 +43,11 @@ public class facturationService {
 
     }
 
-    public facturation findById(Long id){
+    public Facturation findById(Long id){
         EntityManager em= JPAUtil.getEntityManager();
-        facturation facture= null;
+        Facturation facture= null;
         try{
-            facture= em.find(facturation.class, id);
+            facture= em.find(Facturation.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }finally {
@@ -56,11 +56,11 @@ public class facturationService {
         return facture;
     }
 
-    public List<facturation> findAll(){
+    public List<Facturation> findAll(){
         EntityManager em= JPAUtil.getEntityManager();
-        List<facturation> facturesList= null;
+        List<Facturation> facturesList= null;
         try{
-            TypedQuery<facturation> query= em.createQuery("SELECT f FROM Facturations f", facturation.class);
+            TypedQuery<Facturation> query= em.createQuery("SELECT f FROM Facturations f", Facturation.class);
             facturesList= query.getResultList();
         }finally {
             em.close();
@@ -74,7 +74,7 @@ public class facturationService {
         try{
             transaction=em.getTransaction();
             transaction.begin();
-            facturation facture= em.find(facturation.class, id);
+            Facturation facture= em.find(Facturation.class, id);
             if(facture!=null)em.remove(facture);
             transaction.commit();
         } catch (RuntimeException e) {

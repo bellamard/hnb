@@ -1,6 +1,6 @@
 package com.b2la.hnb.util;
 
-public enum etat {
+public enum Etat {
     Payée,
     Non_payée,
     Annulée,

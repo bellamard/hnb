@@ -1,6 +1,6 @@
 package com.b2la.hnb.services;
 
-import com.b2la.hnb.models.commande;
+import com.b2la.hnb.models.Commande;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class commandeService {
 
-    public void save(commande article){
+    public void save(Commande article){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction= null;
         try {
@@ -26,7 +26,7 @@ public class commandeService {
         }
     }
 
-    public void update(commande article){
+    public void update(Commande article){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try {
@@ -42,11 +42,11 @@ public class commandeService {
         }
     }
 
-    public commande findById(Long id){
+    public Commande findById(Long id){
         EntityManager em= JPAUtil.getEntityManager();
-        commande article= null;
+        Commande article= null;
         try {
-            article= em.find(commande.class, id);
+            article= em.find(Commande.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }finally {
@@ -55,11 +55,11 @@ public class commandeService {
         return article;
     }
 
-    public List<commande> findAll(){
+    public List<Commande> findAll(){
         EntityManager em = JPAUtil.getEntityManager();
-        List<commande> articlesList= null;
+        List<Commande> articlesList= null;
         try {
-            TypedQuery<commande> query= em.createQuery("SELECT c FROM Commandes c", commande.class);
+            TypedQuery<Commande> query= em.createQuery("SELECT c FROM Commandes c", Commande.class);
             articlesList= query.getResultList();
         }finally {
             em.close();
@@ -73,7 +73,7 @@ public class commandeService {
         try {
             transaction= em.getTransaction();
             transaction.begin();
-            commande article= em.find(commande.class, id);
+            Commande article= em.find(Commande.class, id);
             if(article!=null)em.remove(article);
             transaction.commit();
         } catch (RuntimeException e) {

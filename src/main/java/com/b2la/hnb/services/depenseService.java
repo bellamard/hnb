@@ -1,6 +1,6 @@
 package com.b2la.hnb.services;
 
-import com.b2la.hnb.models.depense;
+import com.b2la.hnb.models.Depense;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class depenseService {
 
-    public void save(depense depense){
+    public void save(Depense depense){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try{
@@ -26,7 +26,7 @@ public class depenseService {
         }
     }
 
-    public void update(depense depense){
+    public void update(Depense depense){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try {
@@ -42,11 +42,11 @@ public class depenseService {
         }
     }
 
-    public depense findById(Long id){
+    public Depense findById(Long id){
         EntityManager em= JPAUtil.getEntityManager();
-        depense depense= null;
+        Depense depense= null;
         try {
-            depense= em.find(depense.class, id);
+            depense= em.find(Depense.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }finally {
@@ -55,12 +55,12 @@ public class depenseService {
         return depense;
     }
 
-    public List<depense> findAll(){
+    public List<Depense> findAll(){
         EntityManager em= JPAUtil.getEntityManager();
-        List<depense> depenseList= null;
+        List<Depense> depenseList= null;
 
         try{
-            TypedQuery<depense> query= em.createQuery("SELECT d FROM Depenses d", depense.class);
+            TypedQuery<Depense> query= em.createQuery("SELECT d FROM Depenses d", Depense.class);
             depenseList= query.getResultList();
         } finally {
             em.close();
@@ -75,7 +75,7 @@ public class depenseService {
         try {
             transaction= em.getTransaction();
             transaction.begin();
-            depense depense= em.find(depense.class, id);
+            Depense depense= em.find(Depense.class, id);
             if(depense!=null)em.remove(depense);
             transaction.commit();
         } catch (RuntimeException e) {

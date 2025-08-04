@@ -77,6 +77,7 @@
             <artifactId>jasperreports</artifactId>
             <version>7.0.3</version>
         </dependency>
+
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>

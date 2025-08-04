@@ -1,6 +1,6 @@
 package com.b2la.hnb.services;
 
-import com.b2la.hnb.models.produits;
+import com.b2la.hnb.models.Produit;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class produitService {
 
-    public void save(produits produit){
+    public void save(Produit produit){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction= null;
         try {
@@ -24,7 +24,7 @@ public class produitService {
             em.close();
         }
     }
-    public void update(produits produit){
+    public void update(Produit produit){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction= null;
         try{
@@ -39,11 +39,11 @@ public class produitService {
             em.close();
         }
     }
-    public produits findById(Long id){
+    public Produit findById(Long id){
         EntityManager em= JPAUtil.getEntityManager();
-        produits produit=null;
+        Produit produit=null;
         try {
-            produit=em.find(produits.class, id);
+            produit=em.find(Produit.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }finally {
@@ -53,11 +53,11 @@ public class produitService {
         return produit;
     }
 
-    public List<produits> findAll(){
+    public List<Produit> findAll(){
         EntityManager em= JPAUtil.getEntityManager();
-        List<produits> produitsList= null;
+        List<Produit> produitsList= null;
         try {
-            TypedQuery<produits> query= em.createQuery("SELECT p FROM Produits p", produits.class);
+            TypedQuery<Produit> query= em.createQuery("SELECT p FROM Produits p", Produit.class);
             produitsList=query.getResultList();
         } finally {
             em.close();
@@ -70,7 +70,7 @@ public class produitService {
         try {
             transaction=em.getTransaction();
             transaction.begin();
-            produits produit= em.find(produits.class, id);
+            Produit produit= em.find(Produit.class, id);
             if(produit!=null)em.remove(produit);
             transaction.commit();
         } catch (RuntimeException e) {

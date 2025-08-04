@@ -1,6 +1,11 @@
 package com.b2la.hnb;
 
+import com.b2la.hnb.models.Utilisateur;
+import com.b2la.hnb.services.utilisateurService;
+import com.b2la.hnb.util.BcryptUtil;
 import com.b2la.hnb.util.JPAUtil;
+import com.b2la.hnb.util.Fonction;
+import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -10,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.List;
 
 public class HelloApplication extends Application {
     @Override
@@ -24,6 +30,13 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
         stage.show();
     }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        EntityManager em = JPAUtil.getEntityManager();
+    }
+
     @Override
     public void stop() throws Exception {
         super.stop();

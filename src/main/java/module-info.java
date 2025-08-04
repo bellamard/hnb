@@ -16,4 +16,13 @@ module com.b2la.hnb {
 
     opens com.b2la.hnb to javafx.fxml;
     exports com.b2la.hnb;
+
+    requires java.naming;
+    requires java.sql;
+
+    opens com.b2la.hnb.models to org.hibernate.orm.core, javafx.base;
+
+    exports com.b2la.hnb.models;
+    exports com.b2la.hnb.services;
+    exports com.b2la.hnb.util;
 }

@@ -7,22 +7,27 @@
 
     <persistence-unit name="gestion_hnb" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.b2la.hnb.models.bilan</class>
-        <class>com.b2la.hnb.models.facturation</class>
-        <class>com.b2la.hnb.models.utilisateurs</class>
-        <class>com.b2la.hnb.models.produits</class>
-        <class>com.b2la.hnb.models.commande</class>
-        <class>com.b2la.hnb.models.depense</class>
-        <class>com.b2la.hnb.models.promotion</class>
+        <class>com.b2la.hnb.models.Bilan</class>
+        <class>com.b2la.hnb.models.Facturation</class>
+        <class>com.b2la.hnb.models.Utilisateur</class>
+        <class>com.b2la.hnb.models.Produit</class>
+        <class>com.b2la.hnb.models.Commande</class>
+        <class>com.b2la.hnb.models.Depense</class>
+        <class>com.b2la.hnb.models.Promotion</class>
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="${mysql.datasource.url}"/>
-            <property name="jakarta.persistence.jdbc.user" value="${mysql.datasource.username}"/>
-            <property name="jakarta.persistence.jdbc.password" value="${mysql.datasource.password}"/>
-            <property name="jakarta.persistence.jdbc.driver" value="${data.datasource.driver}"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gestion_hnb"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
+
+            <property name="hibernate.transaction.jta.platform"
+                      value="org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform"/>
+
+            <property name="hibernate.allow_reflection_optimization" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

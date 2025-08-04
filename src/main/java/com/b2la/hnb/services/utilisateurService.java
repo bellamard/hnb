@@ -1,19 +1,23 @@
 package com.b2la.hnb.services;
 
-import com.b2la.hnb.models.bilan;
-import com.b2la.hnb.models.utilisateurs;
+import com.b2la.hnb.models.Bilan;
+import com.b2la.hnb.models.Utilisateur;
 import com.b2la.hnb.util.BcryptUtil;
 import com.b2la.hnb.util.JPAUtil;
+import com.b2la.hnb.util.Stockage;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import javafx.scene.control.Alert;
 
 import java.util.List;
 
 public class utilisateurService {
 
-    public void save(utilisateurs utilisateur){
+
+
+    public void save(Utilisateur utilisateur){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try {
@@ -31,7 +35,7 @@ public class utilisateurService {
 
     }
 
-    public void update(utilisateurs utilisateur){
+    public void update(Utilisateur utilisateur){
         EntityManager em= JPAUtil.getEntityManager();
         EntityTransaction transaction=null;
         try {
@@ -48,11 +52,11 @@ public class utilisateurService {
 
     }
 
-    public utilisateurs findById(Long id){
+    public Utilisateur findById(Long id){
         EntityManager em= JPAUtil.getEntityManager();
-        utilisateurs utilisateur= null;
+        Utilisateur utilisateur= null;
         try {
-            utilisateur= em.find(utilisateurs.class, id);
+            utilisateur= em.find(Utilisateur.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }finally {
@@ -61,11 +65,11 @@ public class utilisateurService {
         return utilisateur;
     }
 
-    public List<utilisateurs> findAll(){
+    public List<Utilisateur> findAll(){
         EntityManager em= JPAUtil.getEntityManager();
-        List<utilisateurs> utilisateursList= null;
+        List<Utilisateur> utilisateursList= null;
         try {
-            TypedQuery<utilisateurs> query= em.createQuery("SELECT u FROM Utilisateurs u", utilisateurs.class);
+            TypedQuery<Utilisateur> query= em.createQuery("SELECT u FROM Utilisateurs u", Utilisateur.class);
             utilisateursList=query.getResultList();
         } finally {
             em.close();
@@ -79,7 +83,7 @@ public class utilisateurService {
         try {
             transaction= em.getTransaction();
             transaction.begin();
-            utilisateurs utilisateur=em.find(utilisateurs.class, id);
+            Utilisateur utilisateur=em.find(Utilisateur.class, id);
             if(utilisateur!=null)em.remove(utilisateur);
             transaction.commit();
         } catch (RuntimeException e) {
@@ -90,11 +94,11 @@ public class utilisateurService {
         }
     }
 
-    public utilisateurs findByName(String name){
+    public Utilisateur findByName(String name){
         EntityManager em= JPAUtil.getEntityManager();
-        bilan bil= null;
+        Bilan bil= null;
         try {
-            TypedQuery<utilisateurs> query=em.createQuery("SELECT u FROM Utilisateurs U WHERE u.name=:name",utilisateurs.class);
+            TypedQuery<Utilisateur> query=em.createQuery("SELECT u FROM Utilisateurs U WHERE u.username=:name",Utilisateur.class);
             query.setParameter("name", name);
             return query.getSingleResult();
         }catch (NoResultException e){
@@ -105,13 +109,14 @@ public class utilisateurService {
 
     }
 
-    public utilisateurs login(String name, String password){
+    public Utilisateur login(String name, String password){
         try {
-            utilisateurs user= findByName(name);
+            Utilisateur user= findByName(name);
             if(user==null)throw new RuntimeException("Utilisateurs n'eexiste pas");
-            if(!BcryptUtil.checkPassword(password, user.getMots_de_passe()))throw new RuntimeException("mot de passe incorrecte");;
+            if(!BcryptUtil.checkPassword(password, user.getMotDePasse()))throw new RuntimeException("mot de passe incorrecte");
             return user;
         } catch (RuntimeException e) {
+
             throw new RuntimeException(e);
         }
 
