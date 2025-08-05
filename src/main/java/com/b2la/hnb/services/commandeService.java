@@ -10,76 +10,76 @@ import java.util.List;
 
 public class commandeService {
 
-    public void save(Commande article){
-        EntityManager em= JPAUtil.getEntityManager();
-        EntityTransaction transaction= null;
+    public void save(Commande article) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction transaction = null;
         try {
-            transaction= em.getTransaction();
+            transaction = em.getTransaction();
             transaction.begin();
             em.persist(article);
             transaction.commit();
         } catch (RuntimeException e) {
-            if(transaction!=null)transaction.rollback();
+            if (transaction != null) transaction.rollback();
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             em.close();
         }
     }
 
-    public void update(Commande article){
-        EntityManager em= JPAUtil.getEntityManager();
-        EntityTransaction transaction=null;
+    public void update(Commande article) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction transaction = null;
         try {
-            transaction= em.getTransaction();
+            transaction = em.getTransaction();
             transaction.begin();
             em.merge(article);
             transaction.commit();
         } catch (RuntimeException e) {
-            if(transaction!=null)transaction.rollback();
+            if (transaction != null) transaction.rollback();
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             em.close();
         }
     }
 
-    public Commande findById(Long id){
-        EntityManager em= JPAUtil.getEntityManager();
-        Commande article= null;
+    public Commande findById(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        Commande article = null;
         try {
-            article= em.find(Commande.class, id);
+            article = em.find(Commande.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             em.close();
         }
         return article;
     }
 
-    public List<Commande> findAll(){
+    public List<Commande> findAll() {
         EntityManager em = JPAUtil.getEntityManager();
-        List<Commande> articlesList= null;
+        List<Commande> articlesList = null;
         try {
-            TypedQuery<Commande> query= em.createQuery("SELECT c FROM Commandes c", Commande.class);
-            articlesList= query.getResultList();
-        }finally {
+            TypedQuery<Commande> query = em.createQuery("SELECT c FROM Commandes c", Commande.class);
+            articlesList = query.getResultList();
+        } finally {
             em.close();
         }
         return articlesList;
     }
 
-    public void delete(Long id){
-        EntityManager em= JPAUtil.getEntityManager();
-        EntityTransaction transaction=null;
+    public void delete(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction transaction = null;
         try {
-            transaction= em.getTransaction();
+            transaction = em.getTransaction();
             transaction.begin();
-            Commande article= em.find(Commande.class, id);
-            if(article!=null)em.remove(article);
+            Commande article = em.find(Commande.class, id);
+            if (article != null) em.remove(article);
             transaction.commit();
         } catch (RuntimeException e) {
-            if (transaction!=null)transaction.rollback();
+            if (transaction != null) transaction.rollback();
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             em.close();
         }
     }

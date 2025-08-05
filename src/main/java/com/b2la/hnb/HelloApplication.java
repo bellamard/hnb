@@ -35,6 +35,7 @@ public class HelloApplication extends Application {
     public void init() throws Exception {
         super.init();
         EntityManager em = JPAUtil.getEntityManager();
+        em.close();
     }
 
     @Override

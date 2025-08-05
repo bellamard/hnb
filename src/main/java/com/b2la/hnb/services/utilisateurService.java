@@ -1,120 +1,121 @@
 package com.b2la.hnb.services;
 
-import com.b2la.hnb.models.Bilan;
 import com.b2la.hnb.models.Utilisateur;
 import com.b2la.hnb.util.BcryptUtil;
 import com.b2la.hnb.util.JPAUtil;
-import com.b2la.hnb.util.Stockage;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
-import javafx.scene.control.Alert;
 
 import java.util.List;
 
 public class utilisateurService {
 
 
-
-    public void save(Utilisateur utilisateur){
-        EntityManager em= JPAUtil.getEntityManager();
-        EntityTransaction transaction=null;
+    public void save(Utilisateur utilisateur) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction transaction = null;
         try {
-            transaction= em.getTransaction();
+            transaction = em.getTransaction();
             transaction.begin();
             em.persist(utilisateur);
             transaction.commit();
 
         } catch (RuntimeException e) {
-            if(transaction!=null)transaction.rollback();
+            if (transaction != null) transaction.rollback();
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             em.close();
         }
 
     }
 
-    public void update(Utilisateur utilisateur){
-        EntityManager em= JPAUtil.getEntityManager();
-        EntityTransaction transaction=null;
+    public void update(Utilisateur utilisateur) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction transaction = null;
         try {
-            transaction= em.getTransaction();
+            transaction = em.getTransaction();
             transaction.begin();
             em.merge(utilisateur);
             transaction.commit();
         } catch (RuntimeException e) {
-            if(transaction!=null)transaction.rollback();
+            if (transaction != null) transaction.rollback();
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             em.close();
         }
 
     }
 
-    public Utilisateur findById(Long id){
-        EntityManager em= JPAUtil.getEntityManager();
-        Utilisateur utilisateur= null;
+    public Utilisateur findById(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        Utilisateur utilisateur = null;
         try {
-            utilisateur= em.find(Utilisateur.class, id);
+            utilisateur = em.find(Utilisateur.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             em.close();
         }
         return utilisateur;
     }
 
-    public List<Utilisateur> findAll(){
-        EntityManager em= JPAUtil.getEntityManager();
-        List<Utilisateur> utilisateursList= null;
+    public List<Utilisateur> findAll() {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<Utilisateur> utilisateursList = null;
         try {
-            TypedQuery<Utilisateur> query= em.createQuery("SELECT u FROM Utilisateurs u", Utilisateur.class);
-            utilisateursList=query.getResultList();
+            TypedQuery<Utilisateur> query = em.createQuery("SELECT u FROM Utilisateur u", Utilisateur.class);
+            utilisateursList = query.getResultList();
         } finally {
             em.close();
         }
         return utilisateursList;
     }
 
-    public void delete(Long id){
-        EntityManager em= JPAUtil.getEntityManager();
-        EntityTransaction transaction=null;
+    public void delete(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction transaction = null;
         try {
-            transaction= em.getTransaction();
+            transaction = em.getTransaction();
             transaction.begin();
-            Utilisateur utilisateur=em.find(Utilisateur.class, id);
-            if(utilisateur!=null)em.remove(utilisateur);
+            Utilisateur utilisateur = em.find(Utilisateur.class, id);
+            if (utilisateur != null) em.remove(utilisateur);
             transaction.commit();
         } catch (RuntimeException e) {
-            if(transaction!=null)transaction.rollback();
+            if (transaction != null) transaction.rollback();
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             em.close();
         }
     }
 
-    public Utilisateur findByName(String name){
-        EntityManager em= JPAUtil.getEntityManager();
-        Bilan bil= null;
+    public Utilisateur findByName(String name) {
+        EntityManager em = JPAUtil.getEntityManager();
+
         try {
-            TypedQuery<Utilisateur> query=em.createQuery("SELECT u FROM Utilisateurs U WHERE u.username=:name",Utilisateur.class);
-            query.setParameter("name", name);
+            TypedQuery<Utilisateur> query = em.createQuery("SELECT u FROM Utilisateur u WHERE u.username=:username", Utilisateur.class);
+            query.setParameter("username", name);
             return query.getSingleResult();
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
-        }finally {
+        } finally {
             em.close();
         }
 
     }
 
-    public Utilisateur login(String name, String password){
+    public Utilisateur login(String name, String password) {
         try {
-            Utilisateur user= findByName(name);
-            if(user==null)throw new RuntimeException("Utilisateurs n'eexiste pas");
-            if(!BcryptUtil.checkPassword(password, user.getMotDePasse()))throw new RuntimeException("mot de passe incorrecte");
-            return user;
+            Utilisateur user = findByName(name);
+            if (user != null) {
+                System.out.println(user);
+                if (BcryptUtil.checkPassword(password, user.getMotDePasse())) return user;
+                throw new RuntimeException("mot de passe incorrecte");
+            }
+            throw new RuntimeException("Utilisateur n'existe pas");
+
+
         } catch (RuntimeException e) {
 
             throw new RuntimeException(e);
