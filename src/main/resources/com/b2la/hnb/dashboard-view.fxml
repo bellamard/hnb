@@ -1,14 +1,65 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.b2la.hnb.controllers.DashboardController"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.b2la.hnb.controllers.DashboardController" stylesheets="@styles.css">
 
-</AnchorPane>
+    <top>
+        <HBox styleClass="header">
+            <Label text="DASHBOARD MODERNE" styleClass="header-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Déconnexion" styleClass="logout-button"/>
+        </HBox>
+    </top>
+
+    <center>
+        <GridPane hgap="20" vgap="20" padding="$x20">
+            <!-- Première ligne -->
+            <VBox GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="card">
+                <Label text="Ventes totales" styleClass="card-title"/>
+                <Label text="€12,345" styleClass="card-value"/>
+                <LineChart fx:id="salesChart" styleClass="chart" legendVisible="false" createSymbols="false" animated="false"/>
+            </VBox>
+
+            <VBox GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="card">
+                <Label text="Clients actifs" styleClass="card-title"/>
+                <Label text="1,234" styleClass="card-value"/>
+                <PieChart fx:id="clientsChart" styleClass="chart" legendVisible="false"/>
+            </VBox>
+
+            <VBox GridPane.rowIndex="0" GridPane.columnIndex="2" styleClass="card">
+                <Label text="Taux de conversion" styleClass="card-title"/>
+                <Label text="24.5%" styleClass="card-value"/>
+                <BarChart fx:id="conversionChart" styleClass="chart" legendVisible="false"/>
+            </VBox>
+
+            <!-- Deuxième ligne -->
+            <TableView fx:id="dataTable" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="3" styleClass="data-table">
+                <columns>
+                    <TableColumn text="ID" styleClass="table-column"/>
+                    <TableColumn text="Nom" styleClass="table-column"/>
+                    <TableColumn text="Valeur" styleClass="table-column"/>
+                    <TableColumn text="Date" styleClass="table-column"/>
+                </columns>
+            </TableView>
+        </GridPane>
+    </center>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="20" prefWidth="200">
+            <Label text="MENU" styleClass="sidebar-title"/>
+            <Button text="Tableau de bord" styleClass="menu-button active"/>
+            <Button text="Analytique" styleClass="menu-button"/>
+            <Button text="Rapports" styleClass="menu-button"/>
+            <Button text="Paramètres" styleClass="menu-button"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Label text="Version 1.0.0" styleClass="version-label"/>
+        </VBox>
+    </left>
+</BorderPane>
