@@ -24,5 +24,6 @@ module com.b2la.hnb {
     exports com.b2la.hnb.models;
     exports com.b2la.hnb.services;
     exports com.b2la.hnb.util;
-
+    exports com.b2la.hnb.controllers;
+    opens com.b2la.hnb.controllers to javafx.fxml;
 }
