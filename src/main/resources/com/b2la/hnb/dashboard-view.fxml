@@ -17,10 +17,10 @@
             <Label styleClass="header-title" text="HNB Pâtisserie" />
             <Region HBox.hgrow="ALWAYS" />
             <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Label styleClass="user-label" text="Admin" />
+                <Label fx:id="dateHeure" styleClass="user-label" text="Admin" />
                 <Button styleClass="icon-button">
                     <graphic>
-                        <FontIcon iconColor="white" iconLiteral="fa-user" iconSize="20" />
+                        <FontIcon iconColor="white" iconLiteral="fa-bell" iconSize="20" />
                     </graphic>
                 </Button>
             </HBox>
@@ -32,8 +32,8 @@
         <VBox spacing="15" styleClass="sidebar">
             <VBox alignment="CENTER" styleClass="user-profile">
                 <FontIcon iconLiteral="fa-user-circle" iconSize="48" styleClass="profile-icon" />
-                <Label fx:id="Username" styleClass="profile-name" text="John Doe" />
-                <Label styleClass="profile-role" text="Administrateur" />
+                <Label fx:id="username" styleClass="profile-name" text="John Doe" />
+                <Label fx:id="fonction" styleClass="profile-role" text="Administrateur" />
             </VBox>
 
             <Separator styleClass="divider" />
