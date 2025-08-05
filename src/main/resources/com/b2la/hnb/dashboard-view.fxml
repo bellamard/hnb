@@ -1,15 +1,17 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.b2la.hnb.controllers.DashboardController" stylesheets="@styles.css">
-
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.b2la.hnb.controllers.DashboardController"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@styles.css"
+>
     <top>
         <HBox styleClass="header">
             <Label text="DASHBOARD MODERNE" styleClass="header-title"/>
@@ -19,24 +21,24 @@
     </top>
 
     <center>
-        <GridPane hgap="20" vgap="20" padding="$x20">
+        <GridPane hgap="20" vgap="20" >
             <!-- Première ligne -->
             <VBox GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="card">
                 <Label text="Ventes totales" styleClass="card-title"/>
                 <Label text="€12,345" styleClass="card-value"/>
-                <LineChart fx:id="salesChart" styleClass="chart" legendVisible="false" createSymbols="false" animated="false"/>
+<!--                <LineChart fx:id="salesChart" styleClass="chart" legendVisible="false" createSymbols="false" animated="false"/>-->
             </VBox>
 
             <VBox GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="card">
                 <Label text="Clients actifs" styleClass="card-title"/>
                 <Label text="1,234" styleClass="card-value"/>
-                <PieChart fx:id="clientsChart" styleClass="chart" legendVisible="false"/>
+<!--                <PieChart fx:id="clientsChart" styleClass="chart" legendVisible="false"/>-->
             </VBox>
 
             <VBox GridPane.rowIndex="0" GridPane.columnIndex="2" styleClass="card">
                 <Label text="Taux de conversion" styleClass="card-title"/>
                 <Label text="24.5%" styleClass="card-value"/>
-                <BarChart fx:id="conversionChart" styleClass="chart" legendVisible="false"/>
+<!--                <BarChart fx:id="conversionChart" styleClass="chart" legendVisible="false"/>-->
             </VBox>
 
             <!-- Deuxième ligne -->
@@ -62,4 +64,6 @@
             <Label text="Version 1.0.0" styleClass="version-label"/>
         </VBox>
     </left>
+
+
 </BorderPane>

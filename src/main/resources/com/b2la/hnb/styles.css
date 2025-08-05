@@ -1,132 +1,182 @@
+/* Couleurs */
+:root {
+    -primary: #FF3E4D; /* Rouge vif */
+    -dark: #2D3436;    /* Noir anthracite */
+    -light: #F5F6FA;   /* Blanc cassé */
+    -accent: #FF9F43;  /* Orange pour accents */
+    -text-dark: #2D3436;
+    -text-light: #F5F6FA;
+    -shadow: 0 4px 20px rgba(45, 52, 54, 0.1);
+}
+
+/* Reset */
 .root {
-    -fx-font-family: 'Segoe UI', Arial, sans-serif;
-    -fx-base: #f8f8f8;
+    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    -fx-background-color: -light;
 }
 
-/* Couleurs du thème */
-.theme-red {
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-}
-.theme-black {
-    -fx-background-color: #2c3e50;
-    -fx-text-fill: white;
-}
-.theme-white {
-    -fx-background-color: white;
-    -fx-text-fill: #2c3e50;
-}
-
-/* En-tête */
+/* Header moderne */
 .header {
-    -fx-background-color: #e74c3c;
-    -fx-padding: 15px;
-    -fx-alignment: center-left;
-}
-.header-title {
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-}
-.logout-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-border-color: white;
-    -fx-border-radius: 4px;
-    -fx-padding: 5px 15px;
-}
-.logout-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: -dark;
+    -fx-padding: 0 30px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
 }
 
-/* Barre latérale */
+.header-title {
+    -fx-text-fill: -text-light;
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-letter-spacing: 1px;
+}
+
+/* Sidebar minimaliste */
 .sidebar {
-    -fx-background-color: #2c3e50;
-    -fx-padding: 20px 10px;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(45,52,54,0.1), 20, 0, 0, 0);
+    -fx-padding: 40px 20px;
 }
-.sidebar-title {
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-padding: 0 0 10px 10px;
-}
+
 .menu-button {
     -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-text-fill: -text-dark;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-padding: 15px 20px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
     -fx-alignment: center-left;
-    -fx-padding: 10px 15px;
-    -fx-font-size: 14px;
+    -fx-graphic-text-gap: 15px;
 }
+
 .menu-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-color: #f0f0f0;
 }
+
 .menu-button.active {
-    -fx-background-color: #e74c3c;
-}
-.version-label {
-    -fx-text-fill: #95a5a6;
-    -fx-font-size: 12px;
-    -fx-padding: 10px;
+    -fx-background-color: -primary;
+    -fx-text-fill: white;
 }
 
-/* Cartes */
+/* Cartes avec effet glassmorphisme */
 .card {
-    -fx-background-color: white;
-    -fx-background-radius: 5px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
-    -fx-padding: 15px;
-    -fx-spacing: 10px;
-}
-.card-title {
-    -fx-text-fill: #7f8c8d;
-    -fx-font-size: 14px;
-}
-.card-value {
-    -fx-text-fill: #2c3e50;
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-effect: -shadow;
+    -fx-padding: 20px;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 1px;
 }
 
-/* Graphiques */
+.card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(45,52,54,0.2), 20, 0, 0, 0);
+    -fx-translate-y: -2px;
+}
+
+.card-title {
+    -fx-text-fill: #636e72;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.card-value {
+    -fx-text-fill: -text-dark;
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+}
+
+/* Graphiques modernes */
 .chart {
+    -fx-background-color: transparent;
     -fx-padding: 0;
 }
+
 .chart-plot-background {
     -fx-background-color: transparent;
 }
-.chart-vertical-grid-lines, .chart-horizontal-grid-lines {
-    -fx-stroke: #ecf0f1;
-}
+
 .axis {
-    -fx-tick-label-fill: #95a5a6;
-    -fx-tick-mark-visible: false;
-}
-.axis-label {
-    -fx-text-fill: #95a5a6;
+    -fx-tick-label-fill: #636e72;
+    -fx-font-size: 10px;
 }
 
-/* Série de données pour les graphiques */
-.default-color0.chart-series-line { -fx-stroke: #e74c3c; }
-.default-color0.chart-line-symbol { -fx-background-color: #e74c3c, white; }
-.default-color0.chart-bar { -fx-bar-fill: #e74c3c; }
-.default-color0.chart-pie { -fx-pie-color: #e74c3c; }
+.axis-tick-mark, .axis-minor-tick-mark {
+    -fx-stroke: #dfe6e9;
+}
 
-/* Tableau */
+.default-color0.chart-series-line {
+    -fx-stroke: -primary;
+    -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: -primary, white;
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: -primary;
+}
+
+/* Tableau moderne */
 .data-table {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: -shadow;
+}
+
+.table-view .column-header {
+    -fx-background-color: -dark;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 12px;
+}
+
+.table-row-cell {
     -fx-background-color: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-border-color: #f0f0f0;
 }
-.table-column {
-    -fx-alignment: center-left;
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 10px;
-}
+
 .table-row-cell:odd {
-    -fx-background-color: #f9f9f9;
+    -fx-background-color: #fafafa;
 }
+
 .table-row-cell:selected {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: -primary;
     -fx-text-fill: white;
 }
+
+/* Boutons */
+.button {
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+}
+
+.primary-button {
+    -fx-background-color: -primary;
+    -fx-text-fill: white;
+}
+
+.primary-button:hover {
+    -fx-background-color: derive(-primary, -10%);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { -fx-opacity: 0; }
+    to { -fx-opacity: 1; }
+}
+
+.card {
+    -fx-opacity: 0;
+    -fx-animation: fadeIn 0.5s ease-out forwards;
+}
+
+.card:nth-child(1) { -fx-animation-delay: 0.1s; }
+.card:nth-child(2) { -fx-animation-delay: 0.2s; }
+.card:nth-child(3) { -fx-animation-delay: 0.3s; }
