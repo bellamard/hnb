@@ -44,12 +44,27 @@
                         <FontIcon iconLiteral="fa-tachometer" iconSize="16" />
                     </graphic>
                 </Button>
-                <Button graphicTextGap="15" styleClass="menu-button" text="Analytics">
+                <Button fx:id="facturation" graphicTextGap="15" styleClass="menu-button" text="Facturation">
                     <graphic>
                         <FontIcon iconLiteral="fa-bar-chart" iconSize="16" />
                     </graphic>
                 </Button>
-                <Button graphicTextGap="15" styleClass="menu-button" text="Messages">
+                <Button fx:id="produit" graphicTextGap="15" styleClass="menu-button" text="Produits">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-envelope" iconSize="16" />
+                    </graphic>
+                </Button>
+                <Button fx:id="cloture" graphicTextGap="15" styleClass="menu-button" text="Produits">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-envelope" iconSize="16" />
+                    </graphic>
+                </Button>
+                <Button fx:id="depense" graphicTextGap="15" styleClass="menu-button" text="Produits">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-envelope" iconSize="16" />
+                    </graphic>
+                </Button>
+                <Button fx:id="utilisateur" graphicTextGap="15" styleClass="menu-button" text="Produits">
                     <graphic>
                         <FontIcon iconLiteral="fa-envelope" iconSize="16" />
                     </graphic>
