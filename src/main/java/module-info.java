@@ -21,8 +21,8 @@ module com.b2la.hnb {
     requires java.sql;
 
     opens com.b2la.hnb.models to org.hibernate.orm.core, javafx.base;
-
     exports com.b2la.hnb.models;
     exports com.b2la.hnb.services;
     exports com.b2la.hnb.util;
+
 }

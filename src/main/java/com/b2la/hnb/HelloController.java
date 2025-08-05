@@ -7,6 +7,9 @@ import com.b2la.hnb.util.BcryptUtil;
 import com.b2la.hnb.util.Stockage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -62,10 +67,12 @@ public class HelloController {
                 try {
                     utilisateurService us = new utilisateurService();
                     Utilisateur user = us.login(username, password);
-
-                    Stockage stock = new Stockage();
-                    stock.setUsername(user.getUsername());
-                    stock.setFonction(String.valueOf(user.getFonction()));
+                    if(user!=null){
+                        Stockage stock = new Stockage();
+                        stock.setUsername(user.getUsername());
+                        stock.setFonction(String.valueOf(user.getFonction()));
+                        getDashboard();
+                    }
 
 
                 } catch (RuntimeException e) {
@@ -96,5 +103,17 @@ public class HelloController {
         throw new RuntimeException(messageError);
     }
 
-
+    private void getDashboard(){
+        try {
+            FXMLLoader loader= new FXMLLoader(HelloApplication.class.getResource("dashboard-view.fxml"));
+            Parent root = loader.load();
+            Scene scene= new Scene(root, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
+            Stage stage= (Stage)nameField.getScene().getWindow();
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setTitle("DASHBOARD");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
