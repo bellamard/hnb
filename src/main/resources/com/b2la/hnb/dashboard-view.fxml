@@ -1,69 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.b2la.hnb.controllers.DashboardController"
-            prefHeight="400.0" prefWidth="600.0"
-            stylesheets="@styles.css"
->
+<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.DashboardController">
+    <!-- Top Header -->
     <top>
-        <HBox styleClass="header">
-            <Label text="DASHBOARD MODERNE" styleClass="header-title"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Déconnexion" styleClass="logout-button"/>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/logo.png" />
+                </image>
+            </ImageView>
+            <Label styleClass="header-title" text="HNB Pâtisserie" />
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label styleClass="user-label" text="Admin" />
+                <Button styleClass="icon-button">
+                    <graphic>
+                        <FontIcon iconColor="white" iconLiteral="fa-user" iconSize="20" />
+                    </graphic>
+                </Button>
+            </HBox>
         </HBox>
     </top>
 
-    <center>
-        <GridPane hgap="20" vgap="20" >
-            <!-- Première ligne -->
-            <VBox GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="card">
-                <Label text="Ventes totales" styleClass="card-title"/>
-                <Label text="€12,345" styleClass="card-value"/>
-<!--                <LineChart fx:id="salesChart" styleClass="chart" legendVisible="false" createSymbols="false" animated="false"/>-->
-            </VBox>
-
-            <VBox GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="card">
-                <Label text="Clients actifs" styleClass="card-title"/>
-                <Label text="1,234" styleClass="card-value"/>
-<!--                <PieChart fx:id="clientsChart" styleClass="chart" legendVisible="false"/>-->
-            </VBox>
-
-            <VBox GridPane.rowIndex="0" GridPane.columnIndex="2" styleClass="card">
-                <Label text="Taux de conversion" styleClass="card-title"/>
-                <Label text="24.5%" styleClass="card-value"/>
-<!--                <BarChart fx:id="conversionChart" styleClass="chart" legendVisible="false"/>-->
-            </VBox>
-
-            <!-- Deuxième ligne -->
-            <TableView fx:id="dataTable" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="3" styleClass="data-table">
-                <columns>
-                    <TableColumn text="ID" styleClass="table-column"/>
-                    <TableColumn text="Nom" styleClass="table-column"/>
-                    <TableColumn text="Valeur" styleClass="table-column"/>
-                    <TableColumn text="Date" styleClass="table-column"/>
-                </columns>
-            </TableView>
-        </GridPane>
-    </center>
-
+    <!-- Sidebar -->
     <left>
-        <VBox styleClass="sidebar" spacing="20" prefWidth="200">
-            <Label text="MENU" styleClass="sidebar-title"/>
-            <Button text="Tableau de bord" styleClass="menu-button active"/>
-            <Button text="Analytique" styleClass="menu-button"/>
-            <Button text="Rapports" styleClass="menu-button"/>
-            <Button text="Paramètres" styleClass="menu-button"/>
-            <Region VBox.vgrow="ALWAYS"/>
-            <Label text="Version 1.0.0" styleClass="version-label"/>
+        <VBox spacing="15" styleClass="sidebar">
+            <VBox alignment="CENTER" styleClass="user-profile">
+                <FontIcon iconLiteral="fa-user-circle" iconSize="48" styleClass="profile-icon" />
+                <Label fx:id="Username" styleClass="profile-name" text="John Doe" />
+                <Label styleClass="profile-role" text="Administrateur" />
+            </VBox>
+
+            <Separator styleClass="divider" />
+
+            <VBox spacing="5" styleClass="menu-container">
+                <Button graphicTextGap="15" styleClass="menu-button active" text="Tableau de bord">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-tachometer" iconSize="16" />
+                    </graphic>
+                </Button>
+                <Button graphicTextGap="15" styleClass="menu-button" text="Analytics">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-bar-chart" iconSize="16" />
+                    </graphic>
+                </Button>
+                <Button graphicTextGap="15" styleClass="menu-button" text="Messages">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-envelope" iconSize="16" />
+                    </graphic>
+                </Button>
+                <Button graphicTextGap="15" styleClass="menu-button" text="Paramètres">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-cog" iconSize="16" />
+                    </graphic>
+                </Button>
+            </VBox>
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Button graphicTextGap="15" styleClass="logout-button" text="Déconnexion">
+                <graphic>
+                    <FontIcon iconLiteral="fa-sign-out" iconSize="16" />
+                </graphic>
+            </Button>
         </VBox>
     </left>
 
+    <!-- Main Content -->
+    <center>
+        <VBox spacing="20" styleClass="content">
+            <!-- Stats Cards -->
+            <HBox spacing="20" styleClass="stats-row">
+                <VBox styleClass="stat-card primary">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <FontIcon iconLiteral="fa-line-chart" iconSize="24" styleClass="stat-icon" />
+                        <VBox spacing="5">
+                            <Label styleClass="stat-value" text="12,345" />
+                            <Label styleClass="stat-label" text="Visiteurs" />
+                        </VBox>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="5">
+                        <Label styleClass="stat-trend positive" text="+12%" />
+                        <FontIcon iconLiteral="fa-arrow-up" iconSize="12" styleClass="trend-icon" />
+                    </HBox>
+                </VBox>
 
+                <VBox styleClass="stat-card dark">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <FontIcon iconLiteral="fa-shopping-cart" iconSize="24" styleClass="stat-icon" />
+                        <VBox spacing="5">
+                            <Label styleClass="stat-value" text="8,642" />
+                            <Label styleClass="stat-label" text="Commandes" />
+                        </VBox>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="5">
+                        <Label styleClass="stat-trend positive" text="+5%" />
+                        <FontIcon iconLiteral="fa-arrow-up" iconSize="12" styleClass="trend-icon" />
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- Recent Activity -->
+            <VBox spacing="10" styleClass="section">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <FontIcon iconLiteral="fa-history" iconSize="18" styleClass="section-icon" />
+                    <Label styleClass="section-title" text="Activité Récente" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button styleClass="text-button" text="Voir tout" />
+                </HBox>
+
+                <VBox styleClass="activity-list">
+                    <HBox styleClass="activity-item">
+                        <FontIcon iconLiteral="fa-shopping-cart" iconSize="20" styleClass="activity-icon" />
+                        <VBox styleClass="activity-details">
+                            <Label styleClass="activity-title" text="Nouvelle commande #1256" />
+                            <Label styleClass="activity-time" text="Il y a 2 minutes" />
+                        </VBox>
+                        <Button styleClass="small-button" text="Voir" />
+                    </HBox>
+                </VBox>
+            </VBox>
+        </VBox>
+    </center>
 </BorderPane>

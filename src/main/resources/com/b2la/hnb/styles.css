@@ -1,55 +1,261 @@
-/* Couleurs */
-:root {
-    -primary: #FF3E4D; /* Rouge vif */
-    -dark: #2D3436;    /* Noir anthracite */
-    -light: #F5F6FA;   /* Blanc cassé */
-    -accent: #FF9F43;  /* Orange pour accents */
-    -text-dark: #2D3436;
-    -text-light: #F5F6FA;
-    -shadow: 0 4px 20px rgba(45, 52, 54, 0.1);
-}
-
-/* Reset */
+/* Couleurs du thème */
 .root {
-    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
-    -fx-background-color: -light;
+    -primary: #E74C3C;
+    -dark: #2C3E50;
+    -light: #ECF0F1;
+    -success: #2ECC71;
+    -danger: #E74C3C;
 }
 
-/* Header moderne */
+/* Icônes */
+.ikonli-font-icon {
+    -fx-icon-color: -dark;
+}
+
+.stat-icon {
+    -fx-icon-color: white;
+    -fx-icon-size: 24px;
+    -fx-padding: 10px;
+    -fx-background-color: rgba(0,0,0,0.1);
+    -fx-background-radius: 50%;
+}
+
+.profile-icon {
+    -fx-icon-color: white;
+    -fx-icon-size: 48px;
+    -fx-padding: 15px;
+    -fx-background-color: -primary;
+    -fx-background-radius: 50%;
+}
+
+.trend-icon.positive {
+    -fx-icon-color: -success;
+}
+
+.trend-icon.negative {
+    -fx-icon-color: -danger;
+}
+
+.activity-icon {
+    -fx-icon-color: -primary;
+    -fx-icon-size: 20px;
+    -fx-padding: 10px;
+    -fx-background-color: rgba(231, 76, 60, 0.1);
+    -fx-background-radius: 50%;
+}
+
+
+/* Chargement de la police FontAwesome */
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('fontawesome-webfont.ttf');
+}
+/* Tailles et couleurs d'icônes */
+.fontawesome-icon {
+    -fx-font-size: 1em;
+}
+
+.header-icon {
+    -fx-fill: white;
+    -fx-font-size: 1.5em;
+}
+
+.profile-icon {
+    -fx-fill: white;
+    -fx-font-size: 3em;
+}
+
+.stat-icon {
+    -fx-fill: white;
+    -fx-font-size: 1.8em;
+}
+
+.trend-icon {
+    -fx-font-size: 0.8em;
+}
+
+.positive {
+    -fx-fill: #2ecc71;
+}
+
+.negative {
+    -fx-fill: #e74c3c;
+}
+
+/* Animation au survol */
+.stat-card:hover .fontawesome-icon {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 0);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+/* Le reste du CSS reste similaire à la version précédente */
+
+/* Classes d'icônes */
+.icon {
+    -fx-font-family: FontAwesome;
+    -fx-font-size: 14px;
+}
+
+.header-icon {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.profile-icon {
+    -fx-font-size: 48px;
+    -fx-text-fill: white;
+    -fx-padding: 15px;
+    -fx-background-color: -primary;
+    -fx-background-radius: 50%;
+}
+
+.menu-icon {
+    -fx-font-size: 16px;
+    -fx-padding: 0 10px 0 0;
+}
+
+.stat-icon {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+    -fx-background-color: rgba(0,0,0,0.1);
+    -fx-background-radius: 50%;
+}
+
+.trend-icon {
+    -fx-font-size: 12px;
+}
+
+.activity-icon {
+    -fx-font-size: 20px;
+    -fx-text-fill: -primary;
+    -fx-padding: 10px;
+    -fx-background-color: rgba(231, 76, 60, 0.1);
+    -fx-background-radius: 50%;
+}
+
+.action-icon {
+    -fx-font-size: 18px;
+    -fx-padding: 0 10px 0 0;
+}
+
+/* Modifications pour les icônes dans les boutons */
+.menu-button .text,
+.logout-button .text,
+.action-button .text {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.menu-button .icon,
+.logout-button .icon,
+.action-button .icon {
+    -fx-font-family: FontAwesome;
+}
+
+/* Palette de couleurs */
+.root {
+    -primary: #E74C3C;  /* Rouge vif */
+    -primary-light: #FF6B5B;
+    -dark: #2C3E50;     /* Noir bleuté */
+    -darker: #1A252F;
+    -light: #ECF0F1;    /* Blanc cassé */
+    -lighter: #FFFFFF;
+    -accent: #E67E22;   /* Orange accent */
+    -success: #2ECC71;  /* Vert */
+    -danger: #E74C3C;   /* Rouge */
+    -warning: #F39C12;  /* Orange */
+    -info: #3498DB;     /* Bleu */
+}
+
+/* Reset et polices */
+* {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Header */
 .header {
-    -fx-background-color: -dark;
-    -fx-padding: 0 30px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-background-color: -darker;
+    -fx-padding: 15px 30px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 2);
 }
 
 .header-title {
-    -fx-text-fill: -text-light;
-    -fx-font-size: 24px;
-    -fx-font-weight: 700;
+    -fx-text-fill: -light;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
     -fx-letter-spacing: 1px;
 }
 
-/* Sidebar minimaliste */
+.user-label {
+    -fx-text-fill: -light;
+    -fx-font-size: 14px;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-background-radius: 20px;
+}
+
+.icon-button:hover {
+    -fx-background-color: rgba(255,255,255,0.1);
+}
+
+/* Sidebar */
 .sidebar {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(45,52,54,0.1), 20, 0, 0, 0);
-    -fx-padding: 40px 20px;
+    -fx-background-color: -dark;
+    -fx-padding: 20px 15px;
+    -fx-spacing: 20px;
+    -fx-pref-width: 250px;
+}
+
+.user-profile {
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+    -fx-padding: 20px 0;
+}
+
+.profile-image {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);
+    -fx-background-radius: 40px;
+    -fx-border-radius: 40px;
+    -fx-border-width: 3px;
+    -fx-border-color: -primary;
+}
+
+.profile-name {
+    -fx-text-fill: -light;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.profile-role {
+    -fx-text-fill: #BDC3C7;
+    -fx-font-size: 12px;
+}
+
+.divider {
+    -fx-padding: 10px 0;
+}
+
+.menu-container {
+    -fx-padding: 0 10px;
 }
 
 .menu-button {
     -fx-background-color: transparent;
-    -fx-text-fill: -text-dark;
+    -fx-text-fill: #BDC3C7;
     -fx-font-size: 14px;
-    -fx-font-weight: 500;
-    -fx-padding: 15px 20px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
+    -fx-padding: 12px 15px;
     -fx-alignment: center-left;
+    -fx-background-radius: 5px;
     -fx-graphic-text-gap: 15px;
 }
 
 .menu-button:hover {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-text-fill: -light;
 }
 
 .menu-button.active {
@@ -57,126 +263,188 @@
     -fx-text-fill: white;
 }
 
-/* Cartes avec effet glassmorphisme */
-.card {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
-    -fx-background-radius: 12px;
-    -fx-border-radius: 12px;
-    -fx-effect: -shadow;
+.logout-button {
+    -fx-background-color: rgba(231, 76, 60, 0.2);
+    -fx-text-fill: -primary;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 15px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center-left;
+    -fx-graphic-text-gap: 10px;
+}
+
+.logout-button:hover {
+    -fx-background-color: rgba(231, 76, 60, 0.3);
+}
+
+/* Content */
+.content {
+    -fx-padding: 30px;
+    -fx-background-color: -light;
+}
+
+.stats-row {
+    -fx-alignment: center;
+}
+
+.stat-card {
+    -fx-background-radius: 10px;
     -fx-padding: 20px;
-    -fx-border-color: rgba(255, 255, 255, 0.3);
-    -fx-border-width: 1px;
-}
-
-.card:hover {
-    -fx-effect: dropshadow(three-pass-box, rgba(45,52,54,0.2), 20, 0, 0, 0);
-    -fx-translate-y: -2px;
-}
-
-.card-title {
-    -fx-text-fill: #636e72;
-    -fx-font-size: 14px;
-    -fx-font-weight: 500;
-}
-
-.card-value {
-    -fx-text-fill: -text-dark;
-    -fx-font-size: 28px;
-    -fx-font-weight: 700;
-}
-
-/* Graphiques modernes */
-.chart {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
-.chart-plot-background {
-    -fx-background-color: transparent;
-}
-
-.axis {
-    -fx-tick-label-fill: #636e72;
-    -fx-font-size: 10px;
-}
-
-.axis-tick-mark, .axis-minor-tick-mark {
-    -fx-stroke: #dfe6e9;
-}
-
-.default-color0.chart-series-line {
-    -fx-stroke: -primary;
-    -fx-stroke-width: 2px;
-}
-
-.default-color0.chart-line-symbol {
-    -fx-background-color: -primary, white;
-    -fx-scale-x: 0.8;
-    -fx-scale-y: 0.8;
-}
-
-.default-color0.chart-bar {
-    -fx-bar-fill: -primary;
-}
-
-/* Tableau moderne */
-.data-table {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-    -fx-border-radius: 12px;
-    -fx-background-radius: 12px;
-    -fx-effect: -shadow;
-}
-
-.table-view .column-header {
-    -fx-background-color: -dark;
-    -fx-text-fill: white;
-    -fx-font-weight: 700;
-    -fx-font-size: 12px;
-}
-
-.table-row-cell {
-    -fx-background-color: white;
-    -fx-border-color: #f0f0f0;
-}
-
-.table-row-cell:odd {
-    -fx-background-color: #fafafa;
-}
-
-.table-row-cell:selected {
-    -fx-background-color: -primary;
-    -fx-text-fill: white;
-}
-
-/* Boutons */
-.button {
-    -fx-background-radius: 8px;
-    -fx-padding: 10px 20px;
-    -fx-font-weight: 600;
+    -fx-pref-width: 200px;
+    -fx-alignment: center-left;
+    -fx-spacing: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
     -fx-cursor: hand;
 }
 
-.primary-button {
+.stat-card:hover {
+    -fx-translate-y: -3px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 3);
+}
+
+.stat-card.primary {
+    -fx-background-color: -primary;
+}
+
+.stat-card.dark {
+    -fx-background-color: -dark;
+}
+
+.stat-card.accent {
+    -fx-background-color: -accent;
+}
+
+.stat-card.light {
+    -fx-background-color: -lighter;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+}
+
+.stat-value {
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.stat-card.light .stat-value {
+    -fx-text-fill: -dark;
+}
+
+.stat-label {
+    -fx-text-fill: rgba(255,255,255,0.8);
+    -fx-font-size: 14px;
+}
+
+.stat-card.light .stat-label {
+    -fx-text-fill: #7F8C8D;
+}
+
+.stat-trend {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.positive {
+    -fx-text-fill: -success;
+}
+
+.negative {
+    -fx-text-fill: -danger;
+}
+
+/* Sections */
+.section {
+    -fx-background-color: -lighter;
+    -fx-background-radius: 10px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+}
+
+.section-title {
+    -fx-text-fill: -dark;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.text-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -primary;
+    -fx-font-size: 12px;
+    -fx-padding: 0;
+    -fx-underline: true;
+}
+
+.text-button:hover {
+    -fx-text-fill: -primary-light;
+}
+
+/* Activity List */
+.activity-list {
+    -fx-spacing: 10px;
+}
+
+.activity-item {
+    -fx-spacing: 15px;
+    -fx-padding: 10px 0;
+    -fx-alignment: center-left;
+}
+
+.activity-icon {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+.activity-details {
+    -fx-spacing: 3px;
+    -fx-pref-width: 300px;
+}
+
+.activity-title {
+    -fx-text-fill: -dark;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.activity-time {
+    -fx-text-fill: #95A5A6;
+    -fx-font-size: 12px;
+}
+
+.list-divider {
+    -fx-padding: 0 50px 0 0;
+}
+
+.small-button {
     -fx-background-color: -primary;
     -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 15px;
 }
 
-.primary-button:hover {
-    -fx-background-color: derive(-primary, -10%);
+.small-button:hover {
+    -fx-background-color: -primary-light;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { -fx-opacity: 0; }
-    to { -fx-opacity: 1; }
+/* Quick Actions */
+.quick-actions {
+    -fx-padding: 20px;
+    -fx-background-color: -lighter;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
 }
 
-.card {
-    -fx-opacity: 0;
-    -fx-animation: fadeIn 0.5s ease-out forwards;
+.action-button {
+    -fx-background-color: white;
+    -fx-text-fill: -dark;
+    -fx-font-size: 14px;
+    -fx-padding: 15px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+    -fx-graphic-text-gap: 10px;
+    -fx-pref-width: 200px;
 }
 
-.card:nth-child(1) { -fx-animation-delay: 0.1s; }
-.card:nth-child(2) { -fx-animation-delay: 0.2s; }
-.card:nth-child(3) { -fx-animation-delay: 0.3s; }
+.action-button:hover {
+    -fx-background-color: #f5f5f5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 2);
+}
