@@ -114,27 +114,37 @@
                     </HBox>
                 </VBox>
             </HBox>
-
-            <!-- Recent Activity -->
-            <VBox spacing="10" styleClass="section">
-                <HBox alignment="CENTER_LEFT" spacing="10">
-                    <FontIcon iconLiteral="fa-history" iconSize="18" styleClass="section-icon" />
-                    <Label styleClass="section-title" text="Activité Récente" />
-                    <Region HBox.hgrow="ALWAYS" />
-                    <Button styleClass="text-button" text="Voir tout" />
-                </HBox>
-
-                <VBox styleClass="activity-list">
-                    <HBox styleClass="activity-item">
-                        <FontIcon iconLiteral="fa-shopping-cart" iconSize="20" styleClass="activity-icon" />
-                        <VBox styleClass="activity-details">
-                            <Label styleClass="activity-title" text="Nouvelle commande #1256" />
-                            <Label styleClass="activity-time" text="Il y a 2 minutes" />
-                        </VBox>
-                        <Button styleClass="small-button" text="Voir" />
-                    </HBox>
-                </VBox>
-            </VBox>
+         <StackPane>
+            <children>
+               <VBox fx:id="loadingLayout" prefHeight="200.0" prefWidth="100.0" />
+      
+                  <!-- Recent Activity -->
+                  <VBox fx:id="homeLayout" spacing="10" styleClass="section">
+                      <HBox alignment="CENTER_LEFT" spacing="10">
+                          <FontIcon iconLiteral="fa-history" iconSize="18" styleClass="section-icon" />
+                          <Label styleClass="section-title" text="Activité Récente" />
+                          <Region HBox.hgrow="ALWAYS" />
+                          <Button styleClass="text-button" text="Voir tout" />
+                      </HBox>
+      
+                      <VBox styleClass="activity-list">
+                          <HBox styleClass="activity-item">
+                              <FontIcon iconLiteral="fa-shopping-cart" iconSize="20" styleClass="activity-icon" />
+                              <VBox styleClass="activity-details">
+                                  <Label styleClass="activity-title" text="Nouvelle commande #1256" />
+                                  <Label styleClass="activity-time" text="Il y a 2 minutes" />
+                              </VBox>
+                              <Button styleClass="small-button" text="Voir" />
+                          </HBox>
+                      </VBox>
+                  </VBox>
+               <VBox fx:id="facturationLayout" prefHeight="200.0" prefWidth="100.0" />
+               <VBox fx:id="produitLayout" prefHeight="200.0" prefWidth="100.0" />
+               <VBox fx:id="depenseLayout" prefHeight="200.0" prefWidth="100.0" />
+               <VBox fx:id="clotureLayout" prefHeight="200.0" prefWidth="100.0" />
+               <VBox fx:id="parametreLayout" prefHeight="200.0" prefWidth="100.0" />
+            </children>
+         </StackPane>
         </VBox>
     </center>
 </BorderPane>

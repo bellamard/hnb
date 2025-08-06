@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import javafx.scene.control.Label;
@@ -17,6 +18,8 @@ public class DashboardController {
     private Label username, fonction, dateHeure;
     @FXML
     private Button facturation, produit, cloture, depense, utilisateur;
+    @FXML
+    private VBox homeLayout,facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout;
 
     public void initialize() {
         recoveryUsername();
@@ -42,6 +45,69 @@ public class DashboardController {
 
     }
 
+
+    private void cardLayout(String layout){
+        switch (layout){
+            case "home":
+                homeLayout.setVisible(true);
+                produitLayout.setVisible(false);
+                depenseLayout.setVisible(false);
+                clotureLayout.setVisible(false);
+                facturationLayout.setVisible(false);
+                parametreLayout.setVisible(false);
+                break;
+            case "produit":
+                homeLayout.setVisible(false);
+                produitLayout.setVisible(true);
+                depenseLayout.setVisible(false);
+                clotureLayout.setVisible(false);
+                facturationLayout.setVisible(false);
+                parametreLayout.setVisible(false);
+                break;
+            case "depense":
+                homeLayout.setVisible(false);
+                produitLayout.setVisible(false);
+                depenseLayout.setVisible(true);
+                clotureLayout.setVisible(false);
+                facturationLayout.setVisible(false);
+                parametreLayout.setVisible(false);
+                break;
+            case "cloture":
+                homeLayout.setVisible(false);
+                produitLayout.setVisible(false);
+                depenseLayout.setVisible(false);
+                clotureLayout.setVisible(true);
+                facturationLayout.setVisible(false);
+                parametreLayout.setVisible(false);
+                break;
+            case "facture":
+                homeLayout.setVisible(false);
+                produitLayout.setVisible(false);
+                depenseLayout.setVisible(false);
+                clotureLayout.setVisible(false);
+                facturationLayout.setVisible(true);
+                parametreLayout.setVisible(false);
+                break;
+            case "parametre":
+                homeLayout.setVisible(false);
+                produitLayout.setVisible(false);
+                depenseLayout.setVisible(false);
+                clotureLayout.setVisible(false);
+                facturationLayout.setVisible(false);
+                parametreLayout.setVisible(true);
+                break;
+            default:
+                loadingLayout.setVisible(true);
+                homeLayout.setVisible(false);
+                produitLayout.setVisible(false);
+                depenseLayout.setVisible(false);
+                clotureLayout.setVisible(false);
+                facturationLayout.setVisible(false);
+                parametreLayout.setVisible(false);
+                break;
+
+        }
+    }
 
 }
 
