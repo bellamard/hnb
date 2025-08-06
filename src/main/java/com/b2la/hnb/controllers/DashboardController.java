@@ -21,6 +21,8 @@ public class DashboardController {
     @FXML
     private VBox homeLayout,facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout;
 
+    FacturationController fc;
+
     public void initialize() {
         recoveryUsername();
         viewDateTime();
@@ -143,6 +145,18 @@ public class DashboardController {
     private void parametreView(){
         String layout="parametre";
         cardLayout(layout);
+    }
+    @FXML
+    private void annulerFacture(){
+
+    }
+    @FXML
+    private void genererFacture(){
+
+    }
+    @FXML
+    private void ajouterArticle(){
+
     }
 
 

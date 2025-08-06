@@ -476,3 +476,33 @@
     -fx-text-fill: #555;
     -fx-font-style: italic;
 }
+
+.section-title {
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.data-table {
+    -fx-max-height: 200;
+}
+
+.total-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+}
+
+.total-amount {
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #2e8b57;
+}
+
+.primary-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+.secondary-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
