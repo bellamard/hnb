@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
+<?import javafx.geometry.Insets?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.DashboardController">
     <!-- Top Header -->
     <top>
@@ -64,7 +65,7 @@
                         <FontIcon iconLiteral="fa-cart-arrow-down" iconSize="16" styleClass="icon-color" />
                     </graphic>
                 </Button>
-                <Button fx:id="parametre" graphicTextGap="15" onAction="#parametreLayout" styleClass="menu-button" text="Paramètres">
+                <Button fx:id="parametre" graphicTextGap="15" onAction="#parametreView" styleClass="menu-button" text="Paramètres">
                     <graphic>
                         <FontIcon iconLiteral="fa-cog" iconSize="16" styleClass="icon-color" />
                     </graphic>
@@ -117,10 +118,20 @@
          <StackPane>
             <children>
                <VBox fx:id="loadingLayout"  spacing="10" styleClass="section">
-                  <children>
-                     <ProgressBar maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" />
-                  </children></VBox>
-      
+                   <padding>
+                       <Insets top="20" right="20" bottom="20" left="20"/>
+                   </padding>
+
+                   <ProgressBar fx:id="progressBar"
+                                maxWidth="1.7976931348623157E308"
+                                minHeight="10"
+                                prefWidth="300"
+                                styleClass="progress-bar"/>
+
+                   <Label fx:id="loadingText" text="Chargement en cours..."
+                          styleClass="loading-text"/>
+               </VBox>
+
                   <!-- Recent Activity -->
                   <VBox fx:id="homeLayout" spacing="10" styleClass="section" visible="false">
                       <HBox alignment="CENTER_LEFT" spacing="10">
@@ -129,7 +140,7 @@
                           <Region HBox.hgrow="ALWAYS" />
                           <Button styleClass="text-button" text="Voir tout" />
                       </HBox>
-      
+
                       <VBox styleClass="activity-list">
                           <HBox styleClass="activity-item">
                               <FontIcon iconLiteral="fa-shopping-cart" iconSize="20" styleClass="activity-icon" />

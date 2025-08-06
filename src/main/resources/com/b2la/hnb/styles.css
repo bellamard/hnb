@@ -454,3 +454,25 @@
     -fx-background-color: -primary;
     -fx-icon-color: #c3bcbc;
 }
+
+.progress-bar {
+    -fx-accent: #4285F4;
+    -fx-background-color: #E0E0E0;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.progress-bar .track {
+    -fx-background-radius: 5;
+}
+
+.progress-bar .bar {
+    -fx-background-radius: 5;
+    -fx-background-insets: 1;
+}
+
+.loading-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+    -fx-font-style: italic;
+}
