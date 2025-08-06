@@ -39,32 +39,32 @@
             <Separator styleClass="divider" />
 
             <VBox spacing="5" styleClass="menu-container">
-                <Button graphicTextGap="15" styleClass="menu-button active" text="Tableau de bord">
+                <Button fx:id="home" graphicTextGap="15" onAction="#homeView" styleClass="menu-button active" text="Tableau de bord">
                     <graphic>
                         <FontIcon iconLiteral="fa-tachometer" iconSize="16" />
                     </graphic>
                 </Button>
-                <Button fx:id="facturation" graphicTextGap="15" styleClass="menu-button" text="Facturation">
+                <Button fx:id="facturation" graphicTextGap="15" onAction="#factureView" styleClass="menu-button" text="Facturation">
                     <graphic>
                         <FontIcon iconColor="#c3bcbc" iconLiteral="fa-file-text" iconSize="16" styleClass="icon-color" />
                     </graphic>
                 </Button>
-                <Button fx:id="produit" graphicTextGap="15" styleClass="menu-button" text="Produits">
+                <Button fx:id="produit" graphicTextGap="15" onAction="#produitView" styleClass="menu-button" text="Produits">
                     <graphic>
                         <FontIcon iconLiteral="fa-glass" iconSize="16" styleClass="icon-color" />
                     </graphic>
                 </Button>
-                <Button fx:id="cloture" graphicTextGap="15" styleClass="menu-button" text="Depenses">
+                <Button fx:id="depense" graphicTextGap="15" onAction="#depenseView" styleClass="menu-button" text="Depenses">
                     <graphic>
                         <FontIcon iconLiteral="fa-area-chart" iconSize="16" styleClass="icon-color" text="" />
                     </graphic>
                 </Button>
-                <Button fx:id="depense" graphicTextGap="15" styleClass="menu-button" text="Clotures">
+                <Button fx:id="cloture" graphicTextGap="15" onAction="#clotureView" styleClass="menu-button" text="Clotures">
                     <graphic>
                         <FontIcon iconLiteral="fa-cart-arrow-down" iconSize="16" styleClass="icon-color" />
                     </graphic>
                 </Button>
-                <Button graphicTextGap="15" styleClass="menu-button" text="Paramètres">
+                <Button fx:id="parametre" graphicTextGap="15" onAction="#parametreLayout" styleClass="menu-button" text="Paramètres">
                     <graphic>
                         <FontIcon iconLiteral="fa-cog" iconSize="16" styleClass="icon-color" />
                     </graphic>

@@ -17,7 +17,7 @@ public class DashboardController {
     @FXML
     private Label username, fonction, dateHeure;
     @FXML
-    private Button facturation, produit, cloture, depense, utilisateur;
+    private Button home,facturation, produit, cloture, depense, utilisateur;
     @FXML
     private VBox homeLayout,facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout;
 
@@ -108,6 +108,43 @@ public class DashboardController {
 
         }
     }
+    @FXML
+    private void homeView(){
+        String layout="home";
+        cardLayout(layout);
+    }
+
+    @FXML
+    private void factureView(){
+        String layout="facture";
+        cardLayout(layout);
+    }
+
+    @FXML
+    private void produitView(){
+        String layout="produit";
+        cardLayout(layout);
+    }
+
+    @FXML
+    private void depenseView(){
+        String layout="depense";
+        cardLayout(layout);
+    }
+
+    @FXML
+    private void clotureView(){
+        String layout="cloture";
+        cardLayout(layout);
+    }
+
+    @FXML
+    private void parametreView(){
+        String layout="parametre";
+        cardLayout(layout);
+    }
+
+
 
 }
 
