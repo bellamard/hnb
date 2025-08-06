@@ -24,6 +24,7 @@ public class DashboardController {
     public void initialize() {
         recoveryUsername();
         viewDateTime();
+        cardLayout("");
     }
 
     public void recoveryUsername() {

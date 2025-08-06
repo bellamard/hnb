@@ -116,10 +116,13 @@
             </HBox>
          <StackPane>
             <children>
-               <VBox fx:id="loadingLayout" prefHeight="200.0" prefWidth="100.0" />
+               <VBox fx:id="loadingLayout"  spacing="10" styleClass="section">
+                  <children>
+                     <ProgressBar maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" />
+                  </children></VBox>
       
                   <!-- Recent Activity -->
-                  <VBox fx:id="homeLayout" spacing="10" styleClass="section">
+                  <VBox fx:id="homeLayout" spacing="10" styleClass="section" visible="false">
                       <HBox alignment="CENTER_LEFT" spacing="10">
                           <FontIcon iconLiteral="fa-history" iconSize="18" styleClass="section-icon" />
                           <Label styleClass="section-title" text="Activité Récente" />
@@ -138,11 +141,11 @@
                           </HBox>
                       </VBox>
                   </VBox>
-               <VBox fx:id="facturationLayout" prefHeight="200.0" prefWidth="100.0" />
-               <VBox fx:id="produitLayout" prefHeight="200.0" prefWidth="100.0" />
-               <VBox fx:id="depenseLayout" prefHeight="200.0" prefWidth="100.0" />
-               <VBox fx:id="clotureLayout" prefHeight="200.0" prefWidth="100.0" />
-               <VBox fx:id="parametreLayout" prefHeight="200.0" prefWidth="100.0" />
+               <VBox fx:id="facturationLayout"  spacing="10" styleClass="section" />
+               <VBox fx:id="produitLayout"  spacing="10" styleClass="section" />
+               <VBox fx:id="depenseLayout"  spacing="10" styleClass="section" />
+               <VBox fx:id="clotureLayout"  spacing="10" styleClass="section" />
+               <VBox fx:id="parametreLayout"  spacing="10" styleClass="section" />
             </children>
          </StackPane>
         </VBox>
