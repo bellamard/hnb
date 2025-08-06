@@ -15,7 +15,7 @@ public class JPAUtil {
         if (factory == null) {
 
             Map<String, String> properties = new HashMap<>();
-            properties.put("jakarta.persistence.jdbc.url","jdbc:mysql://localhost:3306/gestion_hnb");
+            properties.put("jakarta.persistence.jdbc.url","jdbc:mysql://localhost:3306/gestion_hnb?createDatabaseIfNotExist=true");
             properties.put("jakarta.persistence.jdbc.user","root");
             properties.put("jakarta.persistence.jdbc.password","");
             properties.put("jakarta.persistence.jdbc.driver","com.mysql.cj.jdbc.Driver");

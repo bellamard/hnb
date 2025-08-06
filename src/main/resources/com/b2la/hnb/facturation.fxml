@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox fx:id="facturationLayout" spacing="10" styleClass="section">
+        <Label styleClass="section-title" text="Système de Facturation" />
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+
+                <!-- Informations client -->
+                <GridPane hgap="10" vgap="5">
+                    <Label text="Client:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <ComboBox fx:id="clientComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Nom:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="nomClientField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+            </children>
+        </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+         <children>
+            <VBox>
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Recherche" />
+                        <TextField />
+                     </children>
+                  </HBox>
+                     <ComboBox fx:id="produitComboBox" promptText="Sélectionner un produit" />
+                     <Button styleClass="action-button" text="Ajouter" />
+               </children>
+            </VBox>
+      
+              <!-- Articles/Produits -->
+              <TableView fx:id="articlesTable" prefHeight="134.0" prefWidth="250.0" styleClass="data-table">
+                  <columns>
+                      <TableColumn fx:id="produitCol" text="Produit" />
+                      <TableColumn fx:id="prixUnitaireCol" text="Prix Unitaire" />
+                      <TableColumn fx:id="quantiteCol" text="Quantité" />
+                      <TableColumn fx:id="totalCol" text="Total" />
+                  </columns>
+              </TableView>
+         </children>
+      </HBox>
+
+        <!-- Ajout d'articles -->
+        <HBox alignment="CENTER_LEFT" spacing="10" />
+      <TableView fx:id="articlesTable1" prefHeight="134.0" prefWidth="250.0" styleClass="data-table">
+         <columns>
+            <TableColumn fx:id="produitCol1" text="Produit" />
+            <TableColumn fx:id="prixUnitaireCol1" text="Prix Unitaire" />
+            <TableColumn fx:id="quantiteCol1" text="Quantité" />
+            <TableColumn fx:id="totalCol1" text="Total" />
+         </columns>
+      </TableView>
+
+        <!-- Total et validation -->
+        <HBox alignment="CENTER_RIGHT" spacing="20">
+            <Label styleClass="total-label" text="Total:" />
+            <Label fx:id="totalFactureLabel" styleClass="total-amount" text="0.00" />
+        </HBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button styleClass="primary-button" text="Générer Facture" />
+            <Button styleClass="secondary-button" text="Annuler" />
+        </HBox>
+    </VBox>
+
+</AnchorPane>
