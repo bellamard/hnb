@@ -46,32 +46,27 @@
                 </Button>
                 <Button fx:id="facturation" graphicTextGap="15" styleClass="menu-button" text="Facturation">
                     <graphic>
-                        <FontIcon iconLiteral="fa-bar-chart" iconSize="16" />
+                        <FontIcon iconColor="#c3bcbc" iconLiteral="fa-file-text" iconSize="16" styleClass="icon-color" />
                     </graphic>
                 </Button>
                 <Button fx:id="produit" graphicTextGap="15" styleClass="menu-button" text="Produits">
                     <graphic>
-                        <FontIcon iconLiteral="fa-envelope" iconSize="16" />
+                        <FontIcon iconLiteral="fa-glass" iconSize="16" styleClass="icon-color" />
                     </graphic>
                 </Button>
-                <Button fx:id="cloture" graphicTextGap="15" styleClass="menu-button" text="Produits">
+                <Button fx:id="cloture" graphicTextGap="15" styleClass="menu-button" text="Depenses">
                     <graphic>
-                        <FontIcon iconLiteral="fa-envelope" iconSize="16" />
+                        <FontIcon iconLiteral="fa-area-chart" iconSize="16" styleClass="icon-color" text="" />
                     </graphic>
                 </Button>
-                <Button fx:id="depense" graphicTextGap="15" styleClass="menu-button" text="Produits">
+                <Button fx:id="depense" graphicTextGap="15" styleClass="menu-button" text="Clotures">
                     <graphic>
-                        <FontIcon iconLiteral="fa-envelope" iconSize="16" />
-                    </graphic>
-                </Button>
-                <Button fx:id="utilisateur" graphicTextGap="15" styleClass="menu-button" text="Produits">
-                    <graphic>
-                        <FontIcon iconLiteral="fa-envelope" iconSize="16" />
+                        <FontIcon iconLiteral="fa-cart-arrow-down" iconSize="16" styleClass="icon-color" />
                     </graphic>
                 </Button>
                 <Button graphicTextGap="15" styleClass="menu-button" text="Paramètres">
                     <graphic>
-                        <FontIcon iconLiteral="fa-cog" iconSize="16" />
+                        <FontIcon iconLiteral="fa-cog" iconSize="16" styleClass="icon-color" />
                     </graphic>
                 </Button>
             </VBox>
