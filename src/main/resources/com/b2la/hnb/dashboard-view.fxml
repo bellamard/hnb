@@ -115,113 +115,117 @@
                     </HBox>
                 </VBox>
             </HBox>
-         <StackPane>
-            <children>
-               <VBox fx:id="loadingLayout" spacing="10" styleClass="section" visible="false">
-                   <padding>
-                       <Insets bottom="20" left="20" right="20" top="20" />
-                   </padding>
+            <StackPane>
+                <children>
+                    <VBox fx:id="loadingLayout" spacing="10" styleClass="section" visible="false">
+                        <padding>
+                            <Insets bottom="20" left="20" right="20" top="20" />
+                        </padding>
 
-                   <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" minHeight="10" prefWidth="300" styleClass="progress-bar" />
+                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" minHeight="10" prefWidth="300" styleClass="progress-bar" />
 
-                   <Label fx:id="loadingText" styleClass="loading-text" text="Chargement en cours..." />
-               </VBox>
+                        <Label fx:id="loadingText" styleClass="loading-text" text="Chargement en cours..." />
+                    </VBox>
 
-                  <!-- Recent Activity -->
-                  <VBox fx:id="homeLayout" spacing="10" styleClass="section" visible="false">
-                      <HBox alignment="CENTER_LEFT" spacing="10">
-                          <FontIcon iconLiteral="fa-history" iconSize="18" styleClass="section-icon" />
-                          <Label styleClass="section-title" text="Activité Récente" />
-                          <Region HBox.hgrow="ALWAYS" />
-                          <Button styleClass="text-button" text="Voir tout" />
-                      </HBox>
+                    <!-- Recent Activity -->
+                    <VBox fx:id="homeLayout" spacing="10" styleClass="section" visible="false">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <FontIcon iconLiteral="fa-history" iconSize="18" styleClass="section-icon" />
+                            <Label styleClass="section-title" text="Activité Récente" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button styleClass="text-button" text="Voir tout" />
+                        </HBox>
 
-                      <VBox styleClass="activity-list">
-                          <HBox styleClass="activity-item">
-                              <FontIcon iconLiteral="fa-shopping-cart" iconSize="20" styleClass="activity-icon" />
-                              <VBox styleClass="activity-details">
-                                  <Label styleClass="activity-title" text="Nouvelle commande #1256" />
-                                  <Label styleClass="activity-time" text="Il y a 2 minutes" />
-                              </VBox>
-                              <Button styleClass="small-button" text="Voir" />
-                          </HBox>
-                      </VBox>
-                  </VBox>
-                <VBox fx:id="facturationLayout" spacing="10" styleClass="section">
-                    <Label styleClass="section-title" text="Système de Facturation" />
-                    <HBox prefHeight="100.0" prefWidth="200.0">
-                        <children>
+                        <VBox styleClass="activity-list">
+                            <HBox styleClass="activity-item">
+                                <FontIcon iconLiteral="fa-shopping-cart" iconSize="20" styleClass="activity-icon" />
+                                <VBox styleClass="activity-details">
+                                    <Label styleClass="activity-title" text="Nouvelle commande #1256" />
+                                    <Label styleClass="activity-time" text="Il y a 2 minutes" />
+                                </VBox>
+                                <Button styleClass="small-button" text="Voir" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                    <VBox fx:id="facturationLayout" spacing="10" styleClass="section">
+                        <Label styleClass="section-title" text="Système de Facturation" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                            <children>
 
-                            <!-- Informations client -->
-                            <GridPane hgap="10" vgap="5">
-                                <Label text="Client:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <ComboBox fx:id="clientComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <!-- Informations client -->
+                                <GridPane hgap="10" vgap="5">
+                                    <Label text="Client:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <ComboBox fx:id="clientComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                <Label text="Nom:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <TextField fx:id="nomClientField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <columnConstraints>
-                                    <ColumnConstraints />
-                                    <ColumnConstraints />
-                                </columnConstraints>
-                                <rowConstraints>
-                                    <RowConstraints />
-                                    <RowConstraints />
-                                </rowConstraints>
-                            </GridPane>
-                        </children>
-                    </HBox>
-                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
-                        <children>
+                                    <Label text="Nom:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <TextField fx:id="nomClientField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <columnConstraints>
+                                        <ColumnConstraints />
+                                        <ColumnConstraints />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                    </rowConstraints>
+                                </GridPane>
+                            </children>
+                        </HBox>
+                        <HBox spacing="2.0">
+                            <children>
 
-                            <!-- Articles/Produits -->
-                            <TableView fx:id="articlesTable" styleClass="data-table">
-                                <columns>
-                                    <TableColumn fx:id="produitCol" text="Produit" />
-                                    <TableColumn fx:id="prixUnitaireCol" text="Prix Unitaire" />
-                                    <TableColumn fx:id="quantiteCol" text="Quantité" />
-                                    <TableColumn fx:id="totalCol" text="Total" />
-                                </columns>
-                            </TableView>
-                            <VBox spacing="5.0">
-                                <children>
-                                      <Label text="Recherche" />
-                                      <TextField />
-                                    <ComboBox fx:id="produitComboBox" promptText="Sélectionner un produit" />
-                                    <Button styleClass="action-button" text="Ajouter" />
-                                </children>
-                            </VBox>
-                        </children>
-                    </HBox>
+                                <!-- Articles/Produits -->
+                                <TableView fx:id="articlesTable" styleClass="data-table">
+                                    <columns>
+                                        <TableColumn fx:id="produitCol" text="Produit" />
+                                        <TableColumn fx:id="prixUnitaireCol" text="Prix Unitaire" />
+                                        <TableColumn fx:id="quantiteCol" text="Quantité" />
+                                        <TableColumn fx:id="totalCol" text="Total" />
+                                    </columns>
+                                </TableView>
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <HBox>
+                                            <children>
+                                                <FontIcon iconLiteral="fa-search" iconSize="16" />
+                                                <TextField promptText="Recherche" />
+                                            </children>
+                                        </HBox>
+                                        <ComboBox fx:id="produitComboBox" promptText="Sélectionner un produit" />
+                                        <Button styleClass="action-button" text="Ajouter" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
 
-                    <!-- Ajout d'articles -->
-                    <HBox alignment="CENTER_LEFT" spacing="10" />
-                    <TableView fx:id="articlesTable1" prefHeight="134.0" prefWidth="250.0" styleClass="data-table">
-                        <columns>
-                            <TableColumn fx:id="produitCol1" text="Produit" />
-                            <TableColumn fx:id="prixUnitaireCol1" text="Prix Unitaire" />
-                            <TableColumn fx:id="quantiteCol1" text="Quantité" />
-                            <TableColumn fx:id="totalCol1" text="Total" />
-                        </columns>
-                    </TableView>
+                        <!-- Ajout d'articles -->
+                        <HBox alignment="CENTER_LEFT" spacing="10" />
+                        <TableView fx:id="articlesTable1" prefHeight="134.0" prefWidth="250.0" styleClass="data-table">
+                            <columns>
+                                <TableColumn fx:id="produitCol1" text="Produit" />
+                                <TableColumn fx:id="prixUnitaireCol1" text="Prix Unitaire" />
+                                <TableColumn fx:id="quantiteCol1" text="Quantité" />
+                                <TableColumn fx:id="totalCol1" text="Total" />
+                            </columns>
+                        </TableView>
 
-                    <!-- Total et validation -->
-                    <HBox alignment="CENTER_RIGHT" spacing="20">
-                        <Label styleClass="total-label" text="Total:" />
-                        <Label fx:id="totalFactureLabel" styleClass="total-amount" text="0.00" />
-                    </HBox>
+                        <!-- Total et validation -->
+                        <HBox alignment="CENTER_RIGHT" spacing="20">
+                            <Label styleClass="total-label" text="Total:" />
+                            <Label fx:id="totalFactureLabel" styleClass="total-amount" text="0.00" />
+                        </HBox>
 
-                    <HBox alignment="CENTER_RIGHT" spacing="10">
-                        <Button styleClass="primary-button" text="Générer Facture" />
-                        <Button styleClass="secondary-button" text="Annuler" />
-                    </HBox>
-                </VBox>
+                        <HBox alignment="CENTER_RIGHT" spacing="10">
+                            <Button styleClass="primary-button" text="Générer Facture" />
+                            <Button styleClass="secondary-button" text="Annuler" />
+                        </HBox>
+                    </VBox>
 
-               <VBox fx:id="produitLayout" spacing="10" styleClass="section" visible="false" />
-               <VBox fx:id="depenseLayout" spacing="10" styleClass="section" visible="false" />
-               <VBox fx:id="clotureLayout" spacing="10" styleClass="section" visible="false" />
-               <VBox fx:id="parametreLayout" spacing="10" styleClass="section" visible="false" />
-            </children>
-         </StackPane>
+                    <VBox fx:id="produitLayout" spacing="10" styleClass="section" visible="false" />
+                    <VBox fx:id="depenseLayout" spacing="10" styleClass="section" visible="false" />
+                    <VBox fx:id="clotureLayout" spacing="10" styleClass="section" visible="false" />
+                    <VBox fx:id="parametreLayout" spacing="10" styleClass="section" visible="false" />
+                </children>
+            </StackPane>
         </VBox>
     </center>
 </BorderPane>
