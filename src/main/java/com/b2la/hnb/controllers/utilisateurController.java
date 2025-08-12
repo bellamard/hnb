@@ -120,6 +120,39 @@ public class utilisateurController {
 
     }
 
+    public void dataUser(){
+        if(confirme.getText().equals(password.getText())){
+            throw new RuntimeException("Vos Mots des passe ne sont pas identique");
+
+        }
+        if(fieldPhone.getText().length()<9&& fieldPhone.getText().length()>14){
+            throw new RuntimeException("Votre numero de telephone est incorrect");
+
+        }
+        if(fieldUsername.getText().isEmpty()){
+            throw new RuntimeException("Votre nom est incorrect");
+
+        }
+        Utilisateur utilis= new Utilisateur();
+        utilis.setMotDePasse(BcryptUtil.hashPassword(confirme.getText()));
+        utilis.setTelephone(fieldPhone.getText());
+        utilis.setUsername(fieldUsername.getText());
+
+        if(!fieldEmail.getText().isEmpty()&&
+                !fieldEmail.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
+            throw new RuntimeException("Votre email est incorrect");
+
+        }
+        if(!fieldEmail.getText().isEmpty()){
+            utilis.setEmail(fieldEmail.getText());
+        }
+        utilis.setFonction(comboFonction.getValue());
+
+        us= new utilisateurService();
+        us.save(utilis);
+        getTableauUsers();
+    }
+
     private void askSupressionUser(Long utilisateurId){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
@@ -139,5 +172,6 @@ public class utilisateurController {
         fieldPhone.setText("");
         password.setText("");
         confirme.setText("");
+        id= Long.valueOf(0);
     }
 }
