@@ -38,7 +38,8 @@ public class HelloController {
     @FXML
     protected void handleKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            onConnexion();
+//            onConnexion();
+            getDashboard();
         }
     }
 

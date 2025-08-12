@@ -506,3 +506,35 @@
     -fx-background-color: #f44336;
     -fx-text-fill: white;
 }
+/* Boutons icônes */
+.btn-icon {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+}
+
+.btn-icon:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-background-radius: 15px;
+}
+
+/* Icônes */
+.font-icon {
+    -fx-icon-color: #495057;
+}
+
+.btn-primary .font-icon,
+.btn-success .font-icon,
+.btn-danger .font-icon,
+.btn-secondary .font-icon {
+    -fx-icon-color: white;
+}
+
+.btn-icon .font-icon {
+    -fx-icon-color: #6c757d;
+}
+
+.btn-icon:hover .font-icon {
+    -fx-icon-color: #343a40;
+}
