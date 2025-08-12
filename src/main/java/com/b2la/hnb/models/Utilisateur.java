@@ -78,6 +78,10 @@ public class Utilisateur { // Nom de classe en PascalCase
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getMotDePasse() {
         return motDePasse;
     }
