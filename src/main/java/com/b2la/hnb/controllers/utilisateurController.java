@@ -47,6 +47,7 @@ public class utilisateurController {
     }
 
     public void getTableauUsers(){
+        comboFonction.getItems().addAll(Fonction.values());
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -71,6 +72,7 @@ public class utilisateurController {
 
 
         });
+        reset();
 
     }
 
@@ -131,5 +133,11 @@ public class utilisateurController {
         }
     }
 
-
+    private void reset(){
+        fieldEmail.setText("");
+        fieldUsername.setText("");
+        fieldPhone.setText("");
+        password.setText("");
+        confirme.setText("");
+    }
 }
