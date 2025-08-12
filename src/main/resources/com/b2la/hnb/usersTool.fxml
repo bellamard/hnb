@@ -1,15 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.b2la.hnb.controllers.utilisateurController"
-            prefHeight="400.0" prefWidth="800.0">
+<VBox
+        maxHeight="-Infinity"
+        maxWidth="-Infinity"
+        minHeight="-Infinity"
+        minWidth="-Infinity"
+        prefHeight="400.0"
+        prefWidth="600.0"
+        spacing="5.0"
+        fx:controller="com.b2la.hnb.controllers.utilisateurController"
+        xmlns="http://javafx.com/javafx/23.0.1"
+        xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="UTILISATEURS">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label text="NOMBRE D'UTILISATEUR:" />
+      <HBox spacing="14.0">
+         <children>
+            <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+              <columns>
+                <TableColumn fx:id="username" prefWidth="75.0" text="Username" />
+                <TableColumn fx:id="phone" prefWidth="75.0" text="Phone" />
+                <TableColumn fx:id="fonction" prefWidth="75.0" text="Fonction" />
+                <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
+                <TableColumn fx:id="action" prefWidth="75.0" text="Action" />
 
-</AnchorPane>
+              </columns>
+            </TableView>
+            <VBox spacing="8.0">
+               <children>
+                  <TextField fx:id="fieldUsername" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="user name" />
+                  <TextField fx:id="fieldPhone" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="telephone" />
+                  <TextField fx:id="fieldEmail" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="e-mail" />
+                  <ComboBox fx:id="comboFonction" prefWidth="150.0" />
+                  <TextField fx:id="password" accessibleRole="PASSWORD_FIELD" layoutX="10.0" layoutY="77.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="********" />
+                  <TextField fx:id="confirme" accessibleRole="PASSWORD_FIELD" layoutX="10.0" layoutY="144.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="********" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addUtilisateur" prefHeight="40.0" prefWidth="120.0" text="AJOUTER" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="MODIFIER" />
+               </children>
+            </VBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+   </padding>
+</VBox>

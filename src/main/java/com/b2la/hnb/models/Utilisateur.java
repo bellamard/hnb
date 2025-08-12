@@ -96,6 +96,22 @@ public class Utilisateur { // Nom de classe en PascalCase
         this.fonction = fonction;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     // Méthodes métier
     public void desactiverCompte() {
         this.actif = false;
