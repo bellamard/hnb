@@ -4,6 +4,10 @@ import com.b2la.hnb.models.Utilisateur;
 import com.b2la.hnb.services.utilisateurService;
 import com.b2la.hnb.util.BcryptUtil;
 import com.b2la.hnb.util.Fonction;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +19,8 @@ import java.util.regex.Pattern;
 public class utilisateurController {
 
     utilisateurService us;
+    @FXML
+    TableView<Utilisateur> tableView;
     @FXML
     TableColumn<Utilisateur, String> username, phone, email,action;
     @FXML
@@ -47,9 +53,11 @@ public class utilisateurController {
     }
 
     public void getTableauUsers(){
+        us= new utilisateurService();
+        List<Utilisateur> utilisateursList = us.findAll();
         comboFonction.getItems().addAll(Fonction.values());
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
-        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("telephone"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         fonction.setCellValueFactory(new PropertyValueFactory<>("fonction"));
         action.setCellFactory(col->new TableCell<>(){
@@ -72,7 +80,18 @@ public class utilisateurController {
 
 
         });
+
+        Task<ObservableList<Utilisateur>> task= new Task<>(){
+
+            @Override
+            protected ObservableList<Utilisateur> call() throws Exception {
+                return FXCollections.observableArrayList(utilisateursList);
+            }
+        };
+        task.setOnSucceeded(e->tableView.setItems(task.getValue()));
+        new Thread(task).start();
         reset();
+
 
     }
 

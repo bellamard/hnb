@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -29,7 +30,7 @@ public class HelloController {
     @FXML
     private Pane panelLoading;
     @FXML
-    private Button connexion, fermer;
+    private Button connexion, fermer, btnUtilisateur;
     @FXML
     private TextField nameField;
     @FXML
@@ -112,5 +113,18 @@ public class HelloController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    public void getUtilisateur() throws IOException {
+        FXMLLoader loader= new FXMLLoader(HelloApplication.class.getResource("usersTool.fxml"));
+        Parent utilis=loader.load();
+        Stage utilisStage= new Stage();
+        utilisStage.setResizable(false);
+        utilisateurController uss= loader.getController();
+        utilisStage.initModality(Modality.APPLICATION_MODAL);
+        utilisStage.setTitle("Gestion Utilisateur!!!");
+        utilisStage.setScene(new Scene(utilis));
+        utilisStage.showAndWait();
+
     }
 }

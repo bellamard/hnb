@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.utilisateurController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.utilisateurController">
    <children>
       <Label text="UTILISATEURS">
          <font>
@@ -20,13 +14,13 @@
       </Label>
       <HBox spacing="14.0">
          <children>
-            <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <TableView fx:id="tableView" >
               <columns>
-                <TableColumn fx:id="username" prefWidth="75.0" text="Username" />
-                <TableColumn fx:id="phone" prefWidth="75.0" text="Phone" />
-                <TableColumn fx:id="fonction" prefWidth="75.0" text="Fonction" />
-                <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
-                <TableColumn fx:id="action" prefWidth="75.0" text="Action" />
+                <TableColumn fx:id="username"  text="Username" />
+                <TableColumn fx:id="phone"  text="Phone" />
+                <TableColumn fx:id="fonction"  text="Fonction" />
+                <TableColumn fx:id="email"  text="Email" />
+                <TableColumn fx:id="action" text="Action" />
 
               </columns>
             </TableView>
