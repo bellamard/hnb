@@ -11,6 +11,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +28,14 @@ public class utilisateurController {
     TableColumn<Utilisateur, Fonction> fonction;
 
     @FXML
-    TextField fieldUsername, fieldPhone, fieldEmail, password, confirme;
+    TextField fieldUsername, fieldPhone, fieldEmail;
+
+    @FXML
+    PasswordField password, confirme;
+
     @FXML
     ComboBox<Fonction> comboFonction;
-    @FXML Button btnModifierUser;
+    @FXML Button btnModifierUser, btnAjouter;
     Long id;
 
 
@@ -78,7 +83,17 @@ public class utilisateurController {
                 });
             }
 
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if(empty)setGraphic(null);
+                else{
+                    HBox boxBtn=new HBox(2);
+                    boxBtn.getChildren().addAll(btnS,btnM);
+                    setGraphic(boxBtn);
 
+                }
+            }
         });
 
         Task<ObservableList<Utilisateur>> task= new Task<>(){
@@ -101,8 +116,12 @@ public class utilisateurController {
         fieldEmail.setText(utilisateur.getEmail());
         fieldPhone.setText(utilisateur.getTelephone());
         password.setText(utilisateur.getMotDePasse());
+        password.setEditable(false);
+        password.setDisable(true);
         confirme.setText("");
         comboFonction.setValue(Fonction.valueOf(String.valueOf(utilisateur.getFonction())));
+        btnAjouter.setVisible(false);
+        btnModifierUser.setVisible(true);
     }
     @FXML
     public void modifier(){
@@ -139,8 +158,9 @@ public class utilisateurController {
 
     }
 
-    public void dataUser(){
-        if(confirme.getText().equals(password.getText())){
+    @FXML
+    public void addDataUser(){
+        if(!confirme.getText().equals(password.getText())){
             throw new RuntimeException("Vos Mots des passe ne sont pas identique");
 
         }
@@ -190,7 +210,12 @@ public class utilisateurController {
         fieldUsername.setText("");
         fieldPhone.setText("");
         password.setText("");
+        password.setEditable(true);
+        password.setDisable(false);
         confirme.setText("");
         id= Long.valueOf(0);
+        btnAjouter.setVisible(true);
+        btnModifierUser.setVisible(false);
+
     }
 }

@@ -39,8 +39,8 @@ public class HelloController {
     @FXML
     protected void handleKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-//            onConnexion();
-            getDashboard();
+            onConnexion();
+
         }
     }
 
@@ -120,7 +120,6 @@ public class HelloController {
         Parent utilis=loader.load();
         Stage utilisStage= new Stage();
         utilisStage.setResizable(false);
-        utilisateurController uss= loader.getController();
         utilisStage.initModality(Modality.APPLICATION_MODAL);
         utilisStage.setTitle("Gestion Utilisateur!!!");
         utilisStage.setScene(new Scene(utilis));

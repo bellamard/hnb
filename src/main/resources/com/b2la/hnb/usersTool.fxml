@@ -14,12 +14,12 @@
       </Label>
       <HBox spacing="14.0">
          <children>
-            <TableView fx:id="tableView" >
+            <TableView fx:id="tableView">
               <columns>
-                <TableColumn fx:id="username"  text="Username" />
-                <TableColumn fx:id="phone"  text="Phone" />
-                <TableColumn fx:id="fonction"  text="Fonction" />
-                <TableColumn fx:id="email"  text="Email" />
+                <TableColumn fx:id="username" text="Username" />
+                <TableColumn fx:id="phone" text="Phone" />
+                <TableColumn fx:id="fonction" text="Fonction" />
+                <TableColumn fx:id="email" text="Email" />
                 <TableColumn fx:id="action" text="Action" />
 
               </columns>
@@ -30,9 +30,9 @@
                   <TextField fx:id="fieldPhone" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="telephone" />
                   <TextField fx:id="fieldEmail" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="e-mail" />
                   <ComboBox fx:id="comboFonction" prefWidth="150.0" />
-                  <TextField fx:id="password" accessibleRole="PASSWORD_FIELD" layoutX="10.0" layoutY="77.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="********" />
-                  <TextField fx:id="confirme" accessibleRole="PASSWORD_FIELD" layoutX="10.0" layoutY="144.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="********" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addUtilisateur" prefHeight="40.0" prefWidth="120.0" text="AJOUTER" />
+                  <PasswordField fx:id="password" promptText="*********" />
+                  <PasswordField fx:id="confirme" layoutX="10.0" layoutY="144.0" promptText="*********" />
+                  <Button fx:id="btnAjouter" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addDataUser" prefHeight="40.0" prefWidth="120.0" text="AJOUTER" />
                   <Button fx:id="btnModifierUser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifier" prefHeight="40.0" prefWidth="120.0" text="MODIFIER" visible="false" />
                </children>
             </VBox>

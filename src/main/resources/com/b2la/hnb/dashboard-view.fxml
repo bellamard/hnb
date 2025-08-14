@@ -148,7 +148,7 @@
                             </HBox>
                         </VBox>
                     </VBox>
-                    <VBox fx:id="facturationLayout" spacing="10" styleClass="section" visible="false">
+                    <VBox fx:id="facturationLayout" spacing="10" styleClass="section">
                         <Label styleClass="section-title" text="Système de Facturation" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                             <children>
@@ -205,7 +205,7 @@
 
                         <!-- Ajout d'articles -->
                         <HBox alignment="CENTER_LEFT" spacing="10" />
-                        <TableView fx:id="articlesTable1" prefHeight="134.0" prefWidth="250.0" styleClass="data-table">
+                        <TableView fx:id="articlesTable1"  styleClass="data-table">
                             <columns>
                                 <TableColumn fx:id="produitCol1" text="Produit" />
                                 <TableColumn fx:id="prixUnitaireCol1" text="Prix Unitaire" />
@@ -227,7 +227,7 @@
                     </VBox>
 
 <!--                    <VBox fx:id="produitLayout" spacing="10" styleClass="section" visible="false" />-->
-                    <VBox fx:id="produitLayout" spacing="20" styleClass="section">
+                    <VBox fx:id="produitLayout" spacing="20" styleClass="section" visible="false">
                         <padding>
                             <Insets bottom="20" left="20" right="20" top="20" />
                         </padding>
@@ -242,21 +242,13 @@
                                     <FontIcon iconLiteral="fa-plus-circle" iconSize="16" />
                                 </graphic>
                             </Button>
-                            <Button styleClass="btn-primary" text="Modifier Produit">
-                                <graphic>
-                                    <FontIcon iconLiteral="fa-pencil" iconSize="16" />
-                                </graphic>
-                            </Button>
-                            <Button styleClass="btn-danger" text="Supprimer Sélection">
-                                <graphic>
-                                    <FontIcon iconLiteral="fa-minus-circle" iconSize="16" />
-                                </graphic>
-                            </Button>
                             <Button styleClass="btn-danger" text="Tout Supprimer">
                                 <graphic>
                                     <FontIcon iconLiteral="fa-trash" iconSize="16" />
                                 </graphic>
                             </Button>
+                            <TextField fx:id="searchField" promptText="RECHERCHE" maxWidth="200"/>
+                            <FontIcon iconLiteral="fa-search" iconSize="16" />
                         </HBox>
 
                         <!-- Tableau des produits -->
@@ -349,7 +341,7 @@
                             </Button>
                         </VBox>
                     </VBox>
-                    <VBox fx:id="depenseLayout" spacing="10" styleClass="section" visible="false" >
+                    <VBox fx:id="depenseLayout" spacing="10" styleClass="section" visible="false">
 
 
                     </VBox>

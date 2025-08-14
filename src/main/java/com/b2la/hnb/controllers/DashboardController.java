@@ -159,6 +159,10 @@ public class DashboardController {
 
     }
 
+    private void getAllProduit(){
+
+    }
+
 
 
 }
