@@ -43,6 +43,59 @@ public class Produit { // Nom de classe en PascalCase
         this.type = type;
     }
 
-    // Getters et setters (inchangés mais adaptés aux nouveaux noms)
-    // ...
+    public List<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<Promotion> promotions) {
+        this.promotions = promotions;
+    }
+
+    public categoryType getType() {
+        return type;
+    }
+
+    public void setType(categoryType type) {
+        this.type = type;
+    }
+
+    public int getQuantiteStock() {
+        return quantiteStock;
+    }
+
+    public void setQuantiteStock(int quantiteStock) {
+        this.quantiteStock = quantiteStock;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrixUnitaire() {
+        return prixUnitaire;
+    }
+
+    public void setPrixUnitaire(double prixUnitaire) {
+        this.prixUnitaire = prixUnitaire;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
