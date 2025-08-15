@@ -9,6 +9,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -37,8 +38,10 @@ public class ProduitController {
 
     @FXML
     Button btnAdd, btnAllDelete, btnValider;
+    Label messageAlert;
 
     produitService ps;
+    Long idProduit;
 
     public void initialize() {
         getProduitAll();
@@ -59,7 +62,6 @@ public class ProduitController {
                 Produit produitItem= getTableView().getItems().get(getIndex());
                 System.out.println(produitItem.getNom());
                 btnMod.setOnAction(e->{
-
                     getProduit(produitItem);
                 });
 
@@ -93,6 +95,7 @@ public class ProduitController {
         resetProduit();
     }
     private void getProduit(Produit produit){
+        idProduit=produit.getId();
         articleField.setText(produit.getNom());
         description.setText(produit.getDescription());
         prixField.setText(String.valueOf(produit.getPrixUnitaire()));
@@ -150,8 +153,17 @@ public class ProduitController {
 
     }
     private void update(){
+        if(articleField.getText().isEmpty())messageErreur("Votre champs nom est vide!!!");
+        if(description.getText().isEmpty())messageErreur("Votre champs description est vide!!!");
+        if(prixField.getText().isEmpty())messageErreur("votre champs prix est vide!!!");
+        if(category.getValue().toString().isEmpty())messageErreur("Votre categorie est vide!!!");
+        if(nbreArticle.getValue().toString().isEmpty())messageErreur("Votre nombre d'article est vide!!!");
 
+    }
 
+    private void messageErreur(String message){
+        messageAlert.setText(message);
+        throw new RuntimeException(message);
     }
 
 
