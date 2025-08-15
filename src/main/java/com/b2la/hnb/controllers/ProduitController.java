@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import java.awt.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ProduitController {
     @FXML
@@ -112,10 +113,27 @@ public class ProduitController {
 
     }
 
+    @FXML
     public void getProduitSearch(String search){
+        List<Produit> produitList=ps.findAll().stream().filter(produit ->
+                produit.getNom().toLowerCase().contains(search.toLowerCase()) ||
+                produit.getDescription().toLowerCase().contains(search.toLowerCase())||
+                String.valueOf(produit.getPrixUnitaire()).toLowerCase().contains(search.toLowerCase())||
+                String.valueOf(produit.getQuantiteStock()).toLowerCase().contains(search.toLowerCase())
+        ).collect(Collectors.toList());
 
+        Task<ObservableList<Produit>> task= new Task<ObservableList<Produit>>() {
+            @Override
+            protected ObservableList<Produit> call() throws Exception {
+                return FXCollections.observableArrayList(produitList);
+            }
+        };
+        task.setOnSucceeded(e->tableProduit.setItems(task.getValue()));
+        new Thread(task).start();
+        resetProduit();
     }
-    public void deleteProduitll(){
+    @FXML
+    public void deleteAllProduit(){
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
@@ -123,7 +141,6 @@ public class ProduitController {
         alert.setContentText("Cliquez sur Ok pour confirmer la suppression.");
         Optional<ButtonType> result= alert.showAndWait();
         if(result.isPresent()&& result.get()== ButtonType.OK){
-            ps= new produitService();
             List<Produit> produitList=ps.findAll();
             for (Produit produit : produitList) {
                 ps.delete(produit.getId());
