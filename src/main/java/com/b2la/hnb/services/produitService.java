@@ -59,7 +59,7 @@ public class produitService {
         EntityManager em = JPAUtil.getEntityManager();
         List<Produit> produitsList = null;
         try {
-            TypedQuery<Produit> query = em.createQuery("SELECT p FROM Produits p", Produit.class);
+            TypedQuery<Produit> query = em.createQuery("SELECT p FROM Produit p", Produit.class);
             produitsList = query.getResultList();
         } finally {
             em.close();

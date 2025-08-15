@@ -20,6 +20,8 @@ module com.b2la.hnb {
     requires java.naming;
     requires java.sql;
     requires javafx.graphics;
+    requires javafx.base;
+//    requires com.b2la.hnb;
 
     opens com.b2la.hnb.models to org.hibernate.orm.core, javafx.base;
     exports com.b2la.hnb.models;
