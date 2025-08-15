@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 
 public class ProduitController {
     @FXML
@@ -54,15 +55,15 @@ public class ProduitController {
             Button btnMod= new Button("Mod");
             Button btnSup= new Button("Sup");
             {
-                Produit produit= getTableView().getItems().get(getIndex());
-                System.out.println(produit.getNom());
+                Produit produitItem= getTableView().getItems().get(getIndex());
+                System.out.println(produitItem.getNom());
                 btnMod.setOnAction(e->{
 
-                    getProduit(produit);
+                    getProduit(produitItem);
                 });
 
                 btnSup.setOnAction(e->{
-
+                    askSupression(produitItem.getId());
                 });
             }
 
@@ -114,7 +115,7 @@ public class ProduitController {
     public void getProduitSearch(String search){
 
     }
-    public void deleteProduit(Long id){
+    public void deleteProduitll(){
 
     }
     private void update(){
@@ -127,5 +128,18 @@ public class ProduitController {
         articleField.setText("");
         prixField.setText("0");
         description.setText("");
+    }
+
+    private void askSupression(Long produitId){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Voulez-vous Supprimer ?");
+        alert.setContentText("Cliquez sur Ok pour confirmer la suppression.");
+        Optional<ButtonType> result= alert.showAndWait();
+        if(result.isPresent()&& result.get()== ButtonType.OK){
+            ps.delete(produitId);
+            System.out.println("suppression valider");
+            getProduitAll();
+        }
     }
 }
