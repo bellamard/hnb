@@ -117,18 +117,26 @@ public class ProduitController {
     }
     public void deleteProduitll(){
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Voulez-vous Supprimer tout les produits?");
+        alert.setContentText("Cliquez sur Ok pour confirmer la suppression.");
+        Optional<ButtonType> result= alert.showAndWait();
+        if(result.isPresent()&& result.get()== ButtonType.OK){
+            ps= new produitService();
+            List<Produit> produitList=ps.findAll();
+            for (Produit produit : produitList) {
+                ps.delete(produit.getId());
+            }
+        }
+        getProduitAll();
+
     }
     private void update(){
 
 
     }
-    private void reset(){
-        nbreArticle.setValue(0);
-        category.setValue(categoryType.plat);
-        articleField.setText("");
-        prixField.setText("0");
-        description.setText("");
-    }
+
 
     private void askSupression(Long produitId){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
