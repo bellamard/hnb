@@ -152,12 +152,22 @@ public class ProduitController {
         getProduitAll();
 
     }
+    @FXML
     private void update(){
         if(articleField.getText().isEmpty())messageErreur("Votre champs nom est vide!!!");
         if(description.getText().isEmpty())messageErreur("Votre champs description est vide!!!");
         if(prixField.getText().isEmpty())messageErreur("votre champs prix est vide!!!");
         if(category.getValue().toString().isEmpty())messageErreur("Votre categorie est vide!!!");
         if(nbreArticle.getValue().toString().isEmpty())messageErreur("Votre nombre d'article est vide!!!");
+        Produit produit= new Produit();
+        produit.setNom(articleField.getText());
+        produit.setDescription(description.getText());
+        produit.setType(category.getValue());
+        produit.setQuantiteStock(nbreArticle.getValue());
+        produit.setPrixUnitaire(Double.parseDouble(prixField.getText()));
+        ps= new produitService();
+        ps.update(produit);
+        getProduitAll();
 
     }
 

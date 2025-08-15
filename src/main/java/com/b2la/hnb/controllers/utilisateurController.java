@@ -138,9 +138,7 @@ public class utilisateurController {
 
         }
         Utilisateur utilis= new Utilisateur();
-        utilis.setMotDePasse(BcryptUtil.hashPassword(confirme.getText()));
-        utilis.setTelephone(fieldPhone.getText());
-        utilis.setUsername(fieldUsername.getText());
+
 
         if(!fieldEmail.getText().isEmpty()&&
                 !fieldEmail.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
@@ -150,6 +148,9 @@ public class utilisateurController {
         if(!fieldEmail.getText().isEmpty()){
             utilis.setEmail(fieldEmail.getText());
         }
+        utilis.setMotDePasse(BcryptUtil.hashPassword(confirme.getText()));
+        utilis.setTelephone(fieldPhone.getText());
+        utilis.setUsername(fieldUsername.getText());
         utilis.setFonction(comboFonction.getValue());
         utilis.setId(id);
         us= new utilisateurService();
