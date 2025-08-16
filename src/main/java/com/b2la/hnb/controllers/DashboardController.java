@@ -43,13 +43,14 @@ public class DashboardController {
     @FXML
     ComboBox<categoryType> category;
     @FXML
-    TableView<Produit> tableProduit;
+    TableView<Produit> tableProduit, articlesTable;
+
     @FXML
-    TableColumn<Produit, String>Tarticle, Tdescription, Taction;
+    TableColumn<Produit, String>Tarticle, Tdescription, Taction, produitArticle;
     @FXML
-    TableColumn<Produit, Integer>Tquantite;
+    TableColumn<Produit, Integer>Tquantite, quantiteArticle;
     @FXML
-    TableColumn<Produit, Double>Tprix;
+    TableColumn<Produit, Double>Tprix, prixUnitaireArticle;
     @FXML
     TableColumn<Produit, categoryType>Ttype;
 
@@ -92,7 +93,7 @@ public class DashboardController {
     public void recoveryUsername() {
         Stockage stock = new Stockage();
         username.setText(stock.getUsername());
-        fonction.setText(stock.getUsername());
+        fonction.setText(stock.getFonction());
     }
 
     public void viewDateTime() {
@@ -221,7 +222,20 @@ public class DashboardController {
     }
 
     private void getAllProduit(){
+        ps=new produitService();
+        List<Produit> prodList= ps.findAll();
+        produitArticle.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        prixUnitaireArticle.setCellValueFactory(new PropertyValueFactory<>("prixUnitaire"));
+        quantiteArticle.setCellValueFactory(new PropertyValueFactory<>("quantiteStock"));
+        Task<ObservableList<Produit>> task= new Task<>(){
 
+            @Override
+            protected ObservableList<Produit> call() throws Exception {
+                return FXCollections.observableArrayList(prodList);
+            }
+        };
+        task.setOnSucceeded(e->articlesTable.setItems(task.getValue()));
+        new Thread(task).start();
     }
     @FXML
     public void getProduitAll(){
