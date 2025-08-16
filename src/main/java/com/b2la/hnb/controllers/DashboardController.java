@@ -1,6 +1,7 @@
 package com.b2la.hnb.controllers;
 
 
+import com.b2la.hnb.models.Commande;
 import com.b2la.hnb.models.Produit;
 import com.b2la.hnb.services.facturationService;
 import com.b2la.hnb.services.produitService;
@@ -64,7 +65,9 @@ public class DashboardController {
     Long idProduit;
     Double dashBoardFacture=0.0, dashBoardProduit=0.0;
 
-    FacturationController fc;
+    String commande;
+    Double prixUnitcomm;
+    Long idComm;
 
     public void initialize() {
         recoveryUsername();
@@ -234,6 +237,14 @@ public class DashboardController {
                 return FXCollections.observableArrayList(prodList);
             }
         };
+        articlesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                System.out.println("Ligne sélectionnée : " + newSelection.getName() + ", Âge : " + newSelection.getAge());
+                idComm= newSelection.getId();
+                commande= newSelection.getNom();
+                prixUnitcomm= newSelection.getPrixUnitaire();
+            }
+        });
         task.setOnSucceeded(e->articlesTable.setItems(task.getValue()));
         new Thread(task).start();
     }

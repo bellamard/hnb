@@ -194,7 +194,7 @@
                                         <Button styleClass="action-button" text="Ajouter" />
                                     </children>
                                 </VBox>
-                        <Label text="Description">
+                        <Label text="Description" fx:id="labelDescription">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
