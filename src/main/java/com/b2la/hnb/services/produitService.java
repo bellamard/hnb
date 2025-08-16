@@ -83,4 +83,19 @@ public class produitService {
             em.close();
         }
     }
+
+    public int numberProduit(){
+        EntityManager em = JPAUtil.getEntityManager();
+        int numbreProduit=0;
+        try {
+
+            numbreProduit=((Number) em.createQuery("SELECT SUM(p.quantiteStock) FROM Produit p")
+                    .getSingleResult())
+                    .intValue();
+        }finally {
+            em.close();
+        }
+        return numbreProduit;
+
+    }
 }

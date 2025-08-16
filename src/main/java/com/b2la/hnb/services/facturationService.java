@@ -85,4 +85,19 @@ public class facturationService {
         }
     }
 
+    public double sommeFacture(){
+        EntityManager em = JPAUtil.getEntityManager();
+        double numbreFacture=0;
+        try {
+            Double result = (Double) em.createQuery("SELECT SUM(f.ttc) FROM Facturation f")
+                    .getSingleResult();
+            numbreFacture = (result != null) ? result : 0.0;
+        }finally {
+            em.close();
+        }
+
+
+        return numbreFacture;
+    }
+
 }

@@ -2,6 +2,7 @@ package com.b2la.hnb.controllers;
 
 
 import com.b2la.hnb.models.Produit;
+import com.b2la.hnb.services.facturationService;
 import com.b2la.hnb.services.produitService;
 import com.b2la.hnb.util.Stockage;
 import com.b2la.hnb.util.categoryType;
@@ -58,6 +59,7 @@ public class DashboardController {
     Label msgAlert;
 
     produitService ps;
+    facturationService fs;
     Long idProduit;
     Double dashBoardFacture=0.0, dashBoardProduit=0.0;
 
@@ -72,6 +74,12 @@ public class DashboardController {
             nbreArticle.getItems().add(i);
         }
         category.getItems().addAll(categoryType.values());
+        ps=new produitService();
+        fs= new facturationService();
+        dashBoardProduit= (double) ps.numberProduit();
+        dashBoardFacture=fs.sommeFacture();
+        dashBoardNumber();
+
     }
 
     private void dashBoardNumber(){
@@ -219,6 +227,8 @@ public class DashboardController {
     public void getProduitAll(){
         ps=new produitService();
         List<Produit> produitList= ps.findAll();
+        dashBoardProduit= (double) ps.numberProduit();
+        dashBoardNumber();
         Tarticle.setCellValueFactory(new PropertyValueFactory<>("nom"));
         Tdescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         Tprix.setCellValueFactory(new PropertyValueFactory<>("prixUnitaire"));
@@ -268,6 +278,7 @@ public class DashboardController {
         new Thread(task).start();
         resetProduit();
     }
+
     private void getProduit(Produit produit){
         idProduit=produit.getId();
         articleField.setText(produit.getNom());
@@ -307,6 +318,7 @@ public class DashboardController {
         new Thread(task).start();
         resetProduit();
     }
+
     @FXML
     public void deleteAllProduit(){
 
@@ -324,6 +336,7 @@ public class DashboardController {
         getProduitAll();
 
     }
+
     @FXML
     private void updateProduit(){
         if(articleField.getText().isEmpty())messageErreur("Votre champs nom est vide!!!");
@@ -343,6 +356,7 @@ public class DashboardController {
         getProduitAll();
 
     }
+
     @FXML
     private void addProduit(){
         if(articleField.getText().isEmpty())messageErreur("Votre champs nom est vide!!!");
@@ -362,6 +376,7 @@ public class DashboardController {
         getProduitAll();
 
     }
+
     private void boiteAlert(String message){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
@@ -377,7 +392,6 @@ public class DashboardController {
         } );
         throw new RuntimeException(message);
     }
-
 
     private void askSupression(Long produitId){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
