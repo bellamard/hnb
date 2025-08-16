@@ -59,6 +59,7 @@ public class DashboardController {
 
     produitService ps;
     Long idProduit;
+    Double dashBoardFacture=0.0, dashBoardProduit=0.0;
 
     FacturationController fc;
 
@@ -66,10 +67,18 @@ public class DashboardController {
         recoveryUsername();
         viewDateTime();
         cardLayout("");
+        dashBoardNumber();
         for (int i = 0; i < 1000; i++) {
             nbreArticle.getItems().add(i);
         }
         category.getItems().addAll(categoryType.values());
+    }
+
+    private void dashBoardNumber(){
+        runLater(()->{
+            PanneauDashboardProduit.setText(String.valueOf(dashBoardProduit));
+            PanneauDashboardFacture.setText(String.valueOf(dashBoardFacture));
+        });
     }
 
     public void recoveryUsername() {
