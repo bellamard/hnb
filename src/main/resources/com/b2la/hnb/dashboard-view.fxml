@@ -92,8 +92,8 @@
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <FontIcon iconLiteral="fa-line-chart" iconSize="24" styleClass="stat-icon" />
                         <VBox spacing="5">
-                            <Label styleClass="stat-value" text="12,345" />
-                            <Label styleClass="stat-label" text="Visiteurs" />
+                            <Label fx:id="PanneauDashboardProduit" styleClass="stat-value" text="00,0" />
+                            <Label styleClass="stat-label" text="Produits" />
                         </VBox>
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="5">
@@ -106,7 +106,7 @@
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <FontIcon iconLiteral="fa-shopping-cart" iconSize="24" styleClass="stat-icon" />
                         <VBox spacing="5">
-                            <Label styleClass="stat-value" text="8,642" />
+                            <Label fx:id="PanneauDashboardFacture" styleClass="stat-value" text="8,642" />
                             <Label styleClass="stat-label" text="Commandes" />
                         </VBox>
                     </HBox>
@@ -284,15 +284,18 @@
                                 <TextArea fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
 
+                                <Label styleClass="text-erreur-message" text="" fx:id="msgAlert" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+
 
                                 <!-- Boutons d'action -->
                                 <HBox spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
-                                    <Button styleClass="btn-success" text="Modifier" onAction="#updateProduit">
+                                    <Button fx:id="btnProduitMod" visible="false" styleClass="btn-success" text="Modifier" onAction="#updateProduit">
                                         <graphic>
-                                            <FontIcon iconLiteral="fa-floppy-o" iconSize="16" />
+                                            <FontIcon iconLiteral="fa-pencil-square-o" iconSize="16" />
                                         </graphic>
                                     </Button>
-                                    <Button styleClass="btn-success" text="Enregistrer" onAction="#addProduit">
+                                    <Button fx:id="btnProduitAdd" styleClass="btn-success" text="Enregistrer" onAction="#addProduit">
                                         <graphic>
                                             <FontIcon iconLiteral="fa-floppy-o" iconSize="16" />
                                         </graphic>

@@ -12,6 +12,11 @@
     -fx-icon-color: -dark;
 }
 
+.text-erreur-message{
+-fx-fill: -danger;
+-fx-font-size:2em
+}
+
 .stat-icon {
     -fx-icon-color: white;
     -fx-icon-size: 24px;

@@ -23,11 +23,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static javafx.application.Platform.runLater;
+
 public class DashboardController {
     @FXML
-    private Label username, fonction, dateHeure;
+    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture;
     @FXML
-    private Button home,facturation, produit, cloture, depense, utilisateur;
+    private Button home,facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd;
     @FXML
     private VBox homeLayout,facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout;
 
@@ -52,7 +54,8 @@ public class DashboardController {
 
     @FXML
     Button btnAdd, btnAllDelete, btnValider;
-    Label messageAlert;
+    @FXML
+    Label msgAlert;
 
     produitService ps;
     Long idProduit;
@@ -63,6 +66,10 @@ public class DashboardController {
         recoveryUsername();
         viewDateTime();
         cardLayout("");
+        for (int i = 0; i < 1000; i++) {
+            nbreArticle.getItems().add(i);
+        }
+        category.getItems().addAll(categoryType.values());
     }
 
     public void recoveryUsername() {
@@ -205,20 +212,25 @@ public class DashboardController {
         List<Produit> produitList= ps.findAll();
         Tarticle.setCellValueFactory(new PropertyValueFactory<>("nom"));
         Tdescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        Tprix.setCellValueFactory(new PropertyValueFactory<>("prix"));
-        Tquantite.setCellValueFactory(new PropertyValueFactory<>("quantite_stock"));
+        Tprix.setCellValueFactory(new PropertyValueFactory<>("prixUnitaire"));
+        Tquantite.setCellValueFactory(new PropertyValueFactory<>("quantiteStock"));
         Ttype.setCellValueFactory(new PropertyValueFactory<>("type"));
         Taction.setCellFactory(col->new TableCell<>(){
             Button btnMod= new Button("Mod");
             Button btnSup= new Button("Sup");
             {
-                Produit produitItem= getTableView().getItems().get(getIndex());
-                System.out.println(produitItem.getNom());
+
                 btnMod.setOnAction(e->{
+                    Produit produitItem= getTableView().getItems().get(getIndex());
+                    System.out.println(produitItem.getNom());
                     getProduit(produitItem);
+                    btnProduitMod.setVisible(true);
+                    btnProduitAdd.setVisible(false);
                 });
 
                 btnSup.setOnAction(e->{
+                    Produit produitItem= getTableView().getItems().get(getIndex());
+                    System.out.println(produitItem.getNom());
                     askSupression(produitItem.getId());
                 });
             }
@@ -260,13 +272,10 @@ public class DashboardController {
         articleField.setText("");
         prixField.setText("");
         description.setText("");
-        for (int i = 0; i < 1000; i++) {
-            nbreArticle.getItems().add(i);
-        }
         nbreArticle.setValue(0);
-        category.getItems().addAll(categoryType.values());
         category.setValue(categoryType.plat);
-
+        btnProduitAdd.setVisible(true);
+        btnProduitMod.setVisible(false);
     }
 
     @FXML
@@ -309,7 +318,7 @@ public class DashboardController {
     @FXML
     private void updateProduit(){
         if(articleField.getText().isEmpty())messageErreur("Votre champs nom est vide!!!");
-        if(description.getText().isEmpty())messageErreur("Votre champs description est vide!!!");
+//        if(description.getText().isEmpty())messageErreur("Votre champs description est vide!!!");
         if(prixField.getText().isEmpty())messageErreur("votre champs prix est vide!!!");
         if(category.getValue().toString().isEmpty())messageErreur("Votre categorie est vide!!!");
         if(nbreArticle.getValue().toString().isEmpty())messageErreur("Votre nombre d'article est vide!!!");
@@ -328,7 +337,7 @@ public class DashboardController {
     @FXML
     private void addProduit(){
         if(articleField.getText().isEmpty())messageErreur("Votre champs nom est vide!!!");
-        if(description.getText().isEmpty())messageErreur("Votre champs description est vide!!!");
+//        if(description.getText().isEmpty())messageErreur("Votre champs description est vide!!!");
         if(prixField.getText().isEmpty())messageErreur("votre champs prix est vide!!!");
         if(category.getValue().toString().isEmpty())messageErreur("Votre categorie est vide!!!");
         if(nbreArticle.getValue().toString().isEmpty())messageErreur("Votre nombre d'article est vide!!!");
@@ -340,12 +349,23 @@ public class DashboardController {
         produit.setPrixUnitaire(Double.parseDouble(prixField.getText()));
         ps= new produitService();
         ps.save(produit);
+        boiteAlert("felicitation vous avez enregistre le produit "+produit.getNom());
         getProduitAll();
 
     }
+    private void boiteAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(message.toUpperCase().substring(0,10));
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     private void messageErreur(String message){
-        messageAlert.setText(message);
+
+        runLater(() -> {
+            msgAlert.setText(message);
+        } );
         throw new RuntimeException(message);
     }
 
