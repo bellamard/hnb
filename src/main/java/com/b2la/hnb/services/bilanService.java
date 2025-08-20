@@ -60,9 +60,12 @@ public class bilanService {
         EntityManager em = JPAUtil.getEntityManager();
         List<Bilan> bilanList = null;
         try {
-            TypedQuery<Bilan> query = em.createQuery("SELECT b FROM Bilans b", Bilan.class);
+            TypedQuery<Bilan> query = em.createQuery("SELECT b FROM Bilan b", Bilan.class);
             bilanList = query.getResultList();
-        } finally {
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
             em.close();
         }
         return bilanList;

@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -95,6 +96,7 @@ public class DashboardController {
         dashBoardProduit = (double) ps.numberProduit();
         dashBoardFacture = fs.sommeFacture();
         dashBoardNumber();
+        genererBilan();
 
     }
 
@@ -242,17 +244,30 @@ public class DashboardController {
         try {
             bs = new bilanService();
             List<Bilan> bilanList = bs.findAll();
-            if(bilanList.isEmpty()){
+            if(!bilanList.isEmpty()){
                 Bilan lastBilan=bs.lastBilan();
-                if(!LocalDate.now().equals(lastBilan.getDebutBilan())){
+                System.out.println(LocalDate.now());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                if(!LocalDate.now().toString().equals(sdf.format(lastBilan.getDebutBilan()).toString())){
                     ps= new produitService();
-                    fs= new facturationService();
                     Bilan bil= new Bilan();
                     bil.setProduits(ps.findAll());
-                    bil.setFacturations(fs.);
-                    bilanHebdo=
+                    bs.save(bil);
+                    bil=bs.lastBilan();
+                    bilanHebdo=bil;
+                }else{
+                    bilanHebdo=lastBilan;
                 }
             }
+            else{
+                ps= new produitService();
+                Bilan bil= new Bilan();
+                bil.setProduits(ps.findAll());
+                bs.save(bil);
+                bil=bs.lastBilan();
+                bilanHebdo=bil;
+            }
+
 
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
@@ -268,7 +283,7 @@ public class DashboardController {
         comm.setProduit(pro);
         comm.setNombre(quantiteComm);
         comm.calculerPrixTotal();
-        comm.setFacturation();
+//        comm.setFacturation();
 
     }
 
@@ -449,7 +464,6 @@ public class DashboardController {
     @FXML
     private void addProduit() {
         if (articleField.getText().isEmpty()) messageErreur("Votre champs nom est vide!!!");
-//        if(description.getText().isEmpty())messageErreur("Votre champs description est vide!!!");
         if (prixField.getText().isEmpty()) messageErreur("votre champs prix est vide!!!");
         if (category.getValue().toString().isEmpty()) messageErreur("Votre categorie est vide!!!");
         if (nbreArticle.getValue().toString().isEmpty()) messageErreur("Votre nombre d'article est vide!!!");

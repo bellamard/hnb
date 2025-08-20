@@ -89,9 +89,9 @@ public class produitService {
         int numbreProduit=0;
         try {
 
-            numbreProduit=((Number) em.createQuery("SELECT SUM(p.quantiteStock) FROM Produit p")
-                    .getSingleResult())
-                    .intValue();
+            TypedQuery<Integer> query=em.createQuery("SELECT SUM(p.quantiteStock) FROM Produit p", Integer.class);
+            Integer somme=query.getSingleResult();
+            numbreProduit=(somme!=null)?somme.intValue():0;
         }finally {
             em.close();
         }
