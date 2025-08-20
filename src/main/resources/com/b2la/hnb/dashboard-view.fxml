@@ -186,7 +186,7 @@
                                     <children>
                                         <HBox>
                                             <children>
-                                                <TextField promptText="Recherche" />
+                                                <TextField fx:id="researchFacture" promptText="Recherche" />
                                                 <FontIcon iconLiteral="fa-search" iconSize="16" />
                                             </children>
                                         </HBox>
