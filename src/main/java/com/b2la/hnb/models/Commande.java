@@ -11,12 +11,6 @@ public class Commande { // Nom de classe en PascalCase
     private Long id;
 
     @Column(nullable = false)
-    private String nom;
-
-    @Column(name = "prix_unitaire", nullable = false)
-    private double prixUnitaire; // camelCase
-
-    @Column(nullable = false)
     private int nombre;
 
     @Column(name = "prix_total", nullable = false)
@@ -33,11 +27,8 @@ public class Commande { // Nom de classe en PascalCase
     public Commande() {
     }
 
-    public Commande(Long id, String nom, double prixUnitaire, int nombre,
-                    double prixTotal, Facturation facturation, Produit produit) {
+    public Commande(Long id, int nombre, double prixTotal, Facturation facturation, Produit produit) {
         this.id = id;
-        this.nom = nom;
-        this.prixUnitaire = prixUnitaire;
         this.nombre = nombre;
         this.prixTotal = prixTotal;
         this.facturation = facturation;
@@ -46,8 +37,49 @@ public class Commande { // Nom de classe en PascalCase
 
     // Getters et setters...
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(int nombre) {
+        this.nombre = nombre;
+    }
+
+    public double getPrixTotal() {
+        return prixTotal;
+    }
+
+    public void setPrixTotal(double prixTotal) {
+        this.prixTotal = prixTotal;
+    }
+
+    public Facturation getFacturation() {
+        return facturation;
+    }
+
+    public void setFacturation(Facturation facturation) {
+        this.facturation = facturation;
+    }
+
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public void setProduit(Produit produit) {
+        this.produit = produit;
+    }
+
     // Méthode de calcul automatique du prix total
     public void calculerPrixTotal() {
-        this.prixTotal = this.prixUnitaire * this.nombre;
+        this.prixTotal = this.produit.getPrixUnitaire() * this.nombre;
     }
 }

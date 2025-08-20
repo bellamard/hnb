@@ -4,6 +4,7 @@ import com.b2la.hnb.models.Bilan;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -83,4 +84,22 @@ public class bilanService {
             em.close();
         }
     }
+
+    public Bilan lastBilan(){
+        EntityManager em = JPAUtil.getEntityManager();
+        Bilan bil = null;
+        try{
+            TypedQuery<Bilan>query= em.createQuery("SELECT b FROM Bilan b ORDER BY b.id DESC", Bilan.class);
+            query.setMaxResults(1);
+            bil=query.getSingleResult();
+        }catch (NoResultException e){
+            throw new RuntimeException(e);
+        }finally {
+            em.close();
+        }
+
+        return bil;
+    }
+
+
 }

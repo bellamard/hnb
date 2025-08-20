@@ -1,8 +1,11 @@
 package com.b2la.hnb.controllers;
 
 
+import com.b2la.hnb.models.Bilan;
 import com.b2la.hnb.models.Commande;
 import com.b2la.hnb.models.Produit;
+import com.b2la.hnb.services.bilanService;
+import com.b2la.hnb.services.commandeService;
 import com.b2la.hnb.services.facturationService;
 import com.b2la.hnb.services.produitService;
 import com.b2la.hnb.util.Stockage;
@@ -19,8 +22,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,11 +70,15 @@ public class DashboardController {
 
     produitService ps;
     facturationService fs;
+    commandeService cs;
+    bilanService bs;
     Long idProduit;
     Double dashBoardFacture = 0.0, dashBoardProduit = 0.0;
+    Bilan bilanHebdo;
 
     String commande;
     Double prixUnitcomm;
+    int quantiteComm;
     Long idComm;
 
     public void initialize() {
@@ -224,11 +233,42 @@ public class DashboardController {
 
     @FXML
     private void genererFacture() {
+        fs = new facturationService();
 
     }
 
     @FXML
+    private void genererBilan() {
+        try {
+            bs = new bilanService();
+            List<Bilan> bilanList = bs.findAll();
+            if(bilanList.isEmpty()){
+                Bilan lastBilan=bs.lastBilan();
+                if(!LocalDate.now().equals(lastBilan.getDebutBilan())){
+                    ps= new produitService();
+                    fs= new facturationService();
+                    Bilan bil= new Bilan();
+                    bil.setProduits(ps.findAll());
+                    bil.setFacturations(fs.);
+                    bilanHebdo=
+                }
+            }
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
     private void ajouterArticle() {
+        cs = new commandeService();
+        Commande comm = new Commande();
+        ps = new produitService();
+        Produit pro = ps.findById(idComm);
+        comm.setProduit(pro);
+        comm.setNombre(quantiteComm);
+        comm.calculerPrixTotal();
+        comm.setFacturation();
 
     }
 
@@ -246,14 +286,15 @@ public class DashboardController {
                 commande = newSelection.getNom();
                 prixUnitcomm = newSelection.getPrixUnitaire();
                 researchFacture.setText(newSelection.getNom());
-                descriptionFacturation(commande, prixUnitcomm,0);
+                descriptionFacturation(commande, prixUnitcomm, 0);
                 produitComboBox.getItems().removeAll();
-                for (int i = 0; i <=newSelection.getQuantiteStock() ; i++) {
+                for (int i = 0; i <= newSelection.getQuantiteStock(); i++) {
                     produitComboBox.getItems().add(i);
                 }
                 produitComboBox.setOnAction(
                         actionEvent -> {
-                            descriptionFacturation(commande, prixUnitcomm, produitComboBox.getValue());
+                            quantiteComm = produitComboBox.getValue();
+                            descriptionFacturation(commande, prixUnitcomm, quantiteComm);
                         }
                 );
 
@@ -457,7 +498,7 @@ public class DashboardController {
     private void descriptionFacturation(String nomProduit, double prixUnitaire, int quantite) {
         double total = prixUnitaire * quantite;
         labelDescription.setText(String.format(
-                "Produit : %s\nPrix    : %.2f €\nQuantité: %d pièces\nTotal   : %.2f €",
+                        "Produit : %s\nPrix    : %.2f €\nQuantité: %d pièces\nTotal   : %.2f €",
                         nomProduit, prixUnitaire, quantite, total
                 )
         );

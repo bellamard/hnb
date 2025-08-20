@@ -1,5 +1,6 @@
 package com.b2la.hnb.services;
 
+import com.b2la.hnb.models.Bilan;
 import com.b2la.hnb.models.Facturation;
 import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
@@ -68,6 +69,20 @@ public class facturationService {
         return facturesList;
     }
 
+    public List<Facturation> findByBilan(Bilan bilan) {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<Facturation> facturesList = null;
+        try {
+            TypedQuery<Facturation> query = em.createQuery(
+                    "SELECT b FROM Bilan b WHERE b.Bilan = :bilan", Facturation.class);
+            query.setParameter("bilan", bilan);
+            facturesList = query.getResultList();
+        } finally {
+            em.close();
+        }
+        return facturesList;
+    }
+
     public void delete(Long id) {
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction transaction = null;
@@ -85,14 +100,14 @@ public class facturationService {
         }
     }
 
-    public double sommeFacture(){
+    public double sommeFacture() {
         EntityManager em = JPAUtil.getEntityManager();
-        double numbreFacture=0;
+        double numbreFacture = 0;
         try {
             Double result = (Double) em.createQuery("SELECT SUM(f.ttc) FROM Facturation f")
                     .getSingleResult();
             numbreFacture = (result != null) ? result : 0.0;
-        }finally {
+        } finally {
             em.close();
         }
 
