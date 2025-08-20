@@ -191,7 +191,7 @@
                                             </children>
                                         </HBox>
                                         <ComboBox fx:id="produitComboBox" prefHeight="23.0" prefWidth="105.0" promptText="Sélectionner un produit" />
-                                        <Button styleClass="action-button" text="Ajouter" />
+                                        <Button styleClass="action-button" text="Ajouter" onAction="#ajouterArticle"/>
                                     </children>
                                 </VBox>
                         <Label text="Description" fx:id="labelDescription">

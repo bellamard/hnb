@@ -83,6 +83,8 @@ public class DashboardController {
     Long idComm;
     Long idUser;
 
+    Facturation facture;
+
     public void initialize() {
         recoveryUsername();
         viewDateTime();
@@ -240,7 +242,7 @@ public class DashboardController {
     private void genererFacture() {
         fs = new facturationService();
         us= new utilisateurService();
-        Facturation facture=new Facturation();
+        facture=new Facturation();
         facture.setBilan(bilanHebdo);
         facture.setCodeReference( Long.parseLong(fs.generateNumericCode()));
         facture.setEtat(Etat.Non_payée);
@@ -293,7 +295,8 @@ public class DashboardController {
         comm.setProduit(pro);
         comm.setNombre(quantiteComm);
         comm.calculerPrixTotal();
-        //comm.setFacturation();
+        comm.setFacturation(facture);
+        cs.save(comm);
 
     }
 
