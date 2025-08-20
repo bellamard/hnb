@@ -66,6 +66,7 @@ public class HelloController {
                         Stockage stock = new Stockage();
                         stock.setUsername(user.getUsername());
                         stock.setFonction(String.valueOf(user.getFonction()));
+                        stock.setId(String.valueOf(user.getId()));
                         runLater(this::getDashboard);
                     }
 

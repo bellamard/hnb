@@ -3,11 +3,10 @@ package com.b2la.hnb.controllers;
 
 import com.b2la.hnb.models.Bilan;
 import com.b2la.hnb.models.Commande;
+import com.b2la.hnb.models.Facturation;
 import com.b2la.hnb.models.Produit;
-import com.b2la.hnb.services.bilanService;
-import com.b2la.hnb.services.commandeService;
-import com.b2la.hnb.services.facturationService;
-import com.b2la.hnb.services.produitService;
+import com.b2la.hnb.services.*;
+import com.b2la.hnb.util.Etat;
 import com.b2la.hnb.util.Stockage;
 import com.b2la.hnb.util.categoryType;
 import javafx.animation.KeyFrame;
@@ -73,6 +72,7 @@ public class DashboardController {
     facturationService fs;
     commandeService cs;
     bilanService bs;
+    utilisateurService us;
     Long idProduit;
     Double dashBoardFacture = 0.0, dashBoardProduit = 0.0;
     Bilan bilanHebdo;
@@ -81,6 +81,7 @@ public class DashboardController {
     Double prixUnitcomm;
     int quantiteComm;
     Long idComm;
+    Long idUser;
 
     public void initialize() {
         recoveryUsername();
@@ -111,6 +112,7 @@ public class DashboardController {
         Stockage stock = new Stockage();
         username.setText(stock.getUsername());
         fonction.setText(stock.getFonction());
+        idUser=Long.parseLong(stock.getId());
     }
 
     public void viewDateTime() {
@@ -201,6 +203,7 @@ public class DashboardController {
         String layout = "facture";
         cardLayout(layout);
         getAllProduit();
+        genererFacture();
     }
 
     @FXML
@@ -236,6 +239,13 @@ public class DashboardController {
     @FXML
     private void genererFacture() {
         fs = new facturationService();
+        us= new utilisateurService();
+        Facturation facture=new Facturation();
+        facture.setBilan(bilanHebdo);
+        facture.setCodeReference( Long.parseLong(fs.generateNumericCode()));
+        facture.setEtat(Etat.Non_payée);
+        facture.setUtilisateur(us.findById(idUser));
+        fs.save(facture);
 
     }
 
@@ -283,7 +293,7 @@ public class DashboardController {
         comm.setProduit(pro);
         comm.setNombre(quantiteComm);
         comm.calculerPrixTotal();
-//        comm.setFacturation();
+        //comm.setFacturation();
 
     }
 

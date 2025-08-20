@@ -7,9 +7,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 public class facturationService {
+
+    private static final int LENGTH = 15;
+    private final SecureRandom random = new SecureRandom();
     public void save(Facturation facture) {
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction transaction = null;
@@ -98,6 +102,14 @@ public class facturationService {
         } finally {
             em.close();
         }
+    }
+
+    public String generateNumericCode() {
+        StringBuilder sb = new StringBuilder(LENGTH);
+        for (int i = 0; i < LENGTH; i++) {
+            sb.append(random.nextInt(10)); // Chiffres de 0 à 9
+        }
+        return sb.toString();
     }
 
     public double sommeFacture() {
