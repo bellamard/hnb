@@ -36,7 +36,7 @@ public class DashboardController {
     @FXML
     private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription;
     @FXML
-    private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd;
+    private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande;
     @FXML
     private VBox homeLayout, facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout;
 
@@ -290,12 +290,21 @@ public class DashboardController {
         cs = new commandeService();
         Commande comm = new Commande();
         ps = new produitService();
-        Produit pro = ps.findById(idComm);
-        comm.setProduit(pro);
-        comm.setNombre(quantiteComm);
-        comm.calculerPrixTotal();
-        comm.setFacturation(facture);
-        cs.save(comm);
+        if(quantiteComm<=0){
+            Alert alert=new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("PROBLEME SUR LA QUANTITE");
+            alert.setContentText("VOTRE NOMBRE ARTICLE N'EST PAS CORRECTE \nVEUILLEZ MODIFIER LA QUANTITE");
+            alert.showAndWait();
+
+        }else{
+            Produit pro = ps.findById(idComm);
+            comm.setProduit(pro);
+            comm.setNombre(quantiteComm);
+            comm.calculerPrixTotal();
+            comm.setFacturation(facture);
+            cs.save(comm);
+        }
+        resetFactureProduit();
 
     }
 
@@ -357,6 +366,15 @@ public class DashboardController {
         new Thread(task).start();
     }
 
+    private void resetFactureProduit(){
+        researchFacture.setText("");
+        btnAddCommande.setDisable(true);
+        commande="";
+        prixUnitcomm=0.0;
+        quantiteComm=0;
+        produitComboBox.setValue(quantiteComm);
+        descriptionFacturation("",0.0,0);
+    }
     @FXML
     public void getProduitAll() {
         ps = new produitService();
