@@ -82,7 +82,6 @@ public class DashboardController {
     int quantiteComm;
     Long idComm;
     Long idUser;
-
     Facturation facture;
 
     public void initialize() {
@@ -303,6 +302,7 @@ public class DashboardController {
             comm.calculerPrixTotal();
             comm.setFacturation(facture);
             cs.save(comm);
+            getFactureAllCommande();
         }
         resetFactureProduit();
 
@@ -350,7 +350,9 @@ public class DashboardController {
                         actionEvent -> {
                             quantiteComm = produitComboBox.getValue();
                             descriptionFacturation(commande, prixUnitcomm, quantiteComm);
+                            btnAddCommande.setDisable(false);
                         }
+
                 );
 
             }
@@ -366,6 +368,12 @@ public class DashboardController {
         new Thread(task).start();
     }
 
+    private void getFactureAllCommande(){
+        fs= new facturationService();
+        Facturation fac= fs.findById(facture.getId());
+        System.out.println(fac.getDateFacturation());
+    }
+
     private void resetFactureProduit(){
         researchFacture.setText("");
         btnAddCommande.setDisable(true);
@@ -375,6 +383,8 @@ public class DashboardController {
         produitComboBox.setValue(quantiteComm);
         descriptionFacturation("",0.0,0);
     }
+
+
     @FXML
     public void getProduitAll() {
         ps = new produitService();
