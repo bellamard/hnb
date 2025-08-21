@@ -114,7 +114,7 @@ public class DashboardController {
         Stockage stock = new Stockage();
         username.setText(stock.getUsername());
         fonction.setText(stock.getFonction());
-        idUser=Long.parseLong(stock.getId());
+        idUser = Long.parseLong(stock.getId());
     }
 
     public void viewDateTime() {
@@ -241,10 +241,10 @@ public class DashboardController {
     @FXML
     private void genererFacture() {
         fs = new facturationService();
-        us= new utilisateurService();
-        facture=new Facturation();
+        us = new utilisateurService();
+        facture = new Facturation();
         facture.setBilan(bilanHebdo);
-        facture.setCodeReference( Long.parseLong(fs.generateNumericCode()));
+        facture.setCodeReference(Long.parseLong(fs.generateNumericCode()));
         facture.setEtat(Etat.Non_payée);
         facture.setUtilisateur(us.findById(idUser));
         fs.save(facture);
@@ -256,28 +256,27 @@ public class DashboardController {
         try {
             bs = new bilanService();
             List<Bilan> bilanList = bs.findAll();
-            if(!bilanList.isEmpty()){
-                Bilan lastBilan=bs.lastBilan();
+            if (!bilanList.isEmpty()) {
+                Bilan lastBilan = bs.lastBilan();
                 System.out.println(LocalDate.now());
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                if(!LocalDate.now().toString().equals(sdf.format(lastBilan.getDebutBilan()).toString())){
-                    ps= new produitService();
-                    Bilan bil= new Bilan();
+                if (!LocalDate.now().toString().equals(sdf.format(lastBilan.getDebutBilan()).toString())) {
+                    ps = new produitService();
+                    Bilan bil = new Bilan();
                     bil.setProduits(ps.findAll());
                     bs.save(bil);
-                    bil=bs.lastBilan();
-                    bilanHebdo=bil;
-                }else{
-                    bilanHebdo=lastBilan;
+                    bil = bs.lastBilan();
+                    bilanHebdo = bil;
+                } else {
+                    bilanHebdo = lastBilan;
                 }
-            }
-            else{
-                ps= new produitService();
-                Bilan bil= new Bilan();
+            } else {
+                ps = new produitService();
+                Bilan bil = new Bilan();
                 bil.setProduits(ps.findAll());
                 bs.save(bil);
-                bil=bs.lastBilan();
-                bilanHebdo=bil;
+                bil = bs.lastBilan();
+                bilanHebdo = bil;
             }
 
 
@@ -298,6 +297,25 @@ public class DashboardController {
         comm.setFacturation(facture);
         cs.save(comm);
 
+    }
+
+    @FXML
+    private void getSearchFactureProduit() {
+        ps = new produitService();
+        List<Produit> prodList = ps.findAll().stream().filter(produit -> produit.getNom().toLowerCase().contains(researchFacture.getText().toLowerCase()) ||
+                produit.getDescription().toLowerCase().contains(researchFacture.getText().toLowerCase())||
+                String.valueOf(produit.getQuantiteStock()).contains(researchFacture.getText().toLowerCase())||
+                String.valueOf(produit.getPrixUnitaire()).contains(researchFacture.getText().toLowerCase())||
+                produit.getType().toString().contains(researchFacture.getText().toLowerCase())).toList();
+        Task<ObservableList<Produit>> task = new Task<>() {
+
+            @Override
+            protected ObservableList<Produit> call() throws Exception {
+                return FXCollections.observableArrayList(prodList);
+            }
+        };
+        task.setOnSucceeded(e -> articlesTable.setItems(task.getValue()));
+        new Thread(task).start();
     }
 
     private void getAllProduit() {

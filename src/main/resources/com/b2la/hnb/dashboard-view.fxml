@@ -148,7 +148,7 @@
                             </HBox>
                         </VBox>
                     </VBox>
-                    <VBox fx:id="facturationLayout" spacing="10" styleClass="section" visible="false">
+                    <VBox fx:id="facturationLayout" spacing="10" styleClass="section">
                         <Label styleClass="section-title" text="Système de Facturation" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                             <children>
@@ -186,15 +186,15 @@
                                     <children>
                                         <HBox>
                                             <children>
-                                                <TextField fx:id="researchFacture" promptText="Recherche" />
+                                                <TextField fx:id="researchFacture" onKeyReleased="#getSearchFactureProduit" promptText="Recherche" />
                                                 <FontIcon iconLiteral="fa-search" iconSize="16" />
                                             </children>
                                         </HBox>
                                         <ComboBox fx:id="produitComboBox" prefHeight="23.0" prefWidth="105.0" promptText="Sélectionner un produit" />
-                                        <Button styleClass="action-button" text="Ajouter" onAction="#ajouterArticle"/>
+                                        <Button onAction="#ajouterArticle" styleClass="action-button" text="Ajouter" />
                                     </children>
                                 </VBox>
-                        <Label text="Description" fx:id="labelDescription">
+                        <Label fx:id="labelDescription" text="Description">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -225,7 +225,7 @@
                         </HBox>
                     </VBox>
 
-                    <VBox fx:id="produitLayout" alignment="TOP_CENTER" spacing="15" styleClass="section">
+                    <VBox fx:id="produitLayout" alignment="TOP_CENTER" spacing="15" styleClass="section" visible="false">
 
                         <!-- Titre de la section -->
                         <Label styleClass="section-title" text="📦 Gestion des Produits" />
@@ -283,18 +283,18 @@
                                 <TextArea fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
 
-                                <Label styleClass="text-erreur-message" text="" fx:id="msgAlert" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <Label fx:id="msgAlert" styleClass="text-erreur-message" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
 
 
                                 <!-- Boutons d'action -->
                                 <HBox spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
-                                    <Button fx:id="btnProduitMod" visible="false" styleClass="btn-success" text="Modifier" onAction="#updateProduit">
+                                    <Button fx:id="btnProduitMod" onAction="#updateProduit" styleClass="btn-success" text="Modifier" visible="false">
                                         <graphic>
                                             <FontIcon iconLiteral="fa-pencil-square-o" iconSize="16" />
                                         </graphic>
                                     </Button>
-                                    <Button fx:id="btnProduitAdd" styleClass="btn-success" text="Enregistrer" onAction="#addProduit">
+                                    <Button fx:id="btnProduitAdd" onAction="#addProduit" styleClass="btn-success" text="Enregistrer">
                                         <graphic>
                                             <FontIcon iconLiteral="fa-floppy-o" iconSize="16" />
                                         </graphic>
