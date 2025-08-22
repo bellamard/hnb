@@ -210,6 +210,7 @@
                                 <TableColumn fx:id="prixUnitaireCol1" text="Prix Unitaire" />
                                 <TableColumn fx:id="quantiteCol1" text="Quantité" />
                                 <TableColumn fx:id="totalCol1" text="Total" />
+                                <TableColumn fx:id="actionCol1" text="Action" />
                             </columns>
                         </TableView>
 

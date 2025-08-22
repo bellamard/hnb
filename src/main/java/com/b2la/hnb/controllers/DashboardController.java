@@ -56,7 +56,7 @@ public class DashboardController {
     @FXML
     TableView<Commande> articlesCommande;
     @FXML
-    TableColumn<Commande, String> produitCol1;
+    TableColumn<Commande, String> produitCol1, actionCol1;
     @FXML
     TableColumn<Commande, Double> prixUnitaireCol1, totalCol1;
     @FXML
@@ -304,12 +304,22 @@ public class DashboardController {
             alert.showAndWait();
 
         }else{
+
             Produit pro = ps.findById(idComm);
             comm.setProduit(pro);
-            comm.setNombre(quantiteComm);
-            comm.calculerPrixTotal();
-            comm.setFacturation(facture);
-            cs.save(comm);
+            fs= new facturationService();
+            Facturation fac= fs.findById(facture.getId());
+            Commande commVerif  =fac.getCommandes().stream().filter(commande1 -> commande1.getProduit().getId()==pro.getId()).findFirst().orElse(null);
+            if(commVerif==null){
+                comm.setNombre(quantiteComm);
+                comm.calculerPrixTotal();
+                comm.setFacturation(facture);
+                cs.save(comm);
+            }
+            else {
+                commVerif.setNombre(commVerif.getNombre()+quantiteComm);
+                cs.update(commVerif);
+            }
             getFactureAllCommande();
         }
         resetFactureProduit();
@@ -411,6 +421,28 @@ public class DashboardController {
         });
         quantiteCol1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         totalCol1.setCellValueFactory(new PropertyValueFactory<>("prixTotal"));
+        actionCol1.setCellFactory(col->new TableCell<>(){
+            Button btnS= new Button("Sup");
+            {
+                btnS.setOnAction(e->{
+                    Commande commS=getTableView().getItems().get(getIndex());
+                    cs= new commandeService();
+                    cs.delete(commS.getId());
+                    getFactureAllCommande();
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if(empty)setGraphic(null);
+                else{
+                    HBox boxBtn=new HBox(1);
+                    boxBtn.getChildren().addAll(btnS);
+                    setGraphic(boxBtn);
+                }
+            }
+        } );
         Task<ObservableList<Commande>> task= new Task<>() {
             @Override
             protected ObservableList<Commande> call() throws Exception {
