@@ -402,6 +402,9 @@ public class DashboardController {
                 researchFacture.setText(newSelection.getNom());
                 descriptionFacturation(commande, prixUnitcomm, 0);
                 produitComboBox.getItems().removeAll();
+                System.out.println("=============================");
+                System.out.println(produitComboBox.getItems().size());
+                System.out.println("=============================");
                 for (int i = 0; i <= newSelection.getQuantiteStock(); i++) {
                     produitComboBox.getItems().add(i);
                 }
