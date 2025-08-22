@@ -34,7 +34,7 @@ import static javafx.application.Platform.runLater;
 
 public class DashboardController {
     @FXML
-    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription;
+    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel;
     @FXML
     private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande;
     @FXML
@@ -91,6 +91,8 @@ public class DashboardController {
     Long idComm;
     Long idUser;
     Facturation facture;
+    int nbreCommande = 0;
+    double totalPrix=0;
 
     public void initialize() {
         recoveryUsername();
@@ -242,11 +244,34 @@ public class DashboardController {
 
     @FXML
     private void annulerFacture() {
+        fs = new facturationService();
+        fs.delete(facture.getId());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de suppression");
+        alert.setHeaderText("Supprimer la commande");
+        alert.setContentText("Êtes-vous sûr de vouloir supprimer la facture :" + facture.getCodeReference());
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                // Logique de suppression
+                genererFacture();
+                resetFactureProduit();
+                getFactureAllCommande();
+
+            } catch (Exception e) {
+                // Alerte d'erreur
+                throw new RuntimeException(e);
+            }
+        }
+
 
     }
 
     @FXML
     private void genererFacture() {
+        nbreCommande = 0;
+        totalPrix=0.0;
         fs = new facturationService();
         us = new utilisateurService();
         facture = new Facturation();
@@ -255,7 +280,7 @@ public class DashboardController {
         facture.setEtat(Etat.Non_payée);
         facture.setUtilisateur(us.findById(idUser));
         fs.save(facture);
-
+        factureRef.setText(facture.getCodeReference().toString());
     }
 
     @FXML
@@ -297,31 +322,47 @@ public class DashboardController {
         cs = new commandeService();
         Commande comm = new Commande();
         ps = new produitService();
-        if(quantiteComm<=0){
-            Alert alert=new Alert(Alert.AlertType.WARNING);
+        if (quantiteComm <= 0) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("PROBLEME SUR LA QUANTITE");
             alert.setContentText("VOTRE NOMBRE ARTICLE N'EST PAS CORRECTE \nVEUILLEZ MODIFIER LA QUANTITE");
             alert.showAndWait();
 
-        }else{
+        } else {
 
             Produit pro = ps.findById(idComm);
             comm.setProduit(pro);
-            fs= new facturationService();
-            Facturation fac= fs.findById(facture.getId());
-            Commande commVerif  =fac.getCommandes().stream().filter(commande1 -> commande1.getProduit().getId()==pro.getId()).findFirst().orElse(null);
-            if(commVerif==null){
+
+            if (nbreCommande > 0) {
+                fs = new facturationService();
+                Facturation fac = fs.findById(facture.getId());
+                Commande commVerif = fac.getCommandes().stream().filter(commande1 -> commande1.getProduit().getId() == pro.getId()).findFirst().orElse(null);
+
+                if (commVerif != null) {
+                    commVerif.setNombre(commVerif.getNombre() + quantiteComm);
+                    commVerif.calculerPrixTotal();
+                    cs.update(commVerif);
+                    totalPrix+=commVerif.getPrixTotal();
+                } else {
+                    comm.setNombre(quantiteComm);
+                    comm.calculerPrixTotal();
+                    comm.setFacturation(facture);
+                    cs.save(comm);
+                    totalPrix+=comm.getPrixTotal();
+                }
+
+            }
+            else {
                 comm.setNombre(quantiteComm);
                 comm.calculerPrixTotal();
                 comm.setFacturation(facture);
                 cs.save(comm);
+                totalPrix+=comm.getPrixTotal();
             }
-            else {
-                commVerif.setNombre(commVerif.getNombre()+quantiteComm);
-                cs.update(commVerif);
-            }
+
             getFactureAllCommande();
         }
+        nbreCommande++;
         resetFactureProduit();
 
     }
@@ -330,9 +371,9 @@ public class DashboardController {
     private void getSearchFactureProduit() {
         ps = new produitService();
         List<Produit> prodList = ps.findAll().stream().filter(produit -> produit.getNom().toLowerCase().contains(researchFacture.getText().toLowerCase()) ||
-                produit.getDescription().toLowerCase().contains(researchFacture.getText().toLowerCase())||
-                String.valueOf(produit.getQuantiteStock()).contains(researchFacture.getText().toLowerCase())||
-                String.valueOf(produit.getPrixUnitaire()).contains(researchFacture.getText().toLowerCase())||
+                produit.getDescription().toLowerCase().contains(researchFacture.getText().toLowerCase()) ||
+                String.valueOf(produit.getQuantiteStock()).contains(researchFacture.getText().toLowerCase()) ||
+                String.valueOf(produit.getPrixUnitaire()).contains(researchFacture.getText().toLowerCase()) ||
                 produit.getType().toString().contains(researchFacture.getText().toLowerCase())).toList();
         Task<ObservableList<Produit>> task = new Task<>() {
 
@@ -386,34 +427,34 @@ public class DashboardController {
         new Thread(task).start();
     }
 
-    private void getFactureAllCommande(){
-        fs= new facturationService();
-        Facturation fac= fs.findById(facture.getId());
+    private void getFactureAllCommande() {
+        fs = new facturationService();
+        Facturation fac = fs.findById(facture.getId());
 
-        produitCol1.setCellFactory(col-> new TableCell<>(){
+        produitCol1.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if(empty)setGraphic(null);
-                else{
-                    Produit orderCommande=getTableView().getItems().get(getIndex()).getProduit();
-                    Label nomProduit=new Label(orderCommande.getNom());
-                    HBox boxText= new HBox(1);
+                if (empty) setGraphic(null);
+                else {
+                    Produit orderCommande = getTableView().getItems().get(getIndex()).getProduit();
+                    Label nomProduit = new Label(orderCommande.getNom());
+                    HBox boxText = new HBox(1);
                     boxText.getChildren().add(nomProduit);
                     setGraphic(boxText);
                 }
             }
         });
 
-        prixUnitaireCol1.setCellFactory(col-> new TableCell<>(){
+        prixUnitaireCol1.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Double aDouble, boolean empty) {
                 super.updateItem(aDouble, empty);
-                if(empty)setGraphic(null);
-                else{
-                    Produit orderCommande=getTableView().getItems().get(getIndex()).getProduit();
-                    Label prixUnitaireProduit= new Label(String.valueOf(orderCommande.getPrixUnitaire()));
-                    HBox boxText= new HBox(1);
+                if (empty) setGraphic(null);
+                else {
+                    Produit orderCommande = getTableView().getItems().get(getIndex()).getProduit();
+                    Label prixUnitaireProduit = new Label(String.valueOf(orderCommande.getPrixUnitaire()));
+                    HBox boxText = new HBox(1);
                     boxText.getChildren().add(prixUnitaireProduit);
                     setGraphic(boxText);
                 }
@@ -421,13 +462,15 @@ public class DashboardController {
         });
         quantiteCol1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         totalCol1.setCellValueFactory(new PropertyValueFactory<>("prixTotal"));
-        actionCol1.setCellFactory(col->new TableCell<>(){
-            Button btnS= new Button("Sup");
+        actionCol1.setCellFactory(col -> new TableCell<>() {
+            Button btnS = new Button("Sup");
+
             {
-                btnS.setOnAction(e->{
-                    Commande commS=getTableView().getItems().get(getIndex());
-                    cs= new commandeService();
+                btnS.setOnAction(e -> {
+                    Commande commS = getTableView().getItems().get(getIndex());
+                    cs = new commandeService();
                     cs.delete(commS.getId());
+                    totalPrix-=commS.getPrixTotal();
                     getFactureAllCommande();
                 });
             }
@@ -435,32 +478,33 @@ public class DashboardController {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if(empty)setGraphic(null);
-                else{
-                    HBox boxBtn=new HBox(1);
+                if (empty) setGraphic(null);
+                else {
+                    HBox boxBtn = new HBox(1);
                     boxBtn.getChildren().addAll(btnS);
                     setGraphic(boxBtn);
                 }
             }
-        } );
-        Task<ObservableList<Commande>> task= new Task<>() {
+        });
+        Task<ObservableList<Commande>> task = new Task<>() {
             @Override
             protected ObservableList<Commande> call() throws Exception {
                 return FXCollections.observableArrayList(fac.getCommandes());
             }
         };
-        task.setOnSucceeded(e ->articlesCommande.setItems(task.getValue()) );
+        task.setOnSucceeded(e -> articlesCommande.setItems(task.getValue()));
         new Thread(task).start();
+        totalFactureLabel.setText(String.valueOf(totalPrix));
     }
 
-    private void resetFactureProduit(){
+    private void resetFactureProduit() {
         researchFacture.setText("");
         btnAddCommande.setDisable(true);
-        commande="";
-        prixUnitcomm=0.0;
-        quantiteComm=0;
+        commande = "";
+        prixUnitcomm = 0.0;
+        quantiteComm = 0;
         produitComboBox.setValue(quantiteComm);
-        descriptionFacturation("",0.0,0);
+        descriptionFacturation("", 0.0, 0);
     }
 
 
