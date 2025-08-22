@@ -5,6 +5,7 @@ import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import org.hibernate.Hibernate;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class commandeService {
         Commande article = null;
         try {
             article = em.find(Commande.class, id);
+            Hibernate.initialize(article.getProduit());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         } finally {

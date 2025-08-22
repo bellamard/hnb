@@ -46,15 +46,17 @@ public class Facturation { // Nom de classe en PascalCase
     }
 
     // Constructeur sans la liste des commandes
-    public Facturation(Long id, Long codeReference, double ttc, Etat etat,
-                       Utilisateur utilisateur, Bilan bilan) {
-        this.id = id;
+
+    public Facturation(Long codeReference, double ttc, Etat etat, Utilisateur utilisateur, Bilan bilan, List<Commande> commandes, Date dateFacturation) {
         this.codeReference = codeReference;
         this.ttc = ttc;
         this.etat = etat;
         this.utilisateur = utilisateur;
         this.bilan = bilan;
+        this.commandes = commandes;
+        this.dateFacturation = dateFacturation;
     }
+
 
     // Getters et setters...
 

@@ -53,6 +53,14 @@ public class DashboardController {
     ComboBox<categoryType> category;
     @FXML
     TableView<Produit> tableProduit, articlesTable;
+    @FXML
+    TableView<Commande> articlesCommande;
+    @FXML
+    TableColumn<Commande, String> produitCol1;
+    @FXML
+    TableColumn<Commande, Double> prixUnitaireCol1, totalCol1;
+    @FXML
+    TableColumn<Commande, Integer> quantiteCol1;
 
     @FXML
     TableColumn<Produit, String> Tarticle, Tdescription, Taction, produitArticle;
@@ -371,7 +379,46 @@ public class DashboardController {
     private void getFactureAllCommande(){
         fs= new facturationService();
         Facturation fac= fs.findById(facture.getId());
-        System.out.println(fac.getDateFacturation());
+
+        produitCol1.setCellFactory(col-> new TableCell<>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if(empty)setGraphic(null);
+                else{
+                    Produit orderCommande=getTableView().getItems().get(getIndex()).getProduit();
+                    Label nomProduit=new Label(orderCommande.getNom());
+                    HBox boxText= new HBox(1);
+                    boxText.getChildren().add(nomProduit);
+                    setGraphic(boxText);
+                }
+            }
+        });
+
+        prixUnitaireCol1.setCellFactory(col-> new TableCell<>(){
+            @Override
+            protected void updateItem(Double aDouble, boolean empty) {
+                super.updateItem(aDouble, empty);
+                if(empty)setGraphic(null);
+                else{
+                    Produit orderCommande=getTableView().getItems().get(getIndex()).getProduit();
+                    Label prixUnitaireProduit= new Label(String.valueOf(orderCommande.getPrixUnitaire()));
+                    HBox boxText= new HBox(1);
+                    boxText.getChildren().add(prixUnitaireProduit);
+                    setGraphic(boxText);
+                }
+            }
+        });
+        quantiteCol1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        totalCol1.setCellValueFactory(new PropertyValueFactory<>("prixTotal"));
+        Task<ObservableList<Commande>> task= new Task<>() {
+            @Override
+            protected ObservableList<Commande> call() throws Exception {
+                return FXCollections.observableArrayList(fac.getCommandes());
+            }
+        };
+        task.setOnSucceeded(e ->articlesCommande.setItems(task.getValue()) );
+        new Thread(task).start();
     }
 
     private void resetFactureProduit(){

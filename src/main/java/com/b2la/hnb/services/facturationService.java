@@ -6,6 +6,7 @@ import com.b2la.hnb.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import org.hibernate.Hibernate;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -53,6 +54,7 @@ public class facturationService {
         Facturation facture = null;
         try {
             facture = em.find(Facturation.class, id);
+            Hibernate.initialize(facture.getCommandes());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         } finally {

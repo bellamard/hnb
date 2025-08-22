@@ -204,7 +204,7 @@
 
                         <!-- Ajout d'articles -->
                         <HBox alignment="CENTER_LEFT" spacing="10" />
-                        <TableView fx:id="articlesTable1" styleClass="data-table">
+                        <TableView fx:id="articlesCommande" styleClass="data-table">
                             <columns>
                                 <TableColumn fx:id="produitCol1" text="Produit" />
                                 <TableColumn fx:id="prixUnitaireCol1" text="Prix Unitaire" />
