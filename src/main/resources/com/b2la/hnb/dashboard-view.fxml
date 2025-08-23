@@ -221,7 +221,7 @@
                         </HBox>
 
                         <HBox alignment="CENTER_RIGHT" spacing="10">
-                            <Button onAction="#validerFacture" styleClass="primary-button" text="Générer Facture" />
+                            <Button fx:id="btnValiderFacture" onAction="#validerFacture" styleClass="primary-button" text="Générer Facture" />
                             <Button styleClass="secondary-button" text="Annuler" onAction="#annulerFacture" />
                         </HBox>
                     </VBox>

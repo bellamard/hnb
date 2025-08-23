@@ -15,6 +15,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -36,7 +38,7 @@ public class DashboardController {
     @FXML
     private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel;
     @FXML
-    private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande;
+    private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande, btnValiderFacture;
     @FXML
     private VBox homeLayout, facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout;
 
@@ -279,8 +281,43 @@ public class DashboardController {
         }
         facture.setTtc(totalPrix);
         facture.setEtat(Etat.Payée);
+        fs= new facturationService();
+        fs.update(facture);
+        facture=fs.findById(facture.getId());
+        facture.getCommandes().forEach(commande->{
+            Produit produit =commande.getProduit();
+            produit.setQuantiteStock(produit.getQuantiteStock()-commande.getNombre());
+            ps=new produitService();
+            ps.update(produit);
+        });
+
+        getAllProduit();
+        genererFacture();
+        resetFactureProduit();
+        getFactureAllCommande();
+
 
     }
+
+    public void printNode(Node nodeToPrint) {
+        // Créer un travail d'impression
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+
+        if (printerJob != null && printerJob.showPrintDialog(nodeToPrint.getScene().getWindow())) {
+            // Imprimer le Node
+            boolean success = printerJob.printPage(nodeToPrint);
+
+            // Terminer le travail d'impression
+            if (success) {
+                printerJob.endJob();
+            } else {
+                System.out.println("L'impression a échoué.");
+            }
+        } else {
+            System.out.println("Aucun travail d'impression n'a été créé.");
+        }
+    }
+
 
     @FXML
     private void genererFacture() {
