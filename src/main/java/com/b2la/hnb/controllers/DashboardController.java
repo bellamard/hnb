@@ -269,6 +269,20 @@ public class DashboardController {
     }
 
     @FXML
+    private void validerFacture(){
+        if(nbreCommande<=0){
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("vous n'avez pas fait des commande");
+            alert.setHeaderText("probleme facturation");
+            alert.showAndWait();
+            throw new RuntimeException("vous n'avez pas fait des commande");
+        }
+        facture.setTtc(totalPrix);
+        facture.setEtat(Etat.Payée);
+
+    }
+
+    @FXML
     private void genererFacture() {
         nbreCommande = 0;
         totalPrix=0.0;
@@ -359,7 +373,6 @@ public class DashboardController {
                 cs.save(comm);
                 totalPrix+=comm.getPrixTotal();
             }
-
             getFactureAllCommande();
         }
         nbreCommande++;
@@ -401,10 +414,7 @@ public class DashboardController {
                 prixUnitcomm = newSelection.getPrixUnitaire();
                 researchFacture.setText(newSelection.getNom());
                 descriptionFacturation(commande, prixUnitcomm, 0);
-                produitComboBox.getItems().removeAll();
-                System.out.println("=============================");
-                System.out.println(produitComboBox.getItems().size());
-                System.out.println("=============================");
+                produitComboBox.getItems().clear();
                 for (int i = 0; i <= newSelection.getQuantiteStock(); i++) {
                     produitComboBox.getItems().add(i);
                 }
@@ -474,6 +484,7 @@ public class DashboardController {
                     cs = new commandeService();
                     cs.delete(commS.getId());
                     totalPrix-=commS.getPrixTotal();
+                    nbreCommande--;
                     getFactureAllCommande();
                 });
             }
