@@ -1,6 +1,7 @@
 package com.b2la.hnb.controllers;
 
 
+import com.b2la.hnb.HelloApplication;
 import com.b2la.hnb.models.Bilan;
 import com.b2la.hnb.models.Commande;
 import com.b2la.hnb.models.Facturation;
@@ -15,6 +16,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -23,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -94,7 +98,7 @@ public class DashboardController {
     Long idUser;
     Facturation facture;
     int nbreCommande = 0;
-    double totalPrix=0;
+    double totalPrix = 0;
 
     public void initialize() {
         recoveryUsername();
@@ -271,9 +275,9 @@ public class DashboardController {
     }
 
     @FXML
-    private void validerFacture(){
-        if(nbreCommande<=0){
-            Alert alert =new Alert(Alert.AlertType.ERROR);
+    private void validerFacture() {
+        if (nbreCommande <= 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("vous n'avez pas fait des commande");
             alert.setHeaderText("probleme facturation");
             alert.showAndWait();
@@ -281,15 +285,24 @@ public class DashboardController {
         }
         facture.setTtc(totalPrix);
         facture.setEtat(Etat.Payée);
-        fs= new facturationService();
+        fs = new facturationService();
         fs.update(facture);
-        facture=fs.findById(facture.getId());
-        facture.getCommandes().forEach(commande->{
-            Produit produit =commande.getProduit();
-            produit.setQuantiteStock(produit.getQuantiteStock()-commande.getNombre());
-            ps=new produitService();
+        facture = fs.findById(facture.getId());
+        facture.getCommandes().forEach(commande -> {
+            Produit produit = commande.getProduit();
+            produit.setQuantiteStock(produit.getQuantiteStock() - commande.getNombre());
+            ps = new produitService();
             ps.update(produit);
         });
+        try {
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("impression-view.fxml"));
+            VBox rootPrint = loader.load();
+            ImpressionController ic = new ImpressionController();
+            ic.imprimer(facture);
+            ic.lancerImpression(rootPrint);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         getAllProduit();
         genererFacture();
@@ -299,30 +312,11 @@ public class DashboardController {
 
     }
 
-    public void printNode(Node nodeToPrint) {
-        // Créer un travail d'impression
-        PrinterJob printerJob = PrinterJob.createPrinterJob();
-
-        if (printerJob != null && printerJob.showPrintDialog(nodeToPrint.getScene().getWindow())) {
-            // Imprimer le Node
-            boolean success = printerJob.printPage(nodeToPrint);
-
-            // Terminer le travail d'impression
-            if (success) {
-                printerJob.endJob();
-            } else {
-                System.out.println("L'impression a échoué.");
-            }
-        } else {
-            System.out.println("Aucun travail d'impression n'a été créé.");
-        }
-    }
-
 
     @FXML
     private void genererFacture() {
         nbreCommande = 0;
-        totalPrix=0.0;
+        totalPrix = 0.0;
         fs = new facturationService();
         us = new utilisateurService();
         facture = new Facturation();
@@ -332,6 +326,7 @@ public class DashboardController {
         facture.setUtilisateur(us.findById(idUser));
         fs.save(facture);
         factureRef.setText(facture.getCodeReference().toString());
+
     }
 
     @FXML
@@ -393,22 +388,21 @@ public class DashboardController {
                     commVerif.setNombre(commVerif.getNombre() + quantiteComm);
                     commVerif.calculerPrixTotal();
                     cs.update(commVerif);
-                    totalPrix+=commVerif.getPrixTotal();
+                    totalPrix += commVerif.getPrixTotal();
                 } else {
                     comm.setNombre(quantiteComm);
                     comm.calculerPrixTotal();
                     comm.setFacturation(facture);
                     cs.save(comm);
-                    totalPrix+=comm.getPrixTotal();
+                    totalPrix += comm.getPrixTotal();
                 }
 
-            }
-            else {
+            } else {
                 comm.setNombre(quantiteComm);
                 comm.calculerPrixTotal();
                 comm.setFacturation(facture);
                 cs.save(comm);
-                totalPrix+=comm.getPrixTotal();
+                totalPrix += comm.getPrixTotal();
             }
             getFactureAllCommande();
         }
@@ -520,7 +514,7 @@ public class DashboardController {
                     Commande commS = getTableView().getItems().get(getIndex());
                     cs = new commandeService();
                     cs.delete(commS.getId());
-                    totalPrix-=commS.getPrixTotal();
+                    totalPrix -= commS.getPrixTotal();
                     nbreCommande--;
                     getFactureAllCommande();
                 });
