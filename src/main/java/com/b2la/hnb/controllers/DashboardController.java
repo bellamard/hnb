@@ -20,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -296,8 +297,8 @@ public class DashboardController {
         });
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("impression-view.fxml"));
-            VBox rootPrint = loader.load();
-            ImpressionController ic = new ImpressionController();
+            Parent rootPrint = loader.load();
+            ImpressionController ic = loader.getController();
             ic.imprimer(facture);
             ic.lancerImpression(rootPrint);
         } catch (IOException e) {
