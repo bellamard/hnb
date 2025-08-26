@@ -5,58 +5,52 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefWidth="220" spacing="4" style="-fx-padding: 2; -fx-font-family: 'Consolas'; -fx-font-size: 12;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.ImpressionController">
-   <ImageView fitHeight="65.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true">
+<VBox alignment="CENTER" prefWidth="80" spacing="4" style="-fx-padding: 2; -fx-font-family: 'Consolas'; -fx-font-size: 9;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.ImpressionController">
+   <ImageView fitHeight="47.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@images/logo.png" />
       </image>
    </ImageView>
 
     <!-- En-tête -->
-    <Label fx:id="labelNomMagasin" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="HNB" />
-    <Label style="-fx-font-size: 10px; -fx-font-weight: bold;" text="Pâtisserie et Cafétéria" />
-    <Label fx:id="labelAdresseMagasin" style="-fx-font-size: 8px; " text="Avenue Bas congo N° 917" />
-    <Label fx:id="labeladresseCommune" style="-fx-font-size: 8px; " text="KINSHASA / GOMBE" />
-    <Label fx:id="labelTelephoneMagasin" style="-fx-font-size: 8px; " text="Tel : +243 994 041 850" />
+    <Label fx:id="labelNomMagasin" style="-fx-font-size: 9px; -fx-font-weight: bold;" text="HNB" />
+    <Label style="-fx-font-size: 6px; -fx-font-weight: bold;" text="Pâtisserie et Cafétéria" />
+    <Label fx:id="labelAdresseMagasin" style="-fx-font-size: 7px; " text="Avenue Bas congo N° 917" />
+    <Label fx:id="labeladresseCommune" style="-fx-font-size: 7px; " text="KINSHASA / GOMBE" />
+    <Label fx:id="labelTelephoneMagasin" style="-fx-font-size: 7px; " text="Tel : +243 994 041 850" />
     <Label style="-fx-font-size: 6px; " text="RCCM:........../NIF:......" />
     <Label style="-fx-font-size: 6px; " text="IDNAT:............." />
     <Separator />
 
     <!-- Infos facture -->
-    <Label fx:id="labelDateFacture" style="-fx-font-size: 12px; " text="Date : 25/08/2025">
-      <font>
-         <Font size="10.0" />
-      </font></Label>
-    <Label fx:id="labelNumeroFacture" style="-fx-font-size: 12px; " text="Facture N° : 000123">
-      <font>
-         <Font size="10.0" />
-      </font></Label>
+    <Label fx:id="labelDateFacture" style="-fx-font-size: 6px; " text="Date : 25/08/2025"/>
+
+    <Label fx:id="labelNumeroFacture" style="-fx-font-size: 8px; " text="Facture N° : 000123"/>
+
     <Separator />
 
     <!-- Entête des articles -->
-    <HBox alignment="CENTER_LEFT" prefWidth="220" spacing="10">
-        <Label prefWidth="80" text="Article" />
-        <Label prefWidth="40" style="-fx-alignment: center-right;" text="Qté" />
-        <Label prefWidth="80" style="-fx-alignment: center-right;" text="Prix" />
+    <HBox alignment="CENTER_LEFT" prefWidth="100" spacing="2">
+        <Label prefWidth="40" text="Article" />
+        <Label prefWidth="10" style="-fx-alignment: center-right;" text="Qté" />
+        <Label prefWidth="30" style="-fx-alignment: center-right;" text="Prix" />
     </HBox>
     <Separator />
 
     <!-- Liste des articles -->
-    <VBox fx:id="articlesContainer" prefWidth="220" spacing="2" />
+    <VBox fx:id="articlesContainer" prefWidth="100" spacing="1" />
 
 
     <Separator />
 
     <!-- Totaux -->
-    <Label fx:id="labelTotal" style="-fx-font-weight: bold;" text="Total : 20.50$" />
-    <Label fx:id="labelPaiement" text="Paiement : Espèces">
-      <font>
-         <Font size="10.0" />
-      </font></Label>
+    <Label fx:id="labelTotal" style="-fx-font-weight: bold; -fx-font-size: 8px;" text="Total : 20.50$" />
+    <Label fx:id="labelPaiement" text="Paiement : Espèces" style="-fx-font-size: 8px;"/>
+
     <Separator />
 
     <!-- Footer -->
-    <Label fx:id="labelMessageMerci" style="-fx-font-size: 10px;" text="Merci pour votre achat !" />
-    <Label fx:id="labelSiteWeb" style="-fx-font-size: 8px; " text="www.b2la.online" />
+    <Label fx:id="labelMessageMerci" style="-fx-font-size: 6px;" text="Merci pour votre achat !" />
+    <Label fx:id="labelSiteWeb" style="-fx-font-size: 4px; " text="www.b2la.online" />
 
 </VBox>
