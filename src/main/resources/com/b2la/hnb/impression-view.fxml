@@ -3,54 +3,53 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefWidth="80" spacing="4" style="-fx-padding: 2; -fx-font-family: 'Consolas'; -fx-font-size: 9;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.ImpressionController">
-   <ImageView fitHeight="47.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@images/logo.png" />
-      </image>
-   </ImageView>
+<VBox alignment="CENTER" prefWidth="300" spacing="4" style="-fx-padding: 4; -fx-font-family: 'Consolas'; -fx-font-size: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.ImpressionController">
+
+    <!-- Logo -->
+    <ImageView fitHeight="60.0" fitWidth="200" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/logo.png" />
+        </image>
+    </ImageView>
 
     <!-- En-tête -->
-    <Label fx:id="labelNomMagasin" style="-fx-font-size: 9px; -fx-font-weight: bold;" text="HNB" />
-    <Label style="-fx-font-size: 6px; -fx-font-weight: bold;" text="Pâtisserie et Cafétéria" />
-    <Label fx:id="labelAdresseMagasin" style="-fx-font-size: 7px; " text="Avenue Bas congo N° 917" />
-    <Label fx:id="labeladresseCommune" style="-fx-font-size: 7px; " text="KINSHASA / GOMBE" />
-    <Label fx:id="labelTelephoneMagasin" style="-fx-font-size: 7px; " text="Tel : +243 994 041 850" />
-    <Label style="-fx-font-size: 6px; " text="RCCM:........../NIF:......" />
-    <Label style="-fx-font-size: 6px; " text="IDNAT:............." />
+    <Label fx:id="labelNomMagasin" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="HNB" />
+    <Label style="-fx-font-size: 10px; -fx-font-weight: bold;" text="Pâtisserie et Cafétéria" />
+    <Label fx:id="labelAdresseMagasin" style="-fx-font-size: 9px;" text="Avenue Bas congo N° 917" />
+    <Label fx:id="labeladresseCommune" style="-fx-font-size: 9px;" text="KINSHASA / GOMBE" />
+    <Label fx:id="labelTelephoneMagasin" style="-fx-font-size: 9px;" text="Tel : +243 994 041 850" />
+    <Label style="-fx-font-size: 8px;" text="RCCM:........../NIF:......" />
+    <Label style="-fx-font-size: 8px;" text="IDNAT:............." />
     <Separator />
 
     <!-- Infos facture -->
-    <Label fx:id="labelDateFacture" style="-fx-font-size: 6px; " text="Date : 25/08/2025"/>
-
-    <Label fx:id="labelNumeroFacture" style="-fx-font-size: 8px; " text="Facture N° : 000123"/>
-
+    <Label fx:id="labelDateFacture" style="-fx-font-size: 9px;" text="Date : 25/08/2025" />
+    <Label fx:id="labelNumeroFacture" style="-fx-font-size: 10px;" text="Facture N° : 000123" />
     <Separator />
 
     <!-- Entête des articles -->
-    <HBox alignment="CENTER_LEFT" prefWidth="100" spacing="2">
-        <Label prefWidth="40" text="Article" />
-        <Label prefWidth="10" style="-fx-alignment: center-right;" text="Qté" />
-        <Label prefWidth="30" style="-fx-alignment: center-right;" text="Prix" />
+    <HBox alignment="CENTER_LEFT" prefWidth="280" spacing="2">
+        <Label prefWidth="140" text="Article" />
+        <Label prefWidth="40" style="-fx-alignment: center-right;" text="Qté" />
+        <Label prefWidth="80" style="-fx-alignment: center-right;" text="Prix" />
     </HBox>
     <Separator />
 
     <!-- Liste des articles -->
-    <VBox fx:id="articlesContainer" prefWidth="100" spacing="1" />
-
+    <VBox fx:id="articlesContainer" prefWidth="280" spacing="2" />
 
     <Separator />
 
     <!-- Totaux -->
-    <Label fx:id="labelTotal" style="-fx-font-weight: bold; -fx-font-size: 8px;" text="Total : 20.50$" />
-    <Label fx:id="labelPaiement" text="Paiement : Espèces" style="-fx-font-size: 8px;"/>
+    <Label fx:id="labelTotal" style="-fx-font-weight: bold; -fx-font-size: 11px;" text="Total : 20.50$" />
+    <Label fx:id="labelPaiement" style="-fx-font-size: 10px;" text="Paiement : Espèces" />
 
     <Separator />
+   <ImageView fx:id="qrCodeImg" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
 
     <!-- Footer -->
-    <Label fx:id="labelMessageMerci" style="-fx-font-size: 6px;" text="Merci pour votre achat !" />
-    <Label fx:id="labelSiteWeb" style="-fx-font-size: 4px; " text="www.b2la.online" />
+    <Label fx:id="labelMessageMerci" style="-fx-font-size: 8px;" text="Merci pour votre achat !" />
+    <Label fx:id="labelSiteWeb" style="-fx-font-size: 7px;" text="www.b2la.online" />
 
 </VBox>
