@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.CalculerController">
-   <children>
-      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="185.0" spacing="10.0">
-         <children>
-            <Label text="CALCULATRICE">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <VBox fx:id="tFacture" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
-         <children>
-            <Label text="TOTAL FACTURE" />
-            <TextField fx:id="totalFacture" />
-            <Label text="MONTANT PERCUS" />
-            <TextField />
-         </children></VBox>
-   </children>
-</HBox>
+<StackPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.b2la.hnb.controllers.CalculerController"
+           prefWidth="600.0" prefHeight="400.0"
+           style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);">
+
+    <VBox alignment="CENTER" spacing="20.0" style="-fx-padding: 20;">
+        <!-- Titre -->
+        <Label text="CALCULATRICE" style="-fx-text-fill: #2c3e50;">
+            <font>
+                <Font name="System Bold" size="28.0"/>
+            </font>
+        </Label>
+
+        <!-- Carte principale -->
+        <VBox spacing="15" alignment="CENTER"
+              style="-fx-background-color: white; -fx-background-radius: 15; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10,0,0,4);">
+
+            <Label text="TOTAL FACTURE" style="-fx-text-fill: #34495e;"/>
+            <TextField fx:id="totalFacture" alignment="CENTER_RIGHT" promptText="100 00"
+                       style="-fx-background-radius: 8; -fx-padding: 6;"/>
+
+            <Label text="MONTANT REÇU" style="-fx-text-fill: #34495e;"/>
+            <TextField fx:id="montantRecu" alignment="CENTER_RIGHT" promptText="100"
+                       style="-fx-background-radius: 8; -fx-padding: 6;"/>
+
+            <Label text="TAUX DE CONVERSION" style="-fx-text-fill: #34495e;"/>
+            <TextField fx:id="taux" alignment="CENTER_RIGHT" promptText="2900"
+                       style="-fx-background-radius: 8; -fx-padding: 6;"/>
+
+            <Button text="VALIDER"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 8 16;"/>
+        </VBox>
+
+        <!-- Zone description -->
+        <Label fx:id="labelDescription" text="description"
+               style="-fx-text-fill: #2c3e50;">
+            <font>
+                <Font name="System Bold" size="16.0"/>
+            </font>
+        </Label>
+    </VBox>
+</StackPane>
