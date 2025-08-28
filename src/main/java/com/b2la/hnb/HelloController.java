@@ -127,4 +127,16 @@ public class HelloController {
         utilisStage.showAndWait();
 
     }
+
+    @FXML
+    void afficherCalculatrice() throws IOException {
+        FXMLLoader loader= new FXMLLoader(HelloApplication.class.getResource("calculer-view.fxml"));
+        Parent utilis=loader.load();
+        Stage utilisStage= new Stage();
+        utilisStage.setResizable(false);
+        utilisStage.initModality(Modality.APPLICATION_MODAL);
+        utilisStage.setTitle("Calculatrice !!!");
+        utilisStage.setScene(new Scene(utilis));
+        utilisStage.showAndWait();
+    }
 }
