@@ -8,22 +8,19 @@ public class CalculerController {
     TextField totalFacture, montantRecu, taux;
     @FXML
     Label description;
-    @FXML
-    Button btnValider;
-
 
     public void initialize(){
         montantRecu.setTextFormatter(new TextFormatter<>(change -> {
-            if (change.getControlNewText().matches("\\d*")) { // Accepte uniquement les chiffres
+            if (change.getControlNewText().matches("\\d*")) {
                 return change;
             }
-            return null; // Rejette les autres entrées
+            return null;
         }));
         totalFacture.setTextFormatter(new TextFormatter<>(change -> {
-            if (change.getControlNewText().matches("\\d*")) { // Accepte uniquement les chiffres
+            if (change.getControlNewText().matches("\\d*(\\.\\d*)?")) {
                 return change;
             }
-            return null; // Rejette les autres entrées
+            return null;
         }));
 
         taux.setTextFormatter(new TextFormatter<>(change -> {
@@ -32,6 +29,10 @@ public class CalculerController {
             }
             return null; // Rejette les autres entrées
         }));
+    }
+
+    public void afficher(double totalFactu){
+        totalFacture.setText(String.valueOf(totalFactu));
     }
 
 
@@ -56,7 +57,7 @@ public class CalculerController {
             Alert alert= new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Probleme sur  montant");
             alert.setHeaderText("votre montant est inferieur");
-            alert.setContentText("veuillez svp ajouter un montant de "+calculer+" CDF");
+            alert.setContentText("veuillez svp ajouter un montant de "+calcule+" CDF");
             alert.showAndWait();
             throw new RuntimeException("le montant recu est inferieur");
         }

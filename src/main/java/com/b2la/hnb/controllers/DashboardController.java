@@ -21,10 +21,13 @@ import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -744,6 +747,20 @@ public class DashboardController {
                         nomProduit, prixUnitaire, quantite, total
                 )
         );
+    }
+
+    @FXML
+    void afficherCalculatrice() throws IOException {
+        FXMLLoader loader= new FXMLLoader(HelloApplication.class.getResource("calculer-view.fxml"));
+        Parent utilis=loader.load();
+        CalculerController cc=loader.getController();
+        cc.afficher(totalPrix);
+        Stage utilisStage= new Stage();
+        utilisStage.setResizable(false);
+        utilisStage.initModality(Modality.APPLICATION_MODAL);
+        utilisStage.setTitle("Calculatrice !!!");
+        utilisStage.setScene(new Scene(utilis));
+        utilisStage.showAndWait();
     }
 
 

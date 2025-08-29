@@ -201,7 +201,7 @@
                         </Label>
                         <VBox spacing="5.0">
                            <children>
-                              <Button mnemonicParsing="false" styleClass="action-button" text="Calculatrice" />
+                              <Button mnemonicParsing="false" onAction="#afficherCalculatrice" styleClass="action-button" text="Calculatrice" />
                               <Button mnemonicParsing="false" styleClass="action-button" text="Vente du Jour" />
                            </children>
                            <padding>
