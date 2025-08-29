@@ -17,6 +17,8 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
@@ -29,13 +31,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,11 +47,11 @@ import static javafx.application.Platform.runLater;
 
 public class DashboardController {
     @FXML
-    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel;
+    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture;
     @FXML
     private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande, btnValiderFacture;
     @FXML
-    private VBox homeLayout, facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout;
+    private VBox homeLayout, facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout, boxBilanItem;
 
     @FXML
     TextField research, articleField, prixField, researchFacture;
@@ -103,6 +106,8 @@ public class DashboardController {
     Facturation facture;
     int nbreCommande = 0;
     double totalPrix = 0;
+    double revenueToday;
+
 
     public void initialize() {
         recoveryUsername();
@@ -217,6 +222,7 @@ public class DashboardController {
     private void homeView() {
         String layout = "home";
         cardLayout(layout);
+        affichage();
     }
 
     @FXML
@@ -751,11 +757,11 @@ public class DashboardController {
 
     @FXML
     void afficherCalculatrice() throws IOException {
-        FXMLLoader loader= new FXMLLoader(HelloApplication.class.getResource("calculer-view.fxml"));
-        Parent utilis=loader.load();
-        CalculerController cc=loader.getController();
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("calculer-view.fxml"));
+        Parent utilis = loader.load();
+        CalculerController cc = loader.getController();
         cc.afficher(totalPrix);
-        Stage utilisStage= new Stage();
+        Stage utilisStage = new Stage();
         utilisStage.setResizable(false);
         utilisStage.initModality(Modality.APPLICATION_MODAL);
         utilisStage.setTitle("Calculatrice !!!");
@@ -763,6 +769,71 @@ public class DashboardController {
         utilisStage.showAndWait();
     }
 
+    private void affichage() {
+        bs = new bilanService();
+        Bilan bilan = bs.findById(bilanHebdo.getId());
+        List<Facturation> listFacture = bilan.getFacturations()
+                .stream()
+                .filter(facturation ->
+                        facturation.getEtat().equals(Etat.Payée))
+                .limit(5)
+                .collect(Collectors.toList());
+        Collections.reverse(listFacture);
+        listFacture.forEach(fact -> ActivityItem(fact));
+        int nombreFacture = Math.toIntExact(bilan.getFacturations()
+                .stream().
+                filter(facture -> facture.getEtat()
+                        .equals(Etat.Payée))
+                .count());
+        revenueToday = 0.0;
+        bilan.getFacturations().forEach(facturation1 -> {
+            if (facturation1.getEtat().equals(Etat.Payée)) {
+                revenueToday += facturation1.getTtc();
+            }
+        });
+        countFacture.setText("Nombre de FACTURE: " + nombreFacture);
+        sumFacture.setText("Total FACTURE :"+revenueToday+" CDF");
+    }
 
+    public void ActivityItem(Facturation factureBilan) {
+        // Configuration du HBox principal
+
+        HBox articleBox = new HBox();
+        articleBox.getStyleClass().add("activity-item");
+        articleBox.setAlignment(Pos.CENTER_LEFT);
+        articleBox.setSpacing(10);
+        articleBox.setPadding(new Insets(10));
+
+        // Création de l'icône
+        FontIcon cartIcon = new FontIcon();
+        cartIcon.setIconLiteral("fa-shopping-cart");
+        cartIcon.setIconSize(20);
+        cartIcon.getStyleClass().add("activity-icon");
+
+        // Création des labels
+        Label titleLabel = new Label("Nouvelle commande " + factureBilan.getCodeReference());
+        titleLabel.getStyleClass().add("activity-title");
+
+        Label containLabel = new Label("Prix total: " + factureBilan.getTtc() + " CDF");
+        titleLabel.getStyleClass().add("activity-title");
+
+        Label timeLabel = new Label(factureBilan.getDateFacturation().toString());
+        timeLabel.getStyleClass().add("activity-time");
+
+        // Création du VBox pour les détails
+        VBox detailsBox = new VBox(titleLabel, containLabel, timeLabel);
+        detailsBox.getStyleClass().add("activity-details");
+        detailsBox.setSpacing(5);
+
+        // Création du bouton
+        Button viewButton = new Button("Voir");
+        viewButton.getStyleClass().add("small-button");
+        viewButton.setOnAction(ae -> System.out.println(" -- "
+                + factureBilan.getCodeReference()));
+
+        articleBox.getChildren().addAll(cartIcon, detailsBox, viewButton);
+        boxBilanItem.getChildren().clear();
+        runLater(() -> boxBilanItem.getChildren().add(articleBox));
+    }
 }
 

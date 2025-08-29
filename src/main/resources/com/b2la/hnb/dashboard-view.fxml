@@ -129,26 +129,35 @@
                     </VBox>
 
                     <!-- Recent Activity -->
-                    <VBox fx:id="homeLayout" spacing="10" styleClass="section" visible="false">
+                    <VBox fx:id="homeLayout" spacing="10" styleClass="section">
                         <HBox alignment="CENTER_LEFT" spacing="10">
                             <FontIcon iconLiteral="fa-history" iconSize="18" styleClass="section-icon" />
-                            <Label styleClass="section-title" text="Activité Récente" />
+                            <Label styleClass="section-title" text="Facture recents" />
                             <Region HBox.hgrow="ALWAYS" />
                             <Button styleClass="text-button" text="Voir tout" />
                         </HBox>
+                  <HBox spacing="10.0">
+                     <children>
+                        <Label fx:id="countFacture" styleClass="section-title" text="Nombre de FACTURE:" />
+                        <Label fx:id="sumFacture" styleClass="section-title" text="Total facture:" />
+                        <HBox styleClass="activity-list">
+                           <children>
+                              <TextField promptText="numero facture" />
+                              <Button mnemonicParsing="false" text="VERIFIER" />
+                              <Button mnemonicParsing="false" text="Scanner QR" />
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding></HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
+                  </HBox>
 
-                        <VBox styleClass="activity-list">
-                            <HBox styleClass="activity-item">
-                                <FontIcon iconLiteral="fa-shopping-cart" iconSize="20" styleClass="activity-icon" />
-                                <VBox styleClass="activity-details">
-                                    <Label styleClass="activity-title" text="Nouvelle commande #1256" />
-                                    <Label styleClass="activity-time" text="Il y a 2 minutes" />
-                                </VBox>
-                                <Button styleClass="small-button" text="Voir" />
-                            </HBox>
-                        </VBox>
+                        <VBox fx:id="boxBilanItem" styleClass="activity-list" />
                     </VBox>
-                    <VBox fx:id="facturationLayout" spacing="10" styleClass="section">
+                    <VBox fx:id="facturationLayout" spacing="10" styleClass="section" visible="false">
                         <Label styleClass="section-title" text="Système de Facturation" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                             <children>
@@ -202,7 +211,6 @@
                         <VBox spacing="5.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#afficherCalculatrice" styleClass="action-button" text="Calculatrice" />
-                              <Button mnemonicParsing="false" styleClass="action-button" text="Vente du Jour" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
