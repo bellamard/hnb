@@ -132,7 +132,7 @@
                     <VBox fx:id="homeLayout" spacing="10" styleClass="section">
                         <HBox alignment="CENTER_LEFT" spacing="10">
                             <FontIcon iconLiteral="fa-history" iconSize="18" styleClass="section-icon" />
-                            <Label styleClass="section-title" text="Facture recents" />
+                            <Label styleClass="section-title" text="Facture recentes" />
                             <Region HBox.hgrow="ALWAYS" />
                             <Button styleClass="text-button" text="Voir tout" />
                         </HBox>
@@ -142,9 +142,9 @@
                         <Label fx:id="sumFacture" styleClass="section-title" text="Total facture:" />
                         <HBox styleClass="activity-list">
                            <children>
-                              <TextField promptText="numero facture" />
+                              <TextField fx:id="fieldVerifier" promptText="numero facture" />
                               <Button mnemonicParsing="false" text="VERIFIER" />
-                              <Button mnemonicParsing="false" text="Scanner QR" />
+                              <Button fx:id="btnQrscan" mnemonicParsing="false" text="Scanner QR" />
                            </children>
                            <padding>
                               <Insets left="20.0" />

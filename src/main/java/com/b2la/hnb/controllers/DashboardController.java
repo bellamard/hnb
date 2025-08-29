@@ -54,7 +54,7 @@ public class DashboardController {
     private VBox homeLayout, facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout, boxBilanItem;
 
     @FXML
-    TextField research, articleField, prixField, researchFacture;
+    TextField research, articleField, prixField, researchFacture, fieldVerifier;
     @FXML
     TextArea description;
     @FXML
@@ -834,6 +834,9 @@ public class DashboardController {
         articleBox.getChildren().addAll(cartIcon, detailsBox, viewButton);
         boxBilanItem.getChildren().clear();
         runLater(() -> boxBilanItem.getChildren().add(articleBox));
+    }
+    void verifierCode(){
+        String code = fieldVerifier.getText();
     }
 }
 
