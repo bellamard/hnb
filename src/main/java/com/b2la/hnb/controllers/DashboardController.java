@@ -835,8 +835,28 @@ public class DashboardController {
         boxBilanItem.getChildren().clear();
         runLater(() -> boxBilanItem.getChildren().add(articleBox));
     }
-    void verifierCode(){
+    void verifierCode() throws IOException {
         String code = fieldVerifier.getText();
+        fs= new facturationService();
+        Optional<Facturation> fact = fs.findAll().stream().filter(factu -> code.toLowerCase().contains(factu.getCodeReference().toString().toLowerCase())).findFirst();
+        if(fact.isEmpty()){
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("RECHERCHE FACTURE");
+            alert.setContentText("votre facture n'existe pas");
+            alert.showAndWait();
+            throw new RuntimeException("recherche de la facture non trouvee!!!");
+        }
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("calculer-view.fxml"));
+        Parent utilis = loader.load();
+
+        Stage utilisStage = new Stage();
+        utilisStage.setResizable(false);
+        utilisStage.initModality(Modality.APPLICATION_MODAL);
+        utilisStage.setTitle("Apercus !!!");
+        utilisStage.setScene(new Scene(utilis));
+        utilisStage.showAndWait();
+
+
     }
 }
 
