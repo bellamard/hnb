@@ -835,6 +835,7 @@ public class DashboardController {
         boxBilanItem.getChildren().clear();
         runLater(() -> boxBilanItem.getChildren().add(articleBox));
     }
+    @FXML
     void verifierCode() throws IOException {
         String code = fieldVerifier.getText();
         fs= new facturationService();
@@ -846,9 +847,10 @@ public class DashboardController {
             alert.showAndWait();
             throw new RuntimeException("recherche de la facture non trouvee!!!");
         }
-        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("calculer-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("facture-view.fxml"));
         Parent utilis = loader.load();
-
+        factureController fcc= new factureController();
+        fcc.getDescription(fact.get());
         Stage utilisStage = new Stage();
         utilisStage.setResizable(false);
         utilisStage.initModality(Modality.APPLICATION_MODAL);

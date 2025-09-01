@@ -67,7 +67,7 @@ public class facturationService {
         EntityManager em = JPAUtil.getEntityManager();
         List<Facturation> facturesList = null;
         try {
-            TypedQuery<Facturation> query = em.createQuery("SELECT f FROM Facturations f", Facturation.class);
+            TypedQuery<Facturation> query = em.createQuery("SELECT f FROM Facturation f", Facturation.class);
             facturesList = query.getResultList();
         } finally {
             em.close();

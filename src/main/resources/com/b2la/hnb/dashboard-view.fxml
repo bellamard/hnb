@@ -143,7 +143,7 @@
                         <HBox styleClass="activity-list">
                            <children>
                               <TextField fx:id="fieldVerifier" promptText="numero facture" />
-                              <Button mnemonicParsing="false" text="VERIFIER" />
+                              <Button fx:id="btnverifier" mnemonicParsing="false" onAction="#verifierCode" text="VERIFIER" />
                               <Button fx:id="btnQrscan" mnemonicParsing="false" text="Scanner QR" />
                            </children>
                            <padding>
