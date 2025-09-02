@@ -862,5 +862,17 @@ public class DashboardController {
 
 
     }
+
+    @FXML
+    void scannerCode() throws IOException {
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("scanner-view.fxml"));
+        Parent utilis = loader.load();
+        Stage utilisStage = new Stage();
+        utilisStage.setResizable(false);
+        utilisStage.initModality(Modality.APPLICATION_MODAL);
+        utilisStage.setTitle("Scanner QR !!!");
+        utilisStage.setScene(new Scene(utilis));
+        utilisStage.showAndWait();
+    }
 }
 

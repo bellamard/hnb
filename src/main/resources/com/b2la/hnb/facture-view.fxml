@@ -12,9 +12,9 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <VBox alignment="CENTER">
+      <VBox alignment="CENTER" spacing="20.0">
          <children>
-            <Label text="description" fx:id="description"/>
+            <Label fx:id="description" text="description" />
             <Button fx:id="btnPrint" mnemonicParsing="false" text="Imprimer" />
          </children>
       </VBox>

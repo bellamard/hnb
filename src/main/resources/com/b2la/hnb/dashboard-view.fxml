@@ -144,7 +144,7 @@
                            <children>
                               <TextField fx:id="fieldVerifier" promptText="numero facture" />
                               <Button fx:id="btnverifier" mnemonicParsing="false" onAction="#verifierCode" text="VERIFIER" />
-                              <Button fx:id="btnQrscan" mnemonicParsing="false" text="Scanner QR" />
+                              <Button fx:id="btnQrscan" mnemonicParsing="false" onAction="#scannerCode" text="Scanner QR" />
                            </children>
                            <padding>
                               <Insets left="20.0" />
