@@ -14,7 +14,7 @@
       </Label>
       <VBox alignment="CENTER">
          <children>
-            <Label text="description" />
+            <Label text="description" fx:id="description"/>
             <Button fx:id="btnPrint" mnemonicParsing="false" text="Imprimer" />
          </children>
       </VBox>

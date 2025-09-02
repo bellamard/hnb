@@ -847,9 +847,10 @@ public class DashboardController {
             alert.showAndWait();
             throw new RuntimeException("recherche de la facture non trouvee!!!");
         }
+
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("facture-view.fxml"));
         Parent utilis = loader.load();
-        factureController fcc= new factureController();
+        factureController fcc= loader.getController();
         fcc.getDescription(fact.get());
         Stage utilisStage = new Stage();
         utilisStage.setResizable(false);
@@ -857,6 +858,7 @@ public class DashboardController {
         utilisStage.setTitle("Apercus !!!");
         utilisStage.setScene(new Scene(utilis));
         utilisStage.showAndWait();
+
 
 
     }
