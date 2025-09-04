@@ -107,6 +107,7 @@ public class DashboardController {
     int nbreCommande = 0;
     double totalPrix = 0;
     double revenueToday;
+    depenseService ds;
 
 
     public void initialize() {
@@ -120,6 +121,7 @@ public class DashboardController {
         category.getItems().addAll(categoryType.values());
         ps = new produitService();
         fs = new facturationService();
+        ds= new depenseService();
         dashBoardProduit = (double) ps.numberProduit();
         dashBoardFacture = fs.sommeFacture();
         dashBoardNumber();
@@ -440,7 +442,7 @@ public class DashboardController {
         new Thread(task).start();
     }
 
-    private void getAllProduit() {
+    void getAllProduit() {
         ps = new produitService();
         List<Produit> prodList = ps.findAll();
         produitArticle.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -481,7 +483,7 @@ public class DashboardController {
         new Thread(task).start();
     }
 
-    private void getFactureAllCommande() {
+    void getFactureAllCommande() {
         fs = new facturationService();
         Facturation fac = fs.findById(facture.getId());
 
@@ -552,7 +554,7 @@ public class DashboardController {
         totalFactureLabel.setText(String.valueOf(totalPrix));
     }
 
-    private void resetFactureProduit() {
+    void resetFactureProduit() {
         researchFacture.setText("");
         btnAddCommande.setDisable(true);
         commande = "";
@@ -620,7 +622,7 @@ public class DashboardController {
         resetProduit();
     }
 
-    private void getProduit(Produit produit) {
+    void getProduit(Produit produit) {
         idProduit = produit.getId();
         articleField.setText(produit.getNom());
         description.setText(produit.getDescription());
@@ -629,7 +631,7 @@ public class DashboardController {
         category.setValue(produit.getType());
     }
 
-    private void resetProduit() {
+    void resetProduit() {
         articleField.setText("");
         prixField.setText("");
         description.setText("");
@@ -679,7 +681,7 @@ public class DashboardController {
     }
 
     @FXML
-    private void updateProduit() {
+    void updateProduit() {
         if (articleField.getText().isEmpty()) messageErreur("Votre champs nom est vide!!!");
 //        if(description.getText().isEmpty())messageErreur("Votre champs description est vide!!!");
         if (prixField.getText().isEmpty()) messageErreur("votre champs prix est vide!!!");
@@ -699,7 +701,7 @@ public class DashboardController {
     }
 
     @FXML
-    private void addProduit() {
+    void addProduit() {
         if (articleField.getText().isEmpty()) messageErreur("Votre champs nom est vide!!!");
         if (prixField.getText().isEmpty()) messageErreur("votre champs prix est vide!!!");
         if (category.getValue().toString().isEmpty()) messageErreur("Votre categorie est vide!!!");
@@ -717,7 +719,7 @@ public class DashboardController {
 
     }
 
-    private void boiteAlert(String message) {
+    void boiteAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(message.toUpperCase().substring(0, 10));
@@ -725,7 +727,7 @@ public class DashboardController {
         alert.showAndWait();
     }
 
-    private void messageErreur(String message) {
+    void messageErreur(String message) {
 
         runLater(() -> {
             msgAlert.setText(message);
@@ -733,7 +735,7 @@ public class DashboardController {
         throw new RuntimeException(message);
     }
 
-    private void askSupression(Long produitId) {
+    void askSupression(Long produitId) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Voulez-vous Supprimer ?");
@@ -746,7 +748,7 @@ public class DashboardController {
         }
     }
 
-    private void descriptionFacturation(String nomProduit, double prixUnitaire, int quantite) {
+    void descriptionFacturation(String nomProduit, double prixUnitaire, int quantite) {
         double total = prixUnitaire * quantite;
         labelDescription.setText(String.format(
                         "Produit : %s\nPrix    : %.2f €\nQuantité: %d pièces\nTotal   : %.2f €",
@@ -769,7 +771,7 @@ public class DashboardController {
         utilisStage.showAndWait();
     }
 
-    private void affichage() {
+    void affichage() {
         bs = new bilanService();
         Bilan bilan = bs.findById(bilanHebdo.getId());
         List<Facturation> listFacture = bilan.getFacturations()
@@ -875,6 +877,21 @@ public class DashboardController {
         utilisStage.setTitle("Scanner QR !!!");
         utilisStage.setScene(new Scene(utilis));
         utilisStage.showAndWait();
+    }
+
+    void getAllspent(){
+
+    }
+    void getSearchSpents(){
+
+    }
+    void addSpent(){
+
+
+    }
+    void update(){
+
+
     }
 }
 

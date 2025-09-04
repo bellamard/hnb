@@ -2,6 +2,7 @@ package com.b2la.hnb.models;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+
 import java.util.Date;
 
 @Entity
@@ -19,6 +20,9 @@ public class Depense { // Nom de classe en PascalCase
 
     @Column(nullable = false)
     private String auteur;
+
+    @Column(nullable = false)
+    private Double montant;
 
     @Column(name = "is_valide")
     private boolean valide = false; // Renommé et camelCase
@@ -41,13 +45,77 @@ public class Depense { // Nom de classe en PascalCase
     public Depense() {
     }
 
-    public Depense(String intitule, String motif, String auteur, Utilisateur utilisateur) {
+    public Depense(String intitule, String motif, String auteur, Utilisateur utilisateur, Double montant) {
         this.intitule = intitule;
         this.motif = motif;
         this.auteur = auteur;
         this.utilisateur = utilisateur;
+        this.montant = montant;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getIntitule() {
+        return intitule;
+    }
+
+    public void setIntitule(String intitule) {
+        this.intitule = intitule;
+    }
+
+    public String getMotif() {
+        return motif;
+    }
+
+    public void setMotif(String motif) {
+        this.motif = motif;
+    }
+
+    public String getAuteur() {
+        return auteur;
+    }
+
+    public void setAuteur(String auteur) {
+        this.auteur = auteur;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public Double getMontant() {
+        return montant;
+    }
+
+    public void setMontant(Double montant) {
+        this.montant = montant;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public Bilan getBilan() {
+        return bilan;
+    }
+
+    public void setBilan(Bilan bilan) {
+        this.bilan = bilan;
+    }
     // Getters et setters...
 
     // Méthodes booléennes plus idiomatiques
