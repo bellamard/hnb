@@ -23,7 +23,8 @@ module com.b2la.hnb {
     requires javafx.base;
     requires com.google.zxing;
     requires com.google.zxing.javase;
-
+    requires javafx.swing;
+    requires webcam.capture;
 
 
     opens com.b2la.hnb.models to org.hibernate.orm.core, javafx.base;
