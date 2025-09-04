@@ -868,6 +868,8 @@ public class DashboardController {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("scanner-view.fxml"));
         Parent utilis = loader.load();
         Stage utilisStage = new Stage();
+        ScannerController scc= loader.getController();
+        scc.setStage(utilisStage);
         utilisStage.setResizable(false);
         utilisStage.initModality(Modality.APPLICATION_MODAL);
         utilisStage.setTitle("Scanner QR !!!");

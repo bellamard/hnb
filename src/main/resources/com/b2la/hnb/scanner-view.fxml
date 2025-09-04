@@ -25,8 +25,8 @@
                 <Separator orientation="VERTICAL" prefHeight="200.0" />
                 <VBox alignment="CENTER" spacing="5.0">
 
-                    <Label text="==DESCRIPTION==" />
-                    <Button mnemonicParsing="false" text="Button" />
+                    <Label fx:id="detailQR" text="==DESCRIPTION==" />
+                    <Button fx:id="btnPrintQR" mnemonicParsing="false" text="imprimer" />
                     <padding>
                         <Insets top="10.0" />
                     </padding>
