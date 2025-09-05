@@ -368,47 +368,186 @@
                     </VBox>
 
 
-                    <VBox fx:id="depenseLayout" spacing="10" styleClass="section">
+<!--                    <VBox fx:id="depenseLayout" spacing="10" styleClass="section">-->
+<!--                        <children>-->
+<!--                            <Label styleClass="section-title" text="Gestion de depenses"/>-->
+<!--                            <Separator/>-->
+<!--                            <HBox alignment="CENTER" spacing="14.0">-->
+<!--                                <children>-->
+<!--                                    <TextField promptText="Recherche"/>-->
+<!--                                </children>-->
+<!--                            </HBox>-->
+<!--                            <HBox spacing="10.0">-->
+<!--                                <children>-->
+<!--                                    <TableView>-->
+<!--                                        <columns>-->
+<!--                                            <TableColumn fx:id="colSpentDate" text="Date"/>-->
+<!--                                            <TableColumn fx:id="colSpentTitle" text="Titre"/>-->
+<!--                                            <TableColumn fx:id="colSpentPrice" text="Montant"/>-->
+<!--                                            <TableColumn fx:id="colSpentMotif" text="motif"/>-->
+<!--                                            <TableColumn fx:id="colSpentFor" text="Pour"/>-->
+<!--                                            <TableColumn fx:id="colSpentAction" text="Action"/>-->
+<!--                                            <TableColumn fx:id="colSpentAuthor" text="Auteur"/>-->
+<!--                                        </columns>-->
+<!--                                    </TableView>-->
+<!--                                    <VBox>-->
+<!--                                        <children>-->
+<!--                                            <Label fx:id="apercusSpent" text="Apercus: "/>-->
+<!--                                        </children>-->
+
+<!--                                    </VBox>-->
+<!--                                </children>-->
+<!--                            </HBox>-->
+<!--                            &lt;!&ndash; Formulaire d'ajout/modification &ndash;&gt;-->
+<!--                            <TitledPane expanded="false" text="➕ Formulaire DEPENSES">-->
+<!--                                <GridPane fx:id="spentForm" hgap="10" vgap="10">-->
+<!--                                    <padding>-->
+<!--                                        <Insets bottom="10" left="10" right="10" top="10"/>-->
+<!--                                    </padding>-->
+
+<!--                                    <Label styleClass="form-label" text="TITRE"/>-->
+<!--                                    <TextField GridPane.columnIndex="1"/>-->
+<!--                                    <Label styleClass="form-label" text="MONTANT" GridPane.rowIndex="1"/>-->
+<!--                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>-->
+<!--                                    <Label layoutX="20.0" layoutY="59.0" styleClass="form-label" text="POUR"-->
+<!--                                           GridPane.rowIndex="2"/>-->
+<!--                                    <TextField layoutX="20.0" layoutY="55.0" GridPane.columnIndex="1"-->
+<!--                                               GridPane.rowIndex="2"/>-->
+<!--                                    <Label styleClass="form-label" text="MOTIF" GridPane.rowIndex="3"/>-->
+<!--                                    <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"-->
+<!--                                              GridPane.rowIndex="4"/>-->
+<!--                                    <HBox spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="2"-->
+<!--                                          GridPane.rowIndex="5">-->
+<!--                                        <children>-->
+<!--                                            <Button mnemonicParsing="false" styleClass="btn-success" text="MODIFIER">-->
+<!--                                                <graphic>-->
+<!--                                                    <FontIcon iconLiteral="fa-pencil-square-o" iconSize="16"/>-->
+<!--                                                </graphic>-->
+<!--                                            </Button>-->
+<!--                                            <Button mnemonicParsing="false" styleClass="btn-success" text="CREER">-->
+<!--                                                <graphic>-->
+<!--                                                    <FontIcon iconLiteral="fa-floppy-o" iconSize="16"/>-->
+<!--                                                </graphic>-->
+<!--                                            </Button>-->
+<!--                                            <Button mnemonicParsing="false" styleClass="btn-secondary" text="ANNULER">-->
+<!--                                                <graphic>-->
+<!--                                                    <FontIcon iconLiteral="fa-close" iconSize="16"/>-->
+<!--                                                </graphic>-->
+<!--                                            </Button>-->
+<!--                                        </children>-->
+<!--                                    </HBox>-->
+
+
+<!--                                    &lt;!&ndash; Informations principales &ndash;&gt;-->
+
+<!--                                    <columnConstraints>-->
+<!--                                        <ColumnConstraints/>-->
+<!--                                        <ColumnConstraints/>-->
+<!--                                        <ColumnConstraints/>-->
+<!--                                    </columnConstraints>-->
+<!--                                    <rowConstraints>-->
+<!--                                        <RowConstraints/>-->
+<!--                                        <RowConstraints/>-->
+<!--                                        <RowConstraints/>-->
+<!--                                        <RowConstraints/>-->
+<!--                                        <RowConstraints/>-->
+<!--                                        <RowConstraints/>-->
+<!--                                    </rowConstraints>-->
+
+
+<!--                                </GridPane>-->
+<!--                            </TitledPane>-->
+<!--                        </children>-->
+<!--                    </VBox>-->
+                    <VBox fx:id="depenseLayout" spacing="16" styleClass="section">
                         <children>
-                            <Label styleClass="section-title" text="Gestion de depenses"/>
-                            <Separator/>
-                            <HBox alignment="CENTER" spacing="14.0">
+
+                            <!-- Titre principal -->
+                            <HBox alignment="CENTER_LEFT" spacing="10">
                                 <children>
-                                    <TextField promptText="Recherche"/>
+                                    <FontIcon iconLiteral="fa-money" iconSize="20"/>
+                                    <Label styleClass="section-title" text="Gestion des Dépenses"/>
                                 </children>
                             </HBox>
-                            <HBox spacing="10.0">
+
+                            <Separator/>
+
+                            <!-- Barre de recherche moderne -->
+                            <HBox alignment="CENTER_LEFT" spacing="8">
                                 <children>
-                                    <TableView>
+                                    <FontIcon iconLiteral="fa-search" iconSize="16"/>
+                                    <TextField fx:id="searchField" promptText="Rechercher une dépense..." prefWidth="250"/>
+                                </children>
+                            </HBox>
+
+                            <!-- Tableau principal -->
+                            <HBox spacing="14" alignment="TOP_LEFT">
+                                <children>
+                                    <TableView fx:id="spentTable" prefHeight="400" VBox.vgrow="ALWAYS">
                                         <columns>
-                                            <TableColumn text="Date"/>
-                                            <TableColumn text="Intitule"/>
-                                            <TableColumn text="Montant"/>
-                                            <TableColumn text="Pour"/>
-                                            <TableColumn text="Auteur"/>
+                                            <TableColumn fx:id="colSpentDate" text="📅 Date" prefWidth="100"/>
+                                            <TableColumn fx:id="colSpentTitle" text="Titre" prefWidth="180"/>
+                                            <TableColumn fx:id="colSpentPrice" text="💲 Montant" prefWidth="120"/>
+                                            <TableColumn fx:id="colSpentMotif" text="Motif" prefWidth="200"/>
+                                            <TableColumn fx:id="colSpentFor" text="Pour" prefWidth="150"/>
+                                            <TableColumn fx:id="colSpentAuthor" text="Auteur" prefWidth="150"/>
+                                            <TableColumn fx:id="colSpentAction" text="⚙️ Action" prefWidth="100"/>
                                         </columns>
                                     </TableView>
-                                    <VBox>
-                                        <children>
-                                            <Label text="Apercus: " fx:id="apercusSpent"/>
-                                        </children>
 
+                                    <!-- Zone d'aperçu -->
+                                    <VBox spacing="8" alignment="TOP_LEFT">
+                                        <children>
+                                            <Label text="📊 Aperçu" styleClass="apercu-title"/>
+                                            <Label fx:id="apercusSpent" text="Sélectionnez une dépense..." wrapText="true"/>
+                                        </children>
                                     </VBox>
                                 </children>
                             </HBox>
-                            <!-- Formulaire d'ajout/modification -->
-                            <TitledPane expanded="false" text="➕ Formulaire Produit">
-                                <GridPane fx:id="spentForm" hgap="10" vgap="10">
+
+                            <!-- Formulaire moderne -->
+                            <TitledPane expanded="false" text="➕ Ajouter / Modifier une Dépense" animated="true">
+                                <VBox spacing="16" styleClass="form-card" >
                                     <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10"/>
+                                        <Insets top="16" right="16" bottom="16" left="16"/>
                                     </padding>
+                                    <children>
 
-                                    <!-- Informations principales -->
+                                        <GridPane hgap="12" vgap="12">
+                                            <Label styleClass="form-label" text="Titre"/>
+                                            <TextField fx:id="titleField" GridPane.columnIndex="1"/>
 
-                                </GridPane>
+                                            <Label styleClass="form-label" text="Montant" GridPane.rowIndex="1"/>
+                                            <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                                            <Label styleClass="form-label" text="Pour" GridPane.rowIndex="2"/>
+                                            <TextField fx:id="forField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                                            <Label styleClass="form-label" text="Motif" GridPane.rowIndex="3"/>
+                                            <TextArea fx:id="motifArea" prefRowCount="4" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                        </GridPane>
+
+                                        <!-- Boutons d'action -->
+                                        <HBox spacing="12" alignment="CENTER_RIGHT">
+                                            <children>
+                                                <Button styleClass="btn-primary" text="Créer">
+                                                    <graphic><FontIcon iconLiteral="fa-floppy-o" iconSize="16"/></graphic>
+                                                </Button>
+                                                <Button styleClass="btn-warning" text="Modifier">
+                                                    <graphic><FontIcon iconLiteral="fa-pencil" iconSize="16"/></graphic>
+                                                </Button>
+                                                <Button styleClass="btn-danger" text="Annuler">
+                                                    <graphic><FontIcon iconLiteral="fa-close" iconSize="16"/></graphic>
+                                                </Button>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
                             </TitledPane>
+
                         </children>
                     </VBox>
+
                     <VBox fx:id="clotureLayout" spacing="10" styleClass="section" visible="false"/>
                     <VBox fx:id="parametreLayout" spacing="10" styleClass="section" visible="false"/>
 

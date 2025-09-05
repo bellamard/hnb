@@ -124,9 +124,18 @@ public class ScannerController {
             webcam.close();
             webcam=null;
             executor.shutdownNow();
+            try {
+                if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
+                    executor.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                executor.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
             executor = null;
         }
-        stateWebcam.setText("Statut: caméra arrêtée");
+        Platform.runLater(()->stateWebcam.setText("Statut: caméra arrêtée"));
+
     }
 
     private void verifierDataQR(String codeQR){
