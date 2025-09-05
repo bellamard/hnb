@@ -45,16 +45,16 @@ import static javafx.application.Platform.runLater;
 
 public class DashboardController {
     @FXML
-    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture;
+    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture, msgAlertSpent;
     @FXML
     private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande, btnValiderFacture;
     @FXML
     private VBox homeLayout, facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout, boxBilanItem;
 
     @FXML
-    TextField research, articleField, prixField, researchFacture, fieldVerifier;
+    TextField research, articleField, prixField, researchFacture, fieldVerifier, searchSpent, titleSpent, priceSpent, forSpent;
     @FXML
-    TextArea description;
+    TextArea description, motifSpent;
     @FXML
     ComboBox<Integer> nbreArticle;
 
@@ -130,10 +130,17 @@ public class DashboardController {
         ps = new produitService();
         fs = new facturationService();
         ds = new depenseService();
+        us= new utilisateurService();
         dashBoardProduit = (double) ps.numberProduit();
         dashBoardFacture = fs.sommeFacture();
         dashBoardNumber();
         genererBilan();
+        priceSpent.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*")) {
+                return change;
+            }
+            return null;
+        }));
 
     }
 
@@ -743,6 +750,13 @@ public class DashboardController {
         });
         throw new RuntimeException(message);
     }
+    void messageSpentErreur(String message) {
+
+        runLater(() -> {
+            msgAlertSpent.setText(message);
+        });
+        throw new RuntimeException(message);
+    }
 
     void askSupression(Long produitId) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -913,17 +927,8 @@ public class DashboardController {
         colSpentAction.setCellFactory(col -> new TableCell<>() {
             Button btnCancel = new Button("Annuler");
             Button btnValider = new Button("Valider");
-            Depense dep = getTableView().getItems().get(getIndex());
-            {
-                btnCancel.setOnAction(actionEvent -> {
-                    dep.setAnnulee(true);
-                    ds.update(dep);
-                });
-                btnValider.setOnAction(actionEvent -> {
-                    dep.setValide(true);
-                    ds.update(dep);
-                });
-            }
+            Label status= new Label();
+
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -931,10 +936,30 @@ public class DashboardController {
 
                 else {
                     HBox boxBtn = new HBox(2);
-
+                    Depense dep = getTableView().getItems().get(getIndex());
+                    {
+                        btnCancel.setOnAction(actionEvent -> {
+                            dep.setAnnulee(true);
+                            ds.update(dep);
+                            getAllspent();
+                        });
+                        btnValider.setOnAction(actionEvent -> {
+                            dep.setValide(true);
+                            ds.update(dep);
+                            getAllspent();
+                        });
+                    }
                     if (!dep.estAnnulee() && !dep.estValide()) {
 
                         boxBtn.getChildren().addAll(btnValider, btnCancel);
+                    }
+                    if(dep.estAnnulee()) {
+                        status.setText("Annulee");
+                        boxBtn.getChildren().add(status);
+                    }
+                    if(dep.estValide()) {
+                        status.setText("Validee");
+                        boxBtn.getChildren().add(status);
                     }
                     setGraphic(boxBtn);
 
@@ -951,21 +976,53 @@ public class DashboardController {
         };
         task.setOnSucceeded(e -> spentTable.setItems(task.getValue()));
         new Thread(task).start();
-
+        resetDepense();
     }
-
+    @FXML
     void getSearchSpents() {
+        List<Depense> depenseList = ds.findAll().stream().filter(depense -> depense.getAuteur().toLowerCase().contains(searchSpent.getText().toLowerCase()) ||
+                depense.getMotif().toLowerCase().contains(searchSpent.getText().toLowerCase()) ||
+                String.valueOf(depense.getMontant()).contains(searchSpent.getText().toLowerCase()) ||
+                depense.getIntitule().toLowerCase().contains(searchSpent.getText().toLowerCase())||
+                depense.getDateCreation().toString().contains(searchSpent.getText().toLowerCase())).toList();
+        Task<ObservableList<Depense>> task = new Task<>() {
+
+            @Override
+            protected ObservableList<Depense> call() throws Exception {
+                return FXCollections.observableArrayList(depenseList);
+            }
+        };
+        task.setOnSucceeded(e -> spentTable.setItems(task.getValue()));
+        new Thread(task).start();
 
     }
-
+    @FXML
     void addSpent() {
+        if (titleSpent.getText().isEmpty())messageSpentErreur("le titre est vide!!!");
+        if (priceSpent.getText().isEmpty())messageSpentErreur("le prix est vide!!!");
+        if (forSpent.getText().isEmpty())messageSpentErreur("l'auteur est vide!!!");
 
-
+        Depense depense= new Depense();
+        depense.setIntitule(titleSpent.getText());
+        depense.setMontant(Double.parseDouble(priceSpent.getText()));
+        depense.setAuteur(forSpent.getText());
+        if(!motifSpent.getText().isEmpty())depense.setMotif(motifSpent.getText());
+        depense.setBilan(bilanHebdo);
+        depense.setUtilisateur(us.findById(idUser));
+        ds.save(depense);
+        getAllspent();
     }
 
     void update() {
 
 
+    }
+    @FXML
+    void resetDepense(){
+        titleSpent.setText("");
+        priceSpent.setText("");
+        forSpent.setText("");
+        motifSpent.setText("");
     }
 }
 

@@ -5,8 +5,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" styleClass="bgPanel" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.HelloController">
 <left>
     <Pane prefHeight="400.0" prefWidth="325.0" styleClass="bgPanelSecond" BorderPane.alignment="CENTER">
@@ -21,7 +21,7 @@
                     <Font name="System Bold" size="24.0" />
                 </font>
             </Label>
-            <Button fx:id="btnUtilisateur" layoutX="26.0" layoutY="359.0" mnemonicParsing="false" onAction="#getUtilisateur" text="V 2.0" />
+            <Button fx:id="btnUtilisateur" layoutX="141.0" layoutY="234.0" mnemonicParsing="false" onAction="#getUtilisateur" text="V 2.0" />
         </children></Pane>
 </left>
 <center>
