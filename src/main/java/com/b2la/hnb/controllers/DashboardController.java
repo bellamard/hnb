@@ -2,10 +2,7 @@ package com.b2la.hnb.controllers;
 
 
 import com.b2la.hnb.HelloApplication;
-import com.b2la.hnb.models.Bilan;
-import com.b2la.hnb.models.Commande;
-import com.b2la.hnb.models.Facturation;
-import com.b2la.hnb.models.Produit;
+import com.b2la.hnb.models.*;
 import com.b2la.hnb.services.*;
 import com.b2la.hnb.util.Etat;
 import com.b2la.hnb.util.Stockage;
@@ -39,6 +36,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,6 +65,15 @@ public class DashboardController {
     @FXML
     TableView<Produit> tableProduit, articlesTable;
     @FXML
+    TableView<Depense> spentTable;
+    @FXML
+    TableColumn<Depense, Date> colSpentDate;
+    @FXML
+    TableColumn<Depense, Double> colSpentPrice;
+    @FXML
+    TableColumn<Depense, String> colSpentTitle, colSpentMotif, colSpentFor, colSpentAuthor, colSpentAction;
+
+    @FXML
     TableView<Commande> articlesCommande;
     @FXML
     TableColumn<Commande, String> produitCol1, actionCol1;
@@ -83,6 +90,7 @@ public class DashboardController {
     TableColumn<Produit, Double> Tprix, prixUnitaireArticle;
     @FXML
     TableColumn<Produit, categoryType> Ttype;
+
 
     @FXML
     Button btnAdd, btnAllDelete, btnValider;
@@ -121,7 +129,7 @@ public class DashboardController {
         category.getItems().addAll(categoryType.values());
         ps = new produitService();
         fs = new facturationService();
-        ds= new depenseService();
+        ds = new depenseService();
         dashBoardProduit = (double) ps.numberProduit();
         dashBoardFacture = fs.sommeFacture();
         dashBoardNumber();
@@ -245,6 +253,7 @@ public class DashboardController {
     @FXML
     private void depenseView() {
         String layout = "depense";
+        getAllspent();
         cardLayout(layout);
     }
 
@@ -794,7 +803,7 @@ public class DashboardController {
             }
         });
         countFacture.setText("Nombre de FACTURE: " + nombreFacture);
-        sumFacture.setText("Total FACTURE :"+revenueToday+" CDF");
+        sumFacture.setText("Total FACTURE :" + revenueToday + " CDF");
     }
 
     public void ActivityItem(Facturation factureBilan) {
@@ -837,13 +846,14 @@ public class DashboardController {
         boxBilanItem.getChildren().clear();
         runLater(() -> boxBilanItem.getChildren().add(articleBox));
     }
+
     @FXML
     void verifierCode() throws IOException {
         String code = fieldVerifier.getText();
-        fs= new facturationService();
+        fs = new facturationService();
         Optional<Facturation> fact = fs.findAll().stream().filter(factu -> code.toLowerCase().contains(factu.getCodeReference().toString().toLowerCase())).findFirst();
-        if(fact.isEmpty()){
-            Alert alert= new Alert(Alert.AlertType.ERROR);
+        if (fact.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("RECHERCHE FACTURE");
             alert.setContentText("votre facture n'existe pas");
             alert.showAndWait();
@@ -852,7 +862,7 @@ public class DashboardController {
 
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("facture-view.fxml"));
         Parent utilis = loader.load();
-        factureController fcc= loader.getController();
+        factureController fcc = loader.getController();
         fcc.getDescription(fact.get());
         Stage utilisStage = new Stage();
         utilisStage.setResizable(false);
@@ -862,7 +872,6 @@ public class DashboardController {
         utilisStage.showAndWait();
 
 
-
     }
 
     @FXML
@@ -870,7 +879,7 @@ public class DashboardController {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("scanner-view.fxml"));
         Parent utilis = loader.load();
         Stage utilisStage = new Stage();
-        ScannerController scc= loader.getController();
+        ScannerController scc = loader.getController();
         scc.setStage(utilisStage);
         utilisStage.setResizable(false);
         utilisStage.initModality(Modality.APPLICATION_MODAL);
@@ -879,17 +888,82 @@ public class DashboardController {
         utilisStage.showAndWait();
     }
 
-    void getAllspent(){
+    void getAllspent() {
+        List<Depense> depenseList = ds.findAll();
+        colSpentDate.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
+        colSpentTitle.setCellValueFactory(new PropertyValueFactory<>("intitule"));
+        colSpentPrice.setCellValueFactory(new PropertyValueFactory<>("Montant"));
+        colSpentMotif.setCellValueFactory(new PropertyValueFactory<>("motif"));
+        colSpentFor.setCellValueFactory(new PropertyValueFactory<>("auteur"));
+        colSpentAuthor.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) setGraphic(null);
+                else {
+                    HBox boxBtn = new HBox(2);
+                    Utilisateur uti = getTableView().getItems().get(getIndex()).getUtilisateur();
+                    Label auteur = new Label(uti.getUsername());
+                    boxBtn.getChildren().addAll(auteur);
+                    setGraphic(boxBtn);
+
+                }
+            }
+        });
+        colSpentAction.setCellFactory(col -> new TableCell<>() {
+            Button btnCancel = new Button("Annuler");
+            Button btnValider = new Button("Valider");
+            Depense dep = getTableView().getItems().get(getIndex());
+            {
+                btnCancel.setOnAction(actionEvent -> {
+                    dep.setAnnulee(true);
+                    ds.update(dep);
+                });
+                btnValider.setOnAction(actionEvent -> {
+                    dep.setValide(true);
+                    ds.update(dep);
+                });
+            }
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) setGraphic(null);
+
+                else {
+                    HBox boxBtn = new HBox(2);
+
+                    if (!dep.estAnnulee() && !dep.estValide()) {
+
+                        boxBtn.getChildren().addAll(btnValider, btnCancel);
+                    }
+                    setGraphic(boxBtn);
+
+                }
+            }
+        });
+
+        Task<ObservableList<Depense>> task = new Task<>() {
+
+            @Override
+            protected ObservableList<Depense> call() throws Exception {
+                return FXCollections.observableArrayList(depenseList);
+            }
+        };
+        task.setOnSucceeded(e -> spentTable.setItems(task.getValue()));
+        new Thread(task).start();
 
     }
-    void getSearchSpents(){
+
+    void getSearchSpents() {
 
     }
-    void addSpent(){
+
+    void addSpent() {
 
 
     }
-    void update(){
+
+    void update() {
 
 
     }
