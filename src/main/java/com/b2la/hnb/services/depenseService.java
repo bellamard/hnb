@@ -58,7 +58,6 @@ public class depenseService {
     public List<Depense> findAll() {
         EntityManager em = JPAUtil.getEntityManager();
         List<Depense> depenseList = null;
-
         try {
             TypedQuery<Depense> query = em.createQuery("SELECT d FROM Depense d", Depense.class);
             depenseList = query.getResultList();

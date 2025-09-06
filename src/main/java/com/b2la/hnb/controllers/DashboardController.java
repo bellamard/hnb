@@ -45,9 +45,9 @@ import static javafx.application.Platform.runLater;
 
 public class DashboardController {
     @FXML
-    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture, msgAlertSpent;
+    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture, msgAlertSpent, apercusSpentText;
     @FXML
-    private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande, btnValiderFacture;
+    private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande, btnValiderFacture, btnModifierSpent, btnCreateSpent;
     @FXML
     private VBox homeLayout, facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout, boxBilanItem;
 
@@ -966,6 +966,23 @@ public class DashboardController {
                 }
             }
         });
+        spentTable.getSelectionModel();
+
+        spentTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                apercusSpentText.setText(String.format(
+                                "Date : %s\nTitre    : %s\nMontant: %.2f CDF pièces\nMotif   : %s\nPour   : %s\nAuteur   : %s",
+                        newSelection.getDateCreation(),
+                        newSelection.getIntitule(),
+                        newSelection.getMontant(),
+                        newSelection.getMotif(),
+                        newSelection.getAuteur(),
+                        newSelection.getUtilisateur().getUsername()
+                ));
+
+                apercusSpent(newSelection);
+            }
+        });
 
         Task<ObservableList<Depense>> task = new Task<>() {
 
@@ -1012,22 +1029,28 @@ public class DashboardController {
         ds.save(depense);
         getAllspent();
     }
+    void apercusSpent(Depense depense){
+        titleSpent.setText(depense.getIntitule());
+        priceSpent.setText(depense.getMontant().toString());
+        forSpent.setText(depense.getAuteur());
+        motifSpent.setText(depense.getMotif());
+        btnModifierSpent.setVisible(true);
+        btnCreateSpent.setVisible(false);
+        btnModifierSpent.setOnAction(ae->update(depense));
+    }
 
-    void update() {
+    @FXML
+    void update(Depense depense) {
         if (titleSpent.getText().isEmpty())messageSpentErreur("le titre est vide!!!");
         if (priceSpent.getText().isEmpty())messageSpentErreur("le prix est vide!!!");
         if (forSpent.getText().isEmpty())messageSpentErreur("l'auteur est vide!!!");
-
-        Depense depense= new Depense();
         depense.setIntitule(titleSpent.getText());
         depense.setMontant(Double.parseDouble(priceSpent.getText()));
         depense.setAuteur(forSpent.getText());
-        if(!motifSpent.getText().isEmpty())depense.setMotif(motifSpent.getText());
-        depense.setBilan(bilanHebdo);
+        depense.setMotif(motifSpent.getText());
         depense.setUtilisateur(us.findById(idUser));
         ds.update(depense);
         getAllspent();
-
     }
     @FXML
     void resetDepense(){
@@ -1035,6 +1058,9 @@ public class DashboardController {
         priceSpent.setText("");
         forSpent.setText("");
         motifSpent.setText("");
+        btnModifierSpent.setVisible(false);
+        btnCreateSpent.setVisible(true);
+        apercusSpentText.setText("Sélectionnez une dépense...");
     }
 }
 
