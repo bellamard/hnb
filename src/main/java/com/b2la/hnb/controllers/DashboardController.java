@@ -1014,7 +1014,19 @@ public class DashboardController {
     }
 
     void update() {
+        if (titleSpent.getText().isEmpty())messageSpentErreur("le titre est vide!!!");
+        if (priceSpent.getText().isEmpty())messageSpentErreur("le prix est vide!!!");
+        if (forSpent.getText().isEmpty())messageSpentErreur("l'auteur est vide!!!");
 
+        Depense depense= new Depense();
+        depense.setIntitule(titleSpent.getText());
+        depense.setMontant(Double.parseDouble(priceSpent.getText()));
+        depense.setAuteur(forSpent.getText());
+        if(!motifSpent.getText().isEmpty())depense.setMotif(motifSpent.getText());
+        depense.setBilan(bilanHebdo);
+        depense.setUtilisateur(us.findById(idUser));
+        ds.update(depense);
+        getAllspent();
 
     }
     @FXML
