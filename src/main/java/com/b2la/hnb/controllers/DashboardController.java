@@ -299,6 +299,10 @@ public class DashboardController {
         String layout = "parametre";
         cardLayout(layout);
     }
+    @FXML
+    void onClose(){
+        System.exit(0);
+    }
 
     @FXML
     private void annulerFacture() {
