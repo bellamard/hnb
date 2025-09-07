@@ -45,7 +45,7 @@ import static javafx.application.Platform.runLater;
 
 public class DashboardController {
     @FXML
-    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture, msgAlertSpent, apercusSpentText;
+    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture, msgAlertSpent, apercusSpentText, bilanDate, bilanRef, bilanFactureElement, bilanDepenseElement, bilanSommeFacture, bilanSommeDepense;
     @FXML
     private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande, btnValiderFacture, btnModifierSpent, btnCreateSpent;
     @FXML
@@ -115,6 +115,8 @@ public class DashboardController {
     int nbreCommande = 0;
     double totalPrix = 0;
     double revenueToday;
+    double factureTotal;
+    double depenseTotal;
     depenseService ds;
 
 
@@ -275,6 +277,7 @@ public class DashboardController {
     @FXML
     private void clotureView() {
         String layout = "cloture";
+        getBilanHebdo();
         cardLayout(layout);
     }
 
@@ -1075,6 +1078,26 @@ public class DashboardController {
     void getAllCloture(){
         List<Bilan> bilanList=bs.findAll();
 
+    }
+
+    void getBilanHebdo(){
+        bilanHebdo=bs.findById(bilanHebdo.getId());
+        factureTotal=0.0;
+        depenseTotal=0.0;
+        bilanHebdo.getFacturations().forEach(facturation1 -> {
+            if(facturation1.getEtat().equals(Etat.Payée)){
+                factureTotal+=facturation1.getTtc();
+            }
+        });
+        bilanHebdo.getDepenses().forEach(depense1 -> {
+            if(depense1.estValide())depenseTotal+=depense1.getMontant();
+        });
+        bilanSommeDepense.setText("DEPENSE: "+depenseTotal+" CDF");
+        bilanSommeFacture.setText("FACTURE: "+factureTotal+" CDF");
+        bilanDepenseElement.setText("DEPENSE: "+bilanHebdo.getDepenses().size());
+        bilanFactureElement.setText("FACTURE: "+bilanHebdo.getFacturations().stream().filter(facturation1 -> facturation1.getEtat().equals(Etat.Payée)).toList().size());
+        bilanDate.setText("DATE: "+bilanHebdo.getDebutBilan());
+        bilanRef.setText("REF: "+bilanHebdo.getId());
     }
 }
 

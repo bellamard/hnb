@@ -51,6 +51,7 @@ public class bilanService {
             bil = em.find(Bilan.class, id);
             Hibernate.initialize(bil.getFacturations());
             Hibernate.initialize(bil.getDepenses());
+            Hibernate.initialize(bil.getProduits());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         } finally {

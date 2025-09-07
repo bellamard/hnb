@@ -556,8 +556,8 @@
                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                               <children>
                                  <Label styleClass="section-title" text="BILAN:" />
-                                 <Label text="DATE:" />
-                                 <Label text="REF:" />
+                                 <Label fx:id="bilanDate" text="DATE:" />
+                                 <Label fx:id="bilanRef" text="REF:" />
                               </children>
                               <padding>
                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -567,8 +567,8 @@
                             <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                                 <children>
                                     <Label styleClass="section-title" text="ELEMENTS:" />
-                                    <Label text="FACTURE:" />
-                                    <Label text="DEPENSE:" />
+                                    <Label fx:id="bilanFactureElement" text="FACTURE:" />
+                                    <Label fx:id="bilanDepenseElement" text="DEPENSE:" />
                                 </children>
                                 <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -578,8 +578,8 @@
                             <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                                 <children>
                                     <Label styleClass="section-title" text="SOMME:" />
-                                    <Label text="FACTURE:" />
-                                    <Label text="DEPENSE:" />
+                                    <Label fx:id="bilanSommeFacture" text="FACTURE:" />
+                                    <Label fx:id="bilanSommeDepense" text="DEPENSE:" />
                                 </children>
 
                                 <padding>
