@@ -141,6 +141,14 @@ public class DashboardController {
             }
             return null;
         }));
+        try {
+            Thread thread=new Thread(this::homeView);
+            thread.sleep(500);
+            thread.start();
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -336,7 +344,7 @@ public class DashboardController {
         genererFacture();
         resetFactureProduit();
         getFactureAllCommande();
-
+        initialize();
 
     }
 
@@ -1028,6 +1036,7 @@ public class DashboardController {
         depense.setUtilisateur(us.findById(idUser));
         ds.save(depense);
         getAllspent();
+        initialize();
     }
     void apercusSpent(Depense depense){
         titleSpent.setText(depense.getIntitule());
