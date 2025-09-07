@@ -545,84 +545,87 @@
                         <children>
                             <HBox alignment="CENTER_LEFT" spacing="10">
                                 <children>
-                                    <FontIcon iconLiteral="fa-money" iconSize="20" />
-                                    <Label styleClass="section-title" text="Gestion des Bilans" />
+                                    <FontIcon iconLiteral="fa-money" iconSize="20"/>
+                                    <Label styleClass="section-title" text="Gestion des Bilans"/>
                                 </children>
                             </HBox>
 
-                            <Separator />
-                     <HBox alignment="CENTER">
-                        <children>
-                           <VBox spacing="8.0" HBox.hgrow="ALWAYS">
-                              <children>
-                                 <Label styleClass="section-title" text="BILAN:" />
-                                 <Label fx:id="bilanDate" text="DATE:" />
-                                 <Label fx:id="bilanRef" text="REF:" />
-                              </children>
-                              <padding>
-                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                              </padding>
-                           </VBox>
-                           <Separator orientation="VERTICAL" />
-                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                            <Separator/>
+                            <HBox alignment="CENTER">
                                 <children>
-                                    <Label styleClass="section-title" text="ELEMENTS:" />
-                                    <Label fx:id="bilanFactureElement" text="FACTURE:" />
-                                    <Label fx:id="bilanDepenseElement" text="DEPENSE:" />
+                                    <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Label styleClass="section-title" text="BILAN:"/>
+                                            <Label fx:id="bilanDate" text="DATE:"/>
+                                            <Label fx:id="bilanRef" text="REF:"/>
+                                        </children>
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        </padding>
+                                    </VBox>
+                                    <Separator orientation="VERTICAL"/>
+                                    <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Label styleClass="section-title" text="ELEMENTS:"/>
+                                            <Label fx:id="bilanFactureElement" text="FACTURE:"/>
+                                            <Label fx:id="bilanDepenseElement" text="DEPENSE:"/>
+                                        </children>
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        </padding>
+                                    </VBox>
+                                    <Separator orientation="VERTICAL"/>
+                                    <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Label styleClass="section-title" text="SOMME:"/>
+                                            <Label fx:id="bilanSommeFacture" text="FACTURE:"/>
+                                            <Label fx:id="bilanSommeDepense" text="DEPENSE:"/>
+                                        </children>
+
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        </padding>
+                                    </VBox>
+                                    <Separator orientation="VERTICAL"/>
+                                    <VBox alignment="CENTER" spacing="8.0" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Button fx:id="btnCloture" styleClass="small-button" text="Cloture"/>
+                                        </children>
+
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        </padding>
+                                    </VBox>
+
                                 </children>
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                            </VBox>
-                            <Separator orientation="VERTICAL" />
-                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                            </HBox>
+                            <Separator prefWidth="200.0"/>
+                            <HBox spacing="10.0">
                                 <children>
-                                    <Label styleClass="section-title" text="SOMME:" />
-                                    <Label fx:id="bilanSommeFacture" text="FACTURE:" />
-                                    <Label fx:id="bilanSommeDepense" text="DEPENSE:" />
+                                    <TableView fx:id="bilanTable">
+                                        <columns>
+                                            <TableColumn fx:id="colBilanDate" text="DATE"/>
+                                            <TableColumn fx:id="colBilanRef" text="REFERENCE"/>
+                                            <TableColumn fx:id="colBilanFacture" text="FACTURE"/>
+                                            <TableColumn fx:id="colBilanDepense" text="DEPENSE"/>
+                                            <TableColumn fx:id="colBilanTotal" text="TOTAL"/>
+                                            <TableColumn fx:id="colBilanAction" text="ACTION"/>
+                                        </columns>
+                                    </TableView>
+                                    <VBox spacing="5.0">
+                                        <children>
+                                            <HBox spacing="5.0">
+                                                <children>
+                                                    <FontIcon iconLiteral="fa-search" iconSize="16"/>
+                                                    <TextField promptText="Rechercher une bilan..."/>
+                                                </children>
+                                            </HBox>
+                                            <Label styleClass="section-title" text="Description:"/>
+                                            <Label text="Apercus des elements selectionner"/>
+                                        </children>
+                                    </VBox>
                                 </children>
-
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                            </VBox>
-                            <Separator orientation="VERTICAL" />
-                            <VBox alignment="CENTER" spacing="8.0" HBox.hgrow="ALWAYS">
-                                <children>
-                                   <Button fx:id="btnCloture" styleClass="small-button" text="Cloture" />
-                                </children>
-
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                            </VBox>
-
-                        </children></HBox>
-                     <Separator prefWidth="200.0" />
-                     <HBox spacing="10.0">
-                        <children>
-                           <TableView>
-                             <columns>
-                               <TableColumn text="DATE" />
-                               <TableColumn text="REFERENCE" />
-                                 <TableColumn text="FACTURE" />
-                                 <TableColumn text="DEPENSE" />
-                                 <TableColumn text="TOTAL" />
-                                 <TableColumn text="ACTION" />
-                             </columns>
-                           </TableView>
-                           <VBox spacing="5.0">
-                              <children>
-                                 <HBox spacing="5.0">
-                                    <children>
-                                        <FontIcon iconLiteral="fa-search" iconSize="16" />
-                                       <TextField promptText="Rechercher une bilan..." />
-                                    </children>
-                                 </HBox>
-                                 <Label styleClass="section-title" text="Description:" />
-                                 <Label text="Apercus des elements selectionner" />
-                              </children></VBox>
-                        </children></HBox>
+                            </HBox>
                         </children>
                     </VBox>
                     <VBox fx:id="parametreLayout" spacing="10" styleClass="section" visible="false" />
