@@ -979,8 +979,8 @@ public class DashboardController {
                         newSelection.getAuteur(),
                         newSelection.getUtilisateur().getUsername()
                 ));
+                if(!newSelection.estAnnulee() && !newSelection.estValide()) apercusSpent(newSelection);
 
-                apercusSpent(newSelection);
             }
         });
 
@@ -1061,6 +1061,11 @@ public class DashboardController {
         btnModifierSpent.setVisible(false);
         btnCreateSpent.setVisible(true);
         apercusSpentText.setText("Sélectionnez une dépense...");
+    }
+    @FXML
+    void getAllCloture(){
+        List<Bilan> bilanList=bs.findAll();
+
     }
 }
 
