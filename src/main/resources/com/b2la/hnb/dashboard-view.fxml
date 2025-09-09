@@ -602,7 +602,7 @@
                             <Separator prefWidth="200.0" />
                             <HBox spacing="10.0">
                                 <children>
-                                    <TableView fx:id="bilanTable">
+                                    <TableView fx:id="bilanTable" HBox.hgrow="ALWAYS">
                                         <columns>
                                             <TableColumn fx:id="colBilanDate" text="DATE" />
                                             <TableColumn fx:id="colBilanRef" text="REFERENCE" />
@@ -617,11 +617,11 @@
                                             <HBox spacing="5.0">
                                                 <children>
                                                     <FontIcon iconLiteral="fa-search" iconSize="16" />
-                                                    <TextField promptText="Rechercher une bilan..." />
+                                                    <TextField fx:id="researchBilan" onKeyPressed="#getSearchCloture" promptText="Rechercher une bilan..." />
                                                 </children>
                                             </HBox>
                                             <Label styleClass="section-title" text="Description:" />
-                                            <Label text="Apercus des elements selectionner" />
+                                            <Label fx:id="bilansTotal" styleClass="section-title" text="Apercus des elements selectionner" />
                                         </children>
                                     </VBox>
                                 </children>

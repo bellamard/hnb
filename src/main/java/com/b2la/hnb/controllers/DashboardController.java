@@ -16,9 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.print.Printer;
-import javafx.print.PrinterJob;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -39,20 +36,21 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static javafx.application.Platform.runLater;
 
 public class DashboardController {
     @FXML
-    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture, msgAlertSpent, apercusSpentText, bilanDate, bilanRef, bilanFactureElement, bilanDepenseElement, bilanSommeFacture, bilanSommeDepense;
+    private Label username, fonction, dateHeure, PanneauDashboardProduit, PanneauDashboardFacture, labelDescription, factureRef, totalFactureLabel, countFacture, sumFacture, msgAlertSpent, apercusSpentText, bilanDate, bilanRef, bilanFactureElement, bilanDepenseElement, bilanSommeFacture, bilanSommeDepense, bilansTotal;
     @FXML
     private Button home, facturation, produit, cloture, depense, utilisateur, btnProduitMod, btnProduitAdd, btnAddCommande, btnValiderFacture, btnModifierSpent, btnCreateSpent;
     @FXML
     private VBox homeLayout, facturationLayout, produitLayout, depenseLayout, clotureLayout, parametreLayout, loadingLayout, boxBilanItem;
 
     @FXML
-    TextField research, articleField, prixField, researchFacture, fieldVerifier, searchSpent, titleSpent, priceSpent, forSpent;
+    TextField research, articleField, prixField, researchFacture, fieldVerifier, searchSpent, titleSpent, priceSpent, forSpent, researchBilan;
     @FXML
     TextArea description, motifSpent;
     @FXML
@@ -129,6 +127,9 @@ public class DashboardController {
     double revenueToday;
     double factureTotal;
     double depenseTotal;
+    double finalTotal, finalDepense, finalFacture;
+
+
     depenseService ds;
 
 
@@ -144,7 +145,7 @@ public class DashboardController {
         ps = new produitService();
         fs = new facturationService();
         ds = new depenseService();
-        us= new utilisateurService();
+        us = new utilisateurService();
         dashBoardProduit = (double) ps.numberProduit();
         dashBoardFacture = fs.sommeFacture();
         dashBoardNumber();
@@ -156,7 +157,7 @@ public class DashboardController {
             return null;
         }));
         try {
-            Thread thread=new Thread(this::homeView);
+            Thread thread = new Thread(this::homeView);
             thread.sleep(2000);
             thread.start();
 
@@ -299,8 +300,9 @@ public class DashboardController {
         String layout = "parametre";
         cardLayout(layout);
     }
+
     @FXML
-    void onClose(){
+    void onClose() {
         System.exit(0);
     }
 
@@ -778,6 +780,7 @@ public class DashboardController {
         });
         throw new RuntimeException(message);
     }
+
     void messageSpentErreur(String message) {
 
         runLater(() -> {
@@ -955,7 +958,7 @@ public class DashboardController {
         colSpentAction.setCellFactory(col -> new TableCell<>() {
             Button btnCancel = new Button("Annuler");
             Button btnValider = new Button("Valider");
-            Label status= new Label();
+            Label status = new Label();
 
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -981,11 +984,11 @@ public class DashboardController {
 
                         boxBtn.getChildren().addAll(btnValider, btnCancel);
                     }
-                    if(dep.estAnnulee()) {
+                    if (dep.estAnnulee()) {
                         status.setText("Annulee");
                         boxBtn.getChildren().add(status);
                     }
-                    if(dep.estValide()) {
+                    if (dep.estValide()) {
                         status.setText("Validee");
                         boxBtn.getChildren().add(status);
                     }
@@ -999,7 +1002,7 @@ public class DashboardController {
         spentTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 apercusSpentText.setText(String.format(
-                                "Date : %s\nTitre    : %s\nMontant: %.2f CDF pièces\nMotif   : %s\nPour   : %s\nAuteur   : %s",
+                        "Date : %s\nTitre    : %s\nMontant: %.2f CDF pièces\nMotif   : %s\nPour   : %s\nAuteur   : %s",
                         newSelection.getDateCreation(),
                         newSelection.getIntitule(),
                         newSelection.getMontant(),
@@ -1007,7 +1010,7 @@ public class DashboardController {
                         newSelection.getAuteur(),
                         newSelection.getUtilisateur().getUsername()
                 ));
-                if(!newSelection.estAnnulee() && !newSelection.estValide()) apercusSpent(newSelection);
+                if (!newSelection.estAnnulee() && !newSelection.estValide()) apercusSpent(newSelection);
 
             }
         });
@@ -1023,12 +1026,13 @@ public class DashboardController {
         new Thread(task).start();
         resetDepense();
     }
+
     @FXML
     void getSearchSpents() {
         List<Depense> depenseList = ds.findAll().stream().filter(depense -> depense.getAuteur().toLowerCase().contains(searchSpent.getText().toLowerCase()) ||
                 depense.getMotif().toLowerCase().contains(searchSpent.getText().toLowerCase()) ||
                 String.valueOf(depense.getMontant()).contains(searchSpent.getText().toLowerCase()) ||
-                depense.getIntitule().toLowerCase().contains(searchSpent.getText().toLowerCase())||
+                depense.getIntitule().toLowerCase().contains(searchSpent.getText().toLowerCase()) ||
                 depense.getDateCreation().toString().contains(searchSpent.getText().toLowerCase())).toList();
         Task<ObservableList<Depense>> task = new Task<>() {
 
@@ -1041,38 +1045,40 @@ public class DashboardController {
         new Thread(task).start();
 
     }
+
     @FXML
     void addSpent() {
-        if (titleSpent.getText().isEmpty())messageSpentErreur("le titre est vide!!!");
-        if (priceSpent.getText().isEmpty())messageSpentErreur("le prix est vide!!!");
-        if (forSpent.getText().isEmpty())messageSpentErreur("l'auteur est vide!!!");
+        if (titleSpent.getText().isEmpty()) messageSpentErreur("le titre est vide!!!");
+        if (priceSpent.getText().isEmpty()) messageSpentErreur("le prix est vide!!!");
+        if (forSpent.getText().isEmpty()) messageSpentErreur("l'auteur est vide!!!");
 
-        Depense depense= new Depense();
+        Depense depense = new Depense();
         depense.setIntitule(titleSpent.getText());
         depense.setMontant(Double.parseDouble(priceSpent.getText()));
         depense.setAuteur(forSpent.getText());
-        if(!motifSpent.getText().isEmpty())depense.setMotif(motifSpent.getText());
+        if (!motifSpent.getText().isEmpty()) depense.setMotif(motifSpent.getText());
         depense.setBilan(bilanHebdo);
         depense.setUtilisateur(us.findById(idUser));
         ds.save(depense);
         getAllspent();
         initialize();
     }
-    void apercusSpent(Depense depense){
+
+    void apercusSpent(Depense depense) {
         titleSpent.setText(depense.getIntitule());
         priceSpent.setText(depense.getMontant().toString());
         forSpent.setText(depense.getAuteur());
         motifSpent.setText(depense.getMotif());
         btnModifierSpent.setVisible(true);
         btnCreateSpent.setVisible(false);
-        btnModifierSpent.setOnAction(ae->update(depense));
+        btnModifierSpent.setOnAction(ae -> update(depense));
     }
 
     @FXML
     void update(Depense depense) {
-        if (titleSpent.getText().isEmpty())messageSpentErreur("le titre est vide!!!");
-        if (priceSpent.getText().isEmpty())messageSpentErreur("le prix est vide!!!");
-        if (forSpent.getText().isEmpty())messageSpentErreur("l'auteur est vide!!!");
+        if (titleSpent.getText().isEmpty()) messageSpentErreur("le titre est vide!!!");
+        if (priceSpent.getText().isEmpty()) messageSpentErreur("le prix est vide!!!");
+        if (forSpent.getText().isEmpty()) messageSpentErreur("l'auteur est vide!!!");
         depense.setIntitule(titleSpent.getText());
         depense.setMontant(Double.parseDouble(priceSpent.getText()));
         depense.setAuteur(forSpent.getText());
@@ -1081,8 +1087,9 @@ public class DashboardController {
         ds.update(depense);
         getAllspent();
     }
+
     @FXML
-    void resetDepense(){
+    void resetDepense() {
         titleSpent.setText("");
         priceSpent.setText("");
         forSpent.setText("");
@@ -1091,94 +1098,107 @@ public class DashboardController {
         btnCreateSpent.setVisible(true);
         apercusSpentText.setText("Sélectionnez une dépense...");
     }
+
     @FXML
-    void getAllCloture(){
-        List<Bilan> bilanList=bs.findAll();
+    void getAllCloture() {
+        List<Bilan> bilanList = bs.findAll();
+        finalTotal = 0;
+        finalDepense = 0;
+        finalFacture = 0;
         colBilanDate.setCellValueFactory(new PropertyValueFactory<>("debutBilan"));
         colBilanRef.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colBilanFacture.setCellFactory(col->new TableCell<>(){
-            double totalFacture=0;
+        colBilanFacture.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
+
                 if (empty) setGraphic(null);
-                else{
-                    Long itemId= getTableView().getItems().get(getIndex()).getId();
-                    Bilan bilanItem=bs.findById(itemId);
+                else {
+                    AtomicReference<Double> totalFacture = new AtomicReference<>(0.0);
+                    Long itemId = getTableView().getItems().get(getIndex()).getId();
+                    Bilan bilanItem = bs.findById(itemId);
                     bilanItem.getFacturations().forEach(facturation1 -> {
-                        if(facturation1.getEtat().equals(Etat.Payée)){
-                            totalFacture+=facturation1.getTtc();
+                        if (facturation1.getEtat().equals(Etat.Payée)) {
+                            totalFacture.updateAndGet(v -> v + facturation1.getTtc());
                         }
                     });
                     HBox boxBtn = new HBox(2);
-                    Label total= new Label(String.valueOf(totalFacture));
+                    Label total = new Label(String.valueOf(totalFacture));
                     boxBtn.getChildren().add(total);
                     setGraphic(boxBtn);
                 }
             }
         });
 
-        colBilanDepense.setCellFactory(col->new TableCell<>(){
-            double totalDepense=0;
+        colBilanDepense.setCellFactory(col -> new TableCell<>() {
+
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) setGraphic(null);
-                else{
-                    Long itemId= getTableView().getItems().get(getIndex()).getId();
-                    Bilan bilanItem=bs.findById(itemId);
+                else {
+                    AtomicReference<Double> totalDepense = new AtomicReference<>(0.0);
+                    Long itemId = getTableView().getItems().get(getIndex()).getId();
+                    Bilan bilanItem = bs.findById(itemId);
                     bilanItem.getDepenses().forEach(depense1 -> {
-                        if(depense1.estValide()){
-                            totalDepense+=depense1.getMontant();
+                        if (depense1.estValide()) {
+                            totalDepense.updateAndGet(v -> v + depense1.getMontant());
                         }
                     });
                     HBox boxBtn = new HBox(2);
-                    Label total= new Label(String.valueOf(totalDepense));
+                    Label total = new Label(String.valueOf(totalDepense.get()));
                     boxBtn.getChildren().add(total);
                     setGraphic(boxBtn);
                 }
             }
         });
 
-        colBilanTotal.setCellFactory(col->new TableCell<>(){
-            double totalDepense=0;
-            double totalFacture=0;
+        colBilanTotal.setCellFactory(col -> new TableCell<>() {
+
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) setGraphic(null);
-                else{
-                    Long itemId= getTableView().getItems().get(getIndex()).getId();
-                    Bilan bilanItem=bs.findById(itemId);
+                else {
+                    AtomicReference<Double> totalDepense = new AtomicReference<>((double) 0);
+                    AtomicReference<Double> totalFacture = new AtomicReference<>((double) 0);
+                    Long itemId = getTableView().getItems().get(getIndex()).getId();
+                    Bilan bilanItem = bs.findById(itemId);
                     bilanItem.getDepenses().forEach(depense1 -> {
-                        if(depense1.estValide()){
-                            totalDepense+=depense1.getMontant();
+                        if (depense1.estValide()) {
+                            totalDepense.updateAndGet(v -> v + depense1.getMontant());
                         }
                     });
                     bilanItem.getFacturations().forEach(facturation1 -> {
-                        if(facturation1.getEtat().equals(Etat.Payée)){
-                            totalFacture+=facturation1.getTtc();
+                        if (facturation1.getEtat().equals(Etat.Payée)) {
+                            totalFacture.updateAndGet(v -> v + facturation1.getTtc());
                         }
+
                     });
+                    finalDepense += totalDepense.get();
+                    finalFacture += totalFacture.get();
+                    finalTotal += (totalFacture.get() - totalDepense.get());
+                    System.out.println("******* facture:" + finalFacture + "\n******* depense:" + finalDepense + "\n*******" + finalTotal);
+
                     HBox boxBtn = new HBox(2);
-                    Label total= new Label(String.valueOf(totalFacture-totalDepense));
+                    Label total = new Label(String.valueOf(totalFacture.get() - totalDepense.get()));
                     boxBtn.getChildren().add(total);
                     setGraphic(boxBtn);
                 }
             }
         });
 
-        colBilanAction.setCellFactory(col->new TableCell<>(){
-            Button btnCommande= new Button("Apercus | commande");
+        colBilanAction.setCellFactory(col -> new TableCell<>() {
+            Button btnCommande = new Button("Apercus | commande");
+
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) setGraphic(null);
-                else{
-
-
+                else {
+                    Bilan blan=getTableView().getItems().get(getIndex());
                     HBox boxBtn = new HBox(2);
-
+                    btnCommande.setOnAction(actionEvent -> getApercusBilan(blan));
                     boxBtn.getChildren().add(btnCommande);
                     setGraphic(boxBtn);
                 }
@@ -1193,29 +1213,164 @@ public class DashboardController {
                 return FXCollections.observableArrayList(bilanList);
             }
         };
-        task.setOnSucceeded(e -> bilanTable.setItems(task.getValue()));
+        task.setOnSucceeded(e -> {
+            bilanTable.setItems(task.getValue());
+            runLater(() -> bilansTotal.setText(String.format(
+                    "Bilan total:\nFactures: %.2f CDF\nDepenses: %.2f CDF\nTotal: %.2f CDF",
+                    finalFacture, finalDepense, finalTotal)));
+        });
+
         new Thread(task).start();
 
     }
 
-    void getBilanHebdo(){
-        bilanHebdo=bs.findById(bilanHebdo.getId());
-        factureTotal=0.0;
-        depenseTotal=0.0;
+    @FXML
+    void getSearchCloture() {
+        String SearchBila = researchBilan.getText();
+        List<Bilan> bilanList = bs.findAll().stream().filter(bilan -> bilan.getDebutBilan().toString().contains(SearchBila)
+        ).toList();
+        finalTotal = 0;
+        finalDepense = 0;
+        finalFacture = 0;
+        colBilanDate.setCellValueFactory(new PropertyValueFactory<>("debutBilan"));
+        colBilanRef.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colBilanFacture.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) setGraphic(null);
+                else {
+                    AtomicReference<Double> totalFacture = new AtomicReference<>(0.0);
+                    Long itemId = getTableView().getItems().get(getIndex()).getId();
+                    Bilan bilanItem = bs.findById(itemId);
+                    bilanItem.getFacturations().forEach(facturation1 -> {
+                        if (facturation1.getEtat().equals(Etat.Payée)) {
+                            totalFacture.updateAndGet(v -> v + facturation1.getTtc());
+                        }
+                    });
+                    HBox boxBtn = new HBox(2);
+                    Label total = new Label(String.valueOf(totalFacture));
+                    boxBtn.getChildren().add(total);
+                    setGraphic(boxBtn);
+                }
+            }
+        });
+
+        colBilanDepense.setCellFactory(col -> new TableCell<>() {
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) setGraphic(null);
+                else {
+                    AtomicReference<Double> totalDepense = new AtomicReference<>(0.0);
+                    Long itemId = getTableView().getItems().get(getIndex()).getId();
+                    Bilan bilanItem = bs.findById(itemId);
+                    bilanItem.getDepenses().forEach(depense1 -> {
+                        if (depense1.estValide()) {
+                            totalDepense.updateAndGet(v -> v + depense1.getMontant());
+                        }
+                    });
+                    HBox boxBtn = new HBox(2);
+                    Label total = new Label(String.valueOf(totalDepense.get()));
+                    boxBtn.getChildren().add(total);
+                    setGraphic(boxBtn);
+                }
+            }
+        });
+
+        colBilanTotal.setCellFactory(col -> new TableCell<>() {
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) setGraphic(null);
+                else {
+                    AtomicReference<Double> totalDepense = new AtomicReference<>((double) 0);
+                    AtomicReference<Double> totalFacture = new AtomicReference<>((double) 0);
+                    Long itemId = getTableView().getItems().get(getIndex()).getId();
+                    Bilan bilanItem = bs.findById(itemId);
+                    bilanItem.getDepenses().forEach(depense1 -> {
+                        if (depense1.estValide()) {
+                            totalDepense.updateAndGet(v -> v + depense1.getMontant());
+                        }
+                    });
+                    bilanItem.getFacturations().forEach(facturation1 -> {
+                        if (facturation1.getEtat().equals(Etat.Payée)) {
+                            totalFacture.updateAndGet(v -> v + facturation1.getTtc());
+                        }
+
+                    });
+                    finalDepense += totalDepense.get();
+                    finalFacture += totalFacture.get();
+                    finalTotal += (totalFacture.get() - totalDepense.get());
+                    System.out.println("******* facture:" + finalFacture + "\n******* depense:" + finalDepense + "\n*******" + finalTotal);
+
+                    HBox boxBtn = new HBox(2);
+                    Label total = new Label(String.valueOf(totalFacture.get() - totalDepense.get()));
+                    boxBtn.getChildren().add(total);
+                    setGraphic(boxBtn);
+                }
+            }
+        });
+
+
+        Task<ObservableList<Bilan>> task = new Task<>() {
+
+            @Override
+            protected ObservableList<Bilan> call() throws Exception {
+                return FXCollections.observableArrayList(bilanList);
+            }
+        };
+        task.setOnSucceeded(e -> {
+            bilanTable.setItems(task.getValue());
+            runLater(() -> bilansTotal.setText(String.format(
+                    "Bilan total:\nFactures: %.2f CDF\nDepenses: %.2f CDF\nTotal: %.2f CDF",
+                    finalFacture, finalDepense, finalTotal)));
+        });
+
+        new Thread(task).start();
+
+    }
+
+    void getBilanHebdo() {
+        bilanHebdo = bs.findById(bilanHebdo.getId());
+        factureTotal = 0.0;
+        depenseTotal = 0.0;
         bilanHebdo.getFacturations().forEach(facturation1 -> {
-            if(facturation1.getEtat().equals(Etat.Payée)){
-                factureTotal+=facturation1.getTtc();
+            if (facturation1.getEtat().equals(Etat.Payée)) {
+                factureTotal += facturation1.getTtc();
             }
         });
         bilanHebdo.getDepenses().forEach(depense1 -> {
-            if(depense1.estValide())depenseTotal+=depense1.getMontant();
+            if (depense1.estValide()) depenseTotal += depense1.getMontant();
         });
-        bilanSommeDepense.setText("DEPENSE: "+depenseTotal+" CDF");
-        bilanSommeFacture.setText("FACTURE: "+factureTotal+" CDF");
-        bilanDepenseElement.setText("DEPENSE: "+bilanHebdo.getDepenses().size());
-        bilanFactureElement.setText("FACTURE: "+bilanHebdo.getFacturations().stream().filter(facturation1 -> facturation1.getEtat().equals(Etat.Payée)).toList().size());
-        bilanDate.setText("DATE: "+bilanHebdo.getDebutBilan());
-        bilanRef.setText("REF: "+bilanHebdo.getId());
+        bilanSommeDepense.setText("DEPENSE: " + depenseTotal + " CDF");
+        bilanSommeFacture.setText("FACTURE: " + factureTotal + " CDF");
+        bilanDepenseElement.setText("DEPENSE: " + bilanHebdo.getDepenses().size());
+        bilanFactureElement.setText("FACTURE: " + bilanHebdo.getFacturations().stream().filter(facturation1 -> facturation1.getEtat().equals(Etat.Payée)).toList().size());
+        bilanDate.setText("DATE: " + bilanHebdo.getDebutBilan());
+        bilanRef.setText("REF: " + bilanHebdo.getId());
+    }
+
+    void getApercusBilan(Bilan bila)  {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("apercusCommande-view.fxml"));
+            Parent utilis = loader.load();
+            ApercusCommandeController acc = loader.getController();
+            acc.take(bila);
+            Stage utilisStage = new Stage();
+            utilisStage.setResizable(false);
+            utilisStage.initModality(Modality.APPLICATION_MODAL);
+            utilisStage.setTitle("Apercus Commandes!!!");
+            utilisStage.setScene(new Scene(utilis));
+            utilisStage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<VBox prefHeight="400.0" prefWidth="600.0" spacing="5.0" styleClass="section" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b2la.hnb.controllers.ApercusCommandeController">
+   <children>
+      <Label styleClass="section-title" text="LISTE DES COMMANDES" />
+      <Separator prefWidth="200.0" />
+      <HBox spacing="5.0">
+         <children>
+             <FontIcon iconLiteral="fa-search" iconSize="16" />
+            <TextField prefWidth="250" promptText="Recherche Commande" />
+         </children></HBox>
+      <TableView fx:id="tableCommande" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="34.20001220703125" text="Id" />
+          <TableColumn fx:id="colArticle" prefWidth="261.79997634887695" text="Article" />
+            <TableColumn fx:id="colNombre" minWidth="0.0" prefWidth="124.20001220703125" text="Nombre" />
+            <TableColumn fx:id="colTotal" prefWidth="133.39996337890625" text="Total" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>
