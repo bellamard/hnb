@@ -1360,6 +1360,7 @@ public class DashboardController {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("apercusCommande-view.fxml"));
             Parent utilis = loader.load();
             ApercusCommandeController acc = loader.getController();
+            bila=bs.findById(bila.getId());
             acc.take(bila);
             Stage utilisStage = new Stage();
             utilisStage.setResizable(false);
