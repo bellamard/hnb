@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApercusCommandeController {
@@ -27,27 +28,36 @@ public class ApercusCommandeController {
     @FXML
     TableColumn<Commande, Double> colNombre, colTotal;
 
-    public void initialize(){
-        fs= new facturationService();
-        cs= new commandeService();
-        bs= new bilanService();
+    public void initialize() {
+        fs = new facturationService();
+        cs = new commandeService();
+        bs = new bilanService();
 
     }
 
-    public void take(Bilan bil){
-        bilan=bil;
+    public void take(Bilan bil) {
+        bilan = bil;
         System.out.println(bil.getDebutBilan());
         getAllCommande();
     }
 
-    void getAllCommande(){
-        List<Commande> commandeList = new java.util.ArrayList<>(List.of());
-           bilan.getFacturations().forEach(facturation -> {
-               facturation=fs.findById(facturation.getId());
-               commandeList.addAll(facturation.getCommandes());
-           });
+    void getAllCommande() {
+        List<Commande> commandeList = new ArrayList<>(List.of());
+        bilan.getFacturations().forEach(facturation -> {
+            facturation = fs.findById(facturation.getId());
+            commandeList.addAll(facturation.getCommandes());
+        });
 
-           List<Commande>commandesGroup;
-           commandeList.forEach(commande -> if());
+        List<Commande> commandesGroup = List.of();
+        commandeList.forEach(commande -> {
+            Commande verif=commandesGroup.stream().filter(commande1 -> commande1.getId()==commande.getId()).findFirst().orElse(null);
+            if(verif==null){
+                commandesGroup.add(verif);
+            }else{
+                verif.setPrixTotal(verif.getPrixTotal()+commande.getPrixTotal());
+                verif.setNombre(verif.getNombre()+commande.getNombre());
+            }
+
+        });
     }
 }

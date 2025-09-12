@@ -432,7 +432,8 @@ public class DashboardController {
             alert.setContentText("VOTRE NOMBRE ARTICLE N'EST PAS CORRECTE \nVEUILLEZ MODIFIER LA QUANTITE");
             alert.showAndWait();
 
-        } else {
+        }
+        else {
 
             Produit pro = ps.findById(idComm);
             comm.setProduit(pro);
