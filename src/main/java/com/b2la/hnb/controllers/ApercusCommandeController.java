@@ -11,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
@@ -28,6 +25,8 @@ public class ApercusCommandeController {
     facturationService fs;
     bilanService bs;
     commandeService cs;
+    @FXML
+    TextField searchField;
     @FXML
     TableView<Commande> tableCommande;
     @FXML
@@ -93,6 +92,45 @@ public class ApercusCommandeController {
             @Override
             protected ObservableList<Commande> call() throws Exception {
                 return FXCollections.observableArrayList(commandesGroup);
+            }
+        };
+        task.setOnSucceeded(e ->tableCommande.setItems(task.getValue()) );
+        new Thread(task).start();
+
+
+
+    }
+    @FXML
+    void getSearchCommande() {
+        List<Commande> commandeList = new ArrayList<>(List.of());
+        bilan.getFacturations().forEach(facturation -> {
+            facturation = fs.findById(facturation.getId());
+            commandeList.addAll(facturation.getCommandes());
+        });
+
+        List<Commande> commandesGroup = new ArrayList<>(
+                commandeList.stream()
+                        .collect(Collectors.groupingBy(
+                                c -> c.getProduit().getId(),
+                                Collectors.reducing((c1, c2) -> {
+                                    c1.setPrixTotal(c1.getPrixTotal() + c2.getPrixTotal());
+                                    c1.setNombre(c1.getNombre() + c2.getNombre());
+                                    return c1;
+                                })
+                        ))
+                        .values()
+                        .stream()
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .toList()
+        );
+
+        Task<ObservableList<Commande>>task=new Task<>() {
+            @Override
+            protected ObservableList<Commande> call() throws Exception {
+                return FXCollections.observableArrayList(commandesGroup.stream().filter(commande -> commande.getProduit().getNom().toLowerCase().contains(searchField.getText().toLowerCase())
+                        ||String.valueOf(commande.getNombre()).contains(searchField.getText())
+                        ||String.valueOf(commande.getPrixTotal()).contains(searchField.getText())).collect(Collectors.toList()));
             }
         };
         task.setOnSucceeded(e ->tableCommande.setItems(task.getValue()) );

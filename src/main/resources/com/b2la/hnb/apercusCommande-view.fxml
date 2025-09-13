@@ -11,7 +11,7 @@
       <HBox spacing="5.0">
          <children>
              <FontIcon iconLiteral="fa-search" iconSize="16" />
-            <TextField prefWidth="250" promptText="Recherche Commande" />
+            <TextField fx:id="searchField" onKeyPressed="#getSearchCommande" prefWidth="250" promptText="Recherche Commande" />
          </children></HBox>
       <TableView fx:id="tableCommande" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
