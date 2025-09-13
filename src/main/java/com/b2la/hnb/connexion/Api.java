@@ -252,7 +252,7 @@ public class Api {
 
     }
 
-    public static List<Bilan> addBilan(List<Bilan> Bilan){
+    public static List<Bilan> addBilan(List<Bilan> bilan){
         try {
             URL url= new URL("https://hnb.b2la.online/bilan");
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
@@ -261,7 +261,7 @@ public class Api {
             con.setRequestProperty("Accept", "application/json");
             con.setDoOutput(true);
             Gson json= new Gson();
-            String jsInput= json.toJson(depenses);
+            String jsInput= json.toJson(bilan);
             try(OutputStream os= con.getOutputStream()){
                 byte[] input=jsInput.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
