@@ -7,12 +7,21 @@ import com.b2la.hnb.services.bilanService;
 import com.b2la.hnb.services.commandeService;
 import com.b2la.hnb.services.facturationService;
 import com.b2la.hnb.util.Etat;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ApercusCommandeController {
     Bilan bilan;
@@ -48,16 +57,48 @@ public class ApercusCommandeController {
             commandeList.addAll(facturation.getCommandes());
         });
 
-        List<Commande> commandesGroup = List.of();
-        commandeList.forEach(commande -> {
-            Commande verif=commandesGroup.stream().filter(commande1 -> commande1.getId()==commande.getId()).findFirst().orElse(null);
-            if(verif==null){
-                commandesGroup.add(verif);
-            }else{
-                verif.setPrixTotal(verif.getPrixTotal()+commande.getPrixTotal());
-                verif.setNombre(verif.getNombre()+commande.getNombre());
+        List<Commande> commandesGroup = new ArrayList<>(
+                commandeList.stream()
+                        .collect(Collectors.groupingBy(
+                                c -> c.getProduit().getId(),
+                                Collectors.reducing((c1, c2) -> {
+                                    c1.setPrixTotal(c1.getPrixTotal() + c2.getPrixTotal());
+                                    c1.setNombre(c1.getNombre() + c2.getNombre());
+                                    return c1;
+                                })
+                        ))
+                        .values()
+                        .stream()
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .toList()
+        );
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("prixTotal"));
+        colArticle.setCellFactory(col -> new TableCell<>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if(empty)setGraphic(null);
+                else {
+                    Label nomCommande= new Label(getTableView().getItems().get(getIndex()).getProduit().getNom());
+                    HBox boxText= new HBox(1);
+                    boxText.getChildren().add(nomCommande);
+                    setGraphic(boxText);
+                }
             }
-
         });
+        Task<ObservableList<Commande>>task=new Task<>() {
+            @Override
+            protected ObservableList<Commande> call() throws Exception {
+                return FXCollections.observableArrayList(commandesGroup);
+            }
+        };
+        task.setOnSucceeded(e ->tableCommande.setItems(task.getValue()) );
+        new Thread(task).start();
+
+
+
     }
 }
