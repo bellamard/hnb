@@ -589,7 +589,7 @@
                                     <Separator orientation="VERTICAL" />
                                     <VBox alignment="CENTER" spacing="8.0" HBox.hgrow="ALWAYS">
                                         <children>
-                                            <Button fx:id="btnCloture" styleClass="small-button" text="Synchroniser" />
+                                            <Button fx:id="btnCloture" onAction="#synchronisation" styleClass="small-button" text="Synchroniser" />
                                         </children>
 
                                         <padding>

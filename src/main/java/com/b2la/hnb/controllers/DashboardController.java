@@ -2,6 +2,7 @@ package com.b2la.hnb.controllers;
 
 
 import com.b2la.hnb.HelloApplication;
+import com.b2la.hnb.connexion.Api;
 import com.b2la.hnb.models.*;
 import com.b2la.hnb.services.*;
 import com.b2la.hnb.util.Etat;
@@ -236,6 +237,7 @@ public class DashboardController {
                 clotureLayout.setVisible(false);
                 facturationLayout.setVisible(true);
                 parametreLayout.setVisible(false);
+
                 break;
             case "parametre":
                 homeLayout.setVisible(false);
@@ -366,7 +368,10 @@ public class DashboardController {
         genererFacture();
         resetFactureProduit();
         getFactureAllCommande();
-        initialize();
+
+
+        Bilan bilanOnline=bs.findById(bilanHebdo.getId());
+        Api.addBilanOnline(bilanOnline);
 
     }
 
@@ -724,6 +729,8 @@ public class DashboardController {
             }
         }
         getProduitAll();
+        Bilan bilanOnline=bs.findById(bilanHebdo.getId());
+        Api.addBilanOnline(bilanOnline);
 
     }
 
@@ -744,6 +751,8 @@ public class DashboardController {
         ps = new produitService();
         ps.update(produit);
         getProduitAll();
+        Bilan bilanOnline=bs.findById(bilanHebdo.getId());
+        Api.addBilanOnline(bilanOnline);
 
     }
 
@@ -763,6 +772,8 @@ public class DashboardController {
         ps.save(produit);
         boiteAlert("felicitation vous avez enregistre le produit " + produit.getNom());
         getProduitAll();
+        Bilan bilanOnline=bs.findById(bilanHebdo.getId());
+        Api.addBilanOnline(bilanOnline);
 
     }
 
@@ -1063,6 +1074,8 @@ public class DashboardController {
         ds.save(depense);
         getAllspent();
         initialize();
+        Bilan bilanOnline=bs.findById(bilanHebdo.getId());
+        Api.addBilanOnline(bilanOnline);
     }
 
     void apercusSpent(Depense depense) {
@@ -1373,6 +1386,14 @@ public class DashboardController {
             throw new RuntimeException(e);
         }
 
+    }
+    @FXML
+    void synchronisation(){
+        List<Bilan> bilanCheck=bs.findAll();
+        bilanCheck.forEach(bilan -> {
+            Bilan checkB=bs.findById(bilan.getId());
+            Api.addBilanOnline(checkB);
+        });
     }
 }
 

@@ -51,16 +51,16 @@ public class Api {
 
     }
 
-    public static List<Produit> addList(List<Produit> produit){
+    public static void addBilanOnline(Bilan bilan){
         try {
-            URL url= new URL("https://hnb.b2la.online/produits");
+            URL url= new URL("https://hnb.b2la.online/bilans");
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
             con.setDoOutput(true);
             Gson json= new Gson();
-            String jsInput= json.toJson(produit);
+            String jsInput= json.toJson(bilan);
             try(OutputStream os= con.getOutputStream()){
                 byte[] input=jsInput.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
@@ -77,10 +77,9 @@ public class Api {
                     response.append(inputLine);
                 }
                 in.close();
-                return Collections.singletonList(json.fromJson(response.toString(), Produit.class));
+                json.fromJson(response.toString(), Produit.class);
             }
             con.disconnect();
-            return null;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -287,6 +286,9 @@ public class Api {
             throw new RuntimeException(e);
         }
     }
+
+
+
 
 
 }

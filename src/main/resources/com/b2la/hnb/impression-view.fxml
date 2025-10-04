@@ -19,8 +19,8 @@
     <Label fx:id="labelAdresseMagasin" style="-fx-font-size: 9px;" text="Avenue Bas congo N° 917" />
     <Label fx:id="labeladresseCommune" style="-fx-font-size: 9px;" text="KINSHASA / GOMBE" />
     <Label fx:id="labelTelephoneMagasin" style="-fx-font-size: 9px;" text="Tel : +243 994 041 850" />
-    <Label style="-fx-font-size: 8px;" text="RCCM:........../NIF:......" />
-    <Label style="-fx-font-size: 8px;" text="IDNAT:............." />
+    <Label style="-fx-font-size: 8px;" text="RCCM:CD/KNG/RCCM/21-A-02747" />
+    <Label style="-fx-font-size: 8px;" text="IDNAT:01-G4701-N90855C" />
     <Separator />
 
     <!-- Infos facture -->
